@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FHIR EMR — Min Jung Park</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef;
+  --ink: #1a1612;
+  --mid: #6b6560;
+  --light: #c8c3bc;
+  --accent: #1e4d7b;
+  --accent-light: rgba(30,77,123,0.08);
+  --accent-mid: rgba(30,77,123,0.15);
+  --accent2: #c45c2e;
+  --card: #ffffff;
+  --border: rgba(26,22,18,0.08);
+  --blue-border: rgba(30,77,123,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background:var(--bg); color:var(--ink); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 60px;
+  background:rgba(247,244,239,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { font-family:'Fraunces',serif; font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; }
+.nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
+.nav-back:hover { color:var(--accent); }
+.nav-tag { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-light); border:1px solid var(--blue-border); padding:6px 14px; border-radius:100px; }
+
+/* HERO */
+.hero {
+  min-height: 80vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 80px;
+  padding: 140px 60px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-text {}
+
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:24px; opacity:0; animation:fadeUp 0.6s 0.1s ease forwards; }
+.hero-eyebrow::before { content:''; width:24px; height:1.5px; background:var(--accent); }
+.hero-title { font-family:'Fraunces',serif; font-size:clamp(42px,7vw,80px); font-weight:700; line-height:1.05; letter-spacing:-0.02em; margin-bottom:8px; opacity:0; animation:fadeUp 0.6s 0.2s ease forwards; }
+.hero-title-ko { font-size:16px; font-weight:300; color:var(--mid); margin-bottom:28px; opacity:0; animation:fadeUp 0.6s 0.25s ease forwards; }
+.hero-desc { font-size:clamp(15px,2vw,17px); color:var(--mid); line-height:1.8; margin-bottom:8px; opacity:0; animation:fadeUp 0.6s 0.3s ease forwards; }
+.hero-desc strong { color:var(--ink); font-weight:600; }
+.hero-desc-ko { font-size:13px; color:var(--light); line-height:1.7; margin-bottom:48px; opacity:0; animation:fadeUp 0.6s 0.35s ease forwards; }
+.hero-stats { display:flex; gap:40px; flex-wrap:wrap; opacity:0; animation:fadeUp 0.6s 0.4s ease forwards; }
+.hero-stat-num { font-family:'Fraunces',serif; font-size:38px; font-weight:700; color:var(--accent); line-height:1; display:block; }
+.hero-stat-en { font-size:12px; font-weight:600; color:var(--ink); margin-top:4px; }
+.hero-stat-ko { font-size:10px; color:var(--light); }
+
+/* HERO VISUAL */
+.hero-visual {
+  opacity:0;
+  animation:fadeUp 0.7s 0.45s ease forwards;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.hero-photo-frame {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(30,77,123,0.12);
+  border: 1px solid var(--blue-border);
+}
+
+.hero-photo-frame img {
+  width: 100%;
+  display: block;
+}
+
+/* SECTIONS */
+.section { padding:80px 60px; max-width:1200px; margin:0 auto; }
+.section-alt { padding:80px 60px; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.section-inner { max-width:1200px; margin:0 auto; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px; }
+.eyebrow::before { content:''; width:20px; height:1.5px; background:var(--accent); }
+.section-title { font-family:'Fraunces',serif; font-size:clamp(28px,4vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:6px; }
+.section-ko { font-size:13px; color:var(--light); margin-bottom:48px; }
+
+/* OVERVIEW */
+.overview-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:60px; align-items:start; }
+.overview-text p { font-size:16px; line-height:1.85; color:var(--mid); margin-bottom:14px; }
+.overview-text p strong { color:var(--ink); font-weight:600; }
+.overview-text-ko { font-size:12px; color:var(--light); line-height:1.8; margin-top:-8px; margin-bottom:16px; }
+.meta-card { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:22px 24px; margin-bottom:14px; transition:border-color 0.2s; }
+.meta-card:hover { border-color:var(--accent); }
+.meta-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.meta-value { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.meta-value-ko { font-size:11px; color:var(--light); }
+
+/* ARCHITECTURE */
+.arch-img { width:100%; display:block; border-radius:16px; border:1px solid var(--border); margin-bottom:24px; }
+.arch-desc { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; }
+.desc-en { font-size:14px; line-height:1.75; color:var(--mid); margin-bottom:12px; }
+.desc-en strong { color:var(--ink); font-weight:600; }
+.desc-divider { width:32px; height:1.5px; background:var(--accent); opacity:0.4; margin-bottom:12px; }
+.desc-ko { font-size:12px; line-height:1.8; color:var(--light); }
+
+/* FHIR RESOURCES */
+.resource-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.resource-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.resource-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
+.resource-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.resource-name { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--accent); margin-bottom:6px; }
+.resource-en { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.resource-ko { font-size:12px; color:var(--light); margin-bottom:12px; }
+.resource-features { display:flex; flex-direction:column; gap:4px; }
+.resource-feature { font-size:11px; color:var(--mid); display:flex; align-items:flex-start; gap:6px; line-height:1.5; }
+.resource-feature::before { content:'·'; color:var(--accent); flex-shrink:0; margin-top:1px; }
+
+/* SCREEN CARDS */
+.screen-card { background:var(--card); border:1px solid var(--border); border-radius:20px; overflow:hidden; margin-bottom:24px; transition:border-color 0.25s, transform 0.25s; }
+.screen-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.screen-bar { display:flex; align-items:center; gap:8px; padding:12px 18px; background:var(--bg); border-bottom:1px solid var(--border); }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
+.screen-bar-title { flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
+.screen-img { width:100%; display:block; }
+.screen-desc { padding:24px 28px; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+
+/* IMPACT */
+.impact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.impact-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px 24px; text-align:center; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.impact-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), rgba(30,77,123,0.2)); }
+.impact-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.impact-num { font-family:'Fraunces',serif; font-size:40px; font-weight:700; color:var(--accent); display:block; margin-bottom:8px; line-height:1; }
+.impact-en { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.impact-ko { font-size:11px; color:var(--light); line-height:1.6; }
+
+/* TECH */
+.tech-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.tech-group { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:24px; transition:border-color 0.2s; }
+.tech-group:hover { border-color:var(--accent); }
+.tech-group-title { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.tech-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.tech-tag { background:var(--accent-light); color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px; padding:4px 10px; border-radius:100px; }
+
+/* BOTTOM NAV */
+.bottom-nav { padding:60px 60px; max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+.back-btn { display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:white; padding:14px 28px; border-radius:100px; font-size:14px; font-weight:600; text-decoration:none; transition:transform 0.2s, box-shadow 0.2s; }
+.back-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(30,77,123,0.3); }
+.next-btn { display:inline-flex; align-items:center; gap:8px; border:1.5px solid var(--border); color:var(--ink); padding:14px 28px; border-radius:100px; font-size:14px; font-weight:500; text-decoration:none; transition:border-color 0.2s, color 0.2s; }
+.next-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+/* FOOTER */
+footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.footer-name { font-family:'Fraunces',serif; font-size:16px; font-weight:600; }
+.footer-copy { font-size:12px; color:var(--light); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+  nav { padding:16px 24px; }
+  .hero { grid-template-columns:1fr; padding:100px 24px 60px; gap:40px; }
+  .hero-visual { order:-1; }
+  .section { padding:60px 24px; }
+  .section-alt { padding:60px 24px; }
+  .overview-grid { grid-template-columns:1fr; gap:32px; }
+  .resource-grid { grid-template-columns:1fr; }
+  .two-col { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr 1fr; }
+  .tech-grid { grid-template-columns:1fr 1fr; }
+  .bottom-nav { padding:40px 24px; flex-direction:column; gap:16px; }
+  footer { flex-direction:column; gap:8px; text-align:center; padding:32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">MJ Park</a>
+  <a href="../index.html#projects" class="nav-back">← Back to Projects</a>
+  <div class="nav-tag">🩺 FHIR · Healthcare</div>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1200px; margin:0 auto; padding:140px 60px 80px; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:80px;">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Solo Project · Sep 2024 – Mar 2025</div>
+    <h1 class="hero-title">FHIR<br>EMR</h1>
+    <p class="hero-title-ko">KR Core FHIR R4 기반 전자의무기록 시스템</p>
+    <p class="hero-desc">A <strong>full-cycle Electronic Medical Record system</strong> built on KR Core FHIR R4 standards — covering patient registration, clinical encounters, observations, diagnostic reports, conditions, and medication requests.</p>
+    <p class="hero-desc-ko">환자 등록부터 약품 처방까지 진료 전 주기를 KR Core FHIR R4 표준으로 구현한 전자의무기록 시스템입니다. 솔로로 개발했습니다.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">5</span><div class="hero-stat-en">FHIR Resources</div><div class="hero-stat-ko">핵심 리소스</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">KR</span><div class="hero-stat-en">Core IG Compliant</div><div class="hero-stat-ko">국내 표준 준수</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">AI</span><div class="hero-stat-en">Dashboard Analysis</div><div class="hero-stat-ko">AI 대시보드 분석</div></div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-photo-frame">
+      <img src="img/fhir_hero.png" alt="FHIR EMR">
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Overview</div>
+    <h2 class="section-title">Project Overview</h2>
+    <p class="section-ko">프로젝트 개요</p>
+    <div class="overview-grid">
+      <div class="overview-text">
+        <p>This is a <strong>full-cycle EMR system</strong> built entirely on the <strong>KR Core FHIR R4</strong> standard — Korea's national healthcare interoperability specification. Every data element is stored and exchanged as a FHIR Resource.</p>
+        <p class="overview-text-ko">대한민국 의료 표준인 KR Core FHIR R4를 기반으로 진료 전 주기를 구현한 전자의무기록 시스템입니다. 모든 데이터가 FHIR 리소스 형태로 저장·교환됩니다.</p>
+        <p>The system covers the complete clinical workflow: <strong>Patient → Practitioner → Encounter → Observation → DiagnosticReport → Condition → MedicationRequest</strong>. Each resource is linked to the KR Core Implementation Guide.</p>
+        <p class="overview-text-ko">환자 → 의사 → 진료 → 관찰 → 진단보고서 → 상병 → 처방까지 전 과정이 연결됩니다. 각 리소스는 KR Core Implementation Guide를 준수합니다.</p>
+        <p>The <strong>Patient Dashboard</strong> aggregates all clinical data in one view — with trend charts, AI-generated assessments, medication history, and lifestyle guidance — making complex medical data immediately actionable.</p>
+        <p class="overview-text-ko">환자 대시보드는 모든 진료 데이터를 한 화면에 집약합니다. 추이 차트, AI 자동 평가, 복용 약물 이력, 생활 습관 가이드까지 복잡한 의료 데이터를 즉시 활용 가능한 형태로 제공합니다.</p>
+      </div>
+      <div>
+        <div class="meta-card"><div class="meta-label">Period · 기간</div><div class="meta-value">Sep 2024 – Mar 2025</div><div class="meta-value-ko">2024년 9월 – 2025년 3월</div></div>
+        <div class="meta-card"><div class="meta-label">Type · 유형</div><div class="meta-value">Solo Project</div><div class="meta-value-ko">솔로 프로젝트</div></div>
+        <div class="meta-card"><div class="meta-label">Standard · 표준</div><div class="meta-value">KR Core FHIR R4</div><div class="meta-value-ko">국내 의료 표준 준수</div></div>
+        <div class="meta-card"><div class="meta-label">Domain · 도메인</div><div class="meta-value">Healthcare · EMR · AI</div><div class="meta-value-ko">헬스케어 · 전자의무기록 · AI</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FHIR RESOURCES -->
+<div class="section">
+  <div class="eyebrow">FHIR Resources</div>
+  <h2 class="section-title">KR Core Resources</h2>
+  <p class="section-ko">구현한 KR Core FHIR 리소스</p>
+  <div class="resource-grid">
+    <div class="resource-card">
+      <div class="resource-name">Patient</div>
+      <div class="resource-en">Patient Registration</div>
+      <div class="resource-ko">환자 등록</div>
+      <div class="resource-features">
+        <div class="resource-feature">주민등록번호 등 국가 식별자 연동</div>
+        <div class="resource-feature">연락처, 주소(우편번호 검색)</div>
+        <div class="resource-feature">보험 유형, 보호자 연락처</div>
+      </div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-name">Practitioner</div>
+      <div class="resource-en">Doctor Registration</div>
+      <div class="resource-ko">의사 등록</div>
+      <div class="resource-features">
+        <div class="resource-feature">의사면허번호 시스템 연동</div>
+        <div class="resource-feature">전문과목, 역할(Primary Performer)</div>
+        <div class="resource-feature">진료 요일 및 시간 설정</div>
+      </div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-name">Encounter</div>
+      <div class="resource-en">Clinical Encounter</div>
+      <div class="resource-ko">진료 등록</div>
+      <div class="resource-features">
+        <div class="resource-feature">외래/입원 구분, 수간 진료의</div>
+        <div class="resource-feature">SNOMED-CT 코드 기반 진료 사유</div>
+        <div class="resource-feature">내원 기관 및 보험 유형</div>
+      </div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-name">Observation</div>
+      <div class="resource-en">Observation Registration</div>
+      <div class="resource-ko">관찰 결과 등록</div>
+      <div class="resource-features">
+        <div class="resource-feature">Vital Signs (LOINC 코드 기반)</div>
+        <div class="resource-feature">Laboratory, Function Test 결과</div>
+        <div class="resource-feature">Blood Pressure, BMI, SpO2 등</div>
+      </div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-name">DiagnosticReport</div>
+      <div class="resource-en">Diagnostic Report</div>
+      <div class="resource-ko">진단 보고서 등록</div>
+      <div class="resource-features">
+        <div class="resource-feature">Diagnostic Imaging / Function Tests</div>
+        <div class="resource-feature">Laboratory / Pathology Results</div>
+        <div class="resource-feature">EDI 코드, 영상 파일 첨부</div>
+      </div>
+    </div>
+    <div class="resource-card">
+      <div class="resource-name">Condition &<br>MedicationRequest</div>
+      <div class="resource-en">Condition & Prescription</div>
+      <div class="resource-ko">진단(상병) · 약품 처방</div>
+      <div class="resource-features">
+        <div class="resource-feature">SNOMED-CT 기반 상병 코드</div>
+        <div class="resource-feature">ATC 코드, EDI 코드 기반 처방</div>
+        <div class="resource-feature">복용량, 기간, 주의사항 관리</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY SCREENS -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Features</div>
+    <h2 class="section-title">Key Screens</h2>
+    <p class="section-ko">주요 화면</p>
+
+    <!-- Patient Dashboard -->
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">환자 대시보드 · Patient Dashboard</div></div>
+      <img class="screen-img" src="img/0_환자대시보드_전체.JPG" alt="Patient Dashboard">
+      <div class="screen-desc">
+        <div class="desc-en">A comprehensive dashboard aggregating all clinical data — <strong>10 key lab metrics</strong> with trend charts, AI-generated comprehensive assessment, medication history across 5 visits, exam timeline, and lifestyle guidance. Shows "Positive Recovery Trend" with AI analysis.</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">모든 진료 데이터를 한 화면에 집약한 종합 대시보드입니다. CA 15-3, CEA, 백혈구 등 10개 주요 검사 수치 추이 차트, AI 자동 종합 평가, 5회차 복용 약물 이력, 검사 타임라인, 생활 습관 가이드를 제공합니다.</div>
+      </div>
+    </div>
+
+    <!-- Clinical Flow Guide + FHIR Portfolio -->
+    <div class="two-col">
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진료 흐름 가이드</div></div>
+        <img class="screen-img" src="img/1_진료흐름가이드.JPG" alt="Clinical Flow Guide">
+        <div class="screen-desc">
+          <div class="desc-en">Step-by-step guide for the complete FHIR clinical workflow, linking each step to the <strong>KR Core Implementation Guide</strong>.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">FHIR 진료 흐름을 5단계로 안내하며, 각 단계별 KR Core Implementation Guide 링크를 제공합니다.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">FHIR 서비스 포트폴리오</div></div>
+        <img class="screen-img" src="img/2_FHIR포트폴리오.JPG" alt="FHIR Portfolio">
+        <div class="screen-desc">
+          <div class="desc-en">System architecture: <strong>Data Source → KR Core IG FHIR Hub → Applications</strong> (monitoring dashboard, mobile app, big data analytics).</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">데이터 소스 → KR Core IG FHIR 허브 → 의료진 대시보드/환자 모바일 앱/빅데이터 분석으로 이어지는 전체 아키텍처입니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patient + Doctor Registration -->
+    <div class="two-col">
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">환자 등록 · KR Core Patient</div></div>
+        <img class="screen-img" src="img/3_환자등록.JPG" alt="Patient Registration">
+        <div class="screen-desc">
+          <div class="desc-en">Patient registration compliant with <strong>KR Core FHIR Patient</strong>. Supports national ID, address lookup, insurance type, and guardian contacts.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">KR Core FHIR Patient 표준 준수. 주민등록번호, 주소 검색, 보험 유형, 보호자 연락처를 지원합니다.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">의사 등록 · KR Core Practitioner</div></div>
+        <img class="screen-img" src="img/4_의사등록.JPG" alt="Doctor Registration">
+        <div class="screen-desc">
+          <div class="desc-en">Practitioner registration with <strong>medical license ID</strong>, specialty, role (Primary Performer/PPRF), and clinic schedule (days + hours).</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">의사면허번호, 전문과목, 역할(Primary Performer), 진료 요일 및 시간까지 등록합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Encounter + Observation -->
+    <div class="two-col">
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진료 등록 · KR Core Encounter</div></div>
+        <img class="screen-img" src="img/5_진료등록.JPG" alt="Encounter Registration">
+        <div class="screen-desc">
+          <div class="desc-en">Encounter registration with <strong>SNOMED-CT coded symptoms</strong>, visit type, assigned doctor, location, and insurance information.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">SNOMED-CT 코드 기반 진료 사유, 외래/입원 구분, 담당 의사, 진료 기관 정보를 등록합니다.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">관찰 결과 등록 · KR Core Observation</div></div>
+        <img class="screen-img" src="img/6_관찰결과등록1.JPG" alt="Observation Registration">
+        <div class="screen-desc">
+          <div class="desc-en">Comprehensive observation entry: <strong>Vital Signs, Lab Results, Function Tests</strong> (EKG, Pulmonary), Blood Pressure, Height, Weight, SpO2, Heart Rate, Respiratory Rate — all with LOINC codes.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">활력징후, 검사 결과, 기능 검사(EKG, 폐기능), 혈압, 신장, 체중, SpO2, 맥박, 호흡수를 LOINC 코드 기반으로 등록합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagnostic Report -->
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진단 보고서 등록 · KR Core DiagnosticReport</div></div>
+      <img class="screen-img" src="img/7_진단보고서등록.JPG" alt="Diagnostic Report">
+      <div class="screen-desc">
+        <div class="desc-en">4-tab diagnostic report: <strong>Diagnostic Imaging</strong> (X-Ray, CT, MRI with file attachments), <strong>Function Tests</strong>, <strong>Laboratory Results</strong>, and <strong>Pathology Results</strong>. Each includes EDI codes, Observation linkage, and reading physician assignment.</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">Diagnostic Imaging(영상/CT/MRI 파일 첨부), Function Tests, Laboratory Results, Pathology Results 4개 탭으로 구성됩니다. EDI 코드, Observation 연동, 판독 의사 지정을 지원합니다.</div>
+      </div>
+    </div>
+
+    <!-- Condition + Medication -->
+    <div class="two-col">
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진단(상병) 등록 · KR Core Condition</div></div>
+        <img class="screen-img" src="img/8_진단상병등록1.JPG" alt="Condition Registration">
+        <div class="screen-desc">
+          <div class="desc-en">Condition registration with <strong>SNOMED-CT diagnosis codes</strong>, linked to observations, diagnostic reports, prior visit history, and health checkup records.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">SNOMED-CT 상병 코드 기반으로 진단을 등록합니다. 관찰 이력, 진단 보고서, 타병원 내역, 건강검진 내역이 자동 연동됩니다.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">약품 처방 등록 · KR Core MedicationRequest</div></div>
+        <img class="screen-img" src="img/9_약품처방등록.jpg" alt="Medication Request">
+        <div class="screen-desc">
+          <div class="desc-en">Medication request with <strong>EDI/ATC codes</strong>, dosage, frequency, and duration. Includes drug information tabs (basic info, efficacy, dosage, precautions) and prescribing doctor assignment.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">EDI/ATC 코드 기반 약품 처방. 복용량, 복용 시기, 처방 기간을 입력하고 기본정보/유능효과/용법용량/주의사항 탭을 제공합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPACT -->
+<div class="section">
+  <div class="eyebrow">Results</div>
+  <h2 class="section-title">Impact</h2>
+  <p class="section-ko">프로젝트 성과</p>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <span class="impact-num">7</span>
+      <div class="impact-en">FHIR Resources Implemented</div>
+      <div class="impact-ko">구현한 KR Core FHIR 리소스<br>(Patient·Practitioner·Encounter·Observation·DiagnosticReport·Condition·MedicationRequest)</div>
+    </div>
+    <div class="impact-card">
+      <span class="impact-num">100%</span>
+      <div class="impact-en">KR Core IG Compliance</div>
+      <div class="impact-ko">KR Core Implementation Guide<br>표준 준수율</div>
+    </div>
+    <div class="impact-card">
+      <span class="impact-num">Solo</span>
+      <div class="impact-en">Full-Stack Development</div>
+      <div class="impact-ko">기획·설계·프론트·백엔드·FHIR 구현<br>전 과정 단독 개발</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Technology</div>
+    <h2 class="section-title">Tech Stack</h2>
+    <p class="section-ko">기술 스택</p>
+    <div class="tech-grid">
+      <div class="tech-group">
+        <div class="tech-group-title">Frontend</div>
+        <div class="tech-tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">TypeScript</span>
+          <span class="tech-tag">Vite</span>
+          <span class="tech-tag">TanStack Query</span>
+        </div>
+      </div>
+      <div class="tech-group">
+        <div class="tech-group-title">Backend</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Spring Boot</span>
+          <span class="tech-tag">Java</span>
+          <span class="tech-tag">JPA</span>
+          <span class="tech-tag">RESTful API</span>
+        </div>
+      </div>
+      <div class="tech-group">
+        <div class="tech-group-title">FHIR · Healthcare</div>
+        <div class="tech-tags">
+          <span class="tech-tag">HAPI FHIR</span>
+          <span class="tech-tag">KR Core IG</span>
+          <span class="tech-tag">FHIR R4</span>
+          <span class="tech-tag">SNOMED-CT</span>
+          <span class="tech-tag">LOINC</span>
+        </div>
+      </div>
+      <div class="tech-group">
+        <div class="tech-group-title">Database · Infra</div>
+        <div class="tech-tags">
+          <span class="tech-tag">MariaDB</span>
+          <span class="tech-tag">GCP</span>
+          <span class="tech-tag">Docker</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="../index.html#projects" class="back-btn">← Back to Projects</a>
+  <a href="../my-health-coach/" class="next-btn">Next: My Health Coach →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Min Jung Park (박민정) · MSoftech</div>
+  <div class="footer-copy">© 2025 Min Jung Park · Open to U.S. Remote (EST/PST)</div>
+</footer>
+
+</body>
+</html>
