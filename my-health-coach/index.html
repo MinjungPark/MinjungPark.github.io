@@ -297,19 +297,23 @@ nav {
 .desc-ko { font-size:12px; line-height:1.8; color:var(--light); }
 
 /* WELLNESS LAYOUT — GIF left + desc right */
-.wellness-layout { display:grid; grid-template-columns:1fr 1.4fr; }
+.wellness-layout { display:grid; grid-template-columns:0.75fr 1.6fr; }
 .wellness-gif { overflow:hidden; }
 .wellness-gif img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
-.wellness-desc { padding:36px 36px; display:flex; flex-direction:column; justify-content:center; border-left:1px solid var(--border); }
-.wellness-badge { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); background:var(--accent-light); border:1px solid var(--terra-border); padding:4px 12px; border-radius:100px; margin-bottom:16px; width:fit-content; }
+.wellness-desc { padding:32px 36px; display:flex; flex-direction:column; justify-content:center; border-left:1px solid var(--border); gap:18px; }
+.wellness-badge { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); background:var(--accent-light); border:1px solid var(--terra-border); padding:4px 12px; border-radius:100px; width:fit-content; }
 .wellness-badge::before { content:''; width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 1.5s ease-in-out infinite; }
-.wellness-title { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--ink); line-height:1.2; margin-bottom:4px; }
-.wellness-title-ko { font-size:12px; color:var(--light); margin-bottom:16px; }
-.wellness-steps { display:flex; flex-direction:column; gap:12px; }
-.wellness-step { display:flex; align-items:flex-start; gap:14px; }
-.wellness-step-num { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:var(--accent); background:var(--accent-light); border:1px solid var(--terra-border); width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-.wellness-step-title { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:2px; }
-.wellness-step-desc { font-size:11px; color:var(--mid); line-height:1.5; }
+.wellness-title { font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:var(--ink); line-height:1.2; margin-bottom:2px; }
+.wellness-title-ko { font-size:12px; color:var(--light); }
+.wellness-tech-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.wellness-tech-tag { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--ink); background:var(--bg); border:1px solid var(--border); padding:4px 10px; border-radius:100px; }
+.wellness-steps { display:flex; flex-direction:column; gap:10px; }
+.wellness-step { display:flex; align-items:flex-start; gap:14px; background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:12px 14px; transition:border-color 0.2s; }
+.wellness-step:hover { border-color:var(--accent); }
+.wellness-step-num { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:var(--accent); background:var(--accent-light); border:1px solid var(--terra-border); width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.wellness-step-title { font-size:12px; font-weight:600; color:var(--ink); margin-bottom:3px; }
+.wellness-step-desc { font-size:11px; color:var(--mid); line-height:1.55; }
+.wellness-divider { width:32px; height:1.5px; background:var(--accent); opacity:0.3; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 /* AI FEATURES */
@@ -662,42 +666,54 @@ footer { padding:30px 60px; border-top:1px solid var(--border); display:flex; al
           <img src="img/wellness_agent.gif" alt="Wellness AI Agent Control Center" style="width:100%;display:block;">
         </div>
         <div class="wellness-desc">
-          <div class="wellness-badge">Live Demo</div>
-          <h3 class="wellness-title">Multi-Agent Orchestration Center</h3>
-          <p class="wellness-title-ko">웰니스 AI Agent 컨트롤 센터</p>
-          <p class="desc-en" style="margin-bottom:20px;">Select and run <strong>specialized AI agents</strong> — Diet Analysis, Blood Sugar Analysis, Blood Pressure Analysis, or Comprehensive Daily Report. The system streams a real-time Agent Ops execution log showing each pipeline stage as it completes.</p>
-          <div class="desc-divider"></div>
-          <p class="desc-ko" style="margin-bottom:24px;">식단·혈당·혈압 분석 및 일일 종합 리포트 에이전트를 선택 실행. 현재 LLM 모델·환자 범위·실행 ID를 표시하고 실시간 Agent Ops 로그를 스트리밍합니다.</p>
+          <div>
+            <div class="wellness-badge">Live Demo</div>
+          </div>
+          <div>
+            <h3 class="wellness-title">Multi-Agent Orchestration Center</h3>
+            <p class="wellness-title-ko">웰니스 AI Agent 컨트롤 센터</p>
+          </div>
+          <p class="desc-en">The centerpiece of the app — a <strong>real-time AI Agent pipeline</strong> that orchestrates four specialized health analysis agents. Each agent is independently configurable with Gemini or OpenAI as the LLM provider, and streams a live execution log so users can watch every stage complete in real time.</p>
+          <div class="wellness-divider"></div>
+          <p class="desc-ko" style="font-size:11px;color:var(--light);line-height:1.7;">식단·혈당·혈압·종합 분석 4개 에이전트를 Gemini 또는 OpenAI로 실시간 실행. Agent Ops 파이프라인의 각 단계가 라이브 로그로 스트리밍됩니다.</p>
+          <div class="wellness-tech-tags">
+            <span class="wellness-tech-tag">Prompt Registry</span>
+            <span class="wellness-tech-tag">Schema Validation</span>
+            <span class="wellness-tech-tag">Multi-Provider LLM</span>
+            <span class="wellness-tech-tag">Agent Ops Platform</span>
+            <span class="wellness-tech-tag">FHIR Persistence</span>
+          </div>
           <div class="wellness-steps">
             <div class="wellness-step">
               <div class="wellness-step-num">01</div>
               <div>
-                <div class="wellness-step-title">Select Agent</div>
-                <div class="wellness-step-desc">Choose analysis type from the control center</div>
+                <div class="wellness-step-title">Select Agent &amp; Provider</div>
+                <div class="wellness-step-desc">Choose from 4 agents (diet / glucose / BP / daily report) and select AI provider — Gemini 2.5 Flash or GPT-4</div>
               </div>
             </div>
             <div class="wellness-step">
               <div class="wellness-step-num">02</div>
               <div>
                 <div class="wellness-step-title">Pipeline Execution</div>
-                <div class="wellness-step-desc">Prompt registry → Schema validation → LLM call</div>
+                <div class="wellness-step-desc">Prompt Registry → Template Load → Output Schema (JSON) → Prompt Hub validation before LLM call</div>
               </div>
             </div>
             <div class="wellness-step">
               <div class="wellness-step-num">03</div>
               <div>
-                <div class="wellness-step-title">Live Log Stream</div>
-                <div class="wellness-step-desc">Real-time Agent Ops logs with stage tracking</div>
+                <div class="wellness-step-title">Live Agent Ops Log</div>
+                <div class="wellness-step-desc">Real-time streaming log with timestamp, stage name, and status — each step visible as it executes</div>
               </div>
             </div>
             <div class="wellness-step">
               <div class="wellness-step-num">04</div>
               <div>
-                <div class="wellness-step-title">FHIR Storage</div>
-                <div class="wellness-step-desc">Results validated &amp; saved to FHIR database</div>
+                <div class="wellness-step-title">Validate &amp; Store to FHIR</div>
+                <div class="wellness-step-desc">AI output validated against KR Core JSON schema, mapped to DTO, and persisted to FHIR R4 database</div>
               </div>
             </div>
           </div>
+          <p style="font-size:11px;color:var(--accent);font-family:'JetBrains Mono',monospace;border-top:1px solid var(--border);padding-top:14px;">※ Full architecture detail available in the AI Agent Orchestration Platform project →</p>
         </div>
       </div>
     </div>
