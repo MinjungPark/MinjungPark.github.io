@@ -223,7 +223,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <div class="eyebrow">Architecture</div>
   <h2 class="section-title">System Architecture</h2>
   <p class="section-ko">시스템 아키텍처</p>
-  <img class="screen-img" src="img/Architecture_Design_Decisions.png" alt="Architecture" style="border-radius:16px; border:1px solid var(--border); margin-bottom:24px;">
+  <img src="img/Architecture_Design_Decisions.png" alt="Architecture" style="width:100%; display:block; border-radius:16px; border:1px solid var(--border); margin-bottom:24px;">
   <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px;">
     <div class="desc-en"><strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database.</div>
     <div class="desc-divider"></div>
