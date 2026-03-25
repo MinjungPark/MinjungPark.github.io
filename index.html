@@ -757,6 +757,230 @@ nav {
   box-shadow: 0 8px 24px rgba(196,92,46,0.4);
 }
 
+/* ── CORE TECHNOLOGY ── */
+.core-tech-section {
+  padding: 100px 60px;
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.core-tech-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.core-tech-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #c45c2e;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.core-tech-eyebrow::before {
+  content: '';
+  width: 20px; height: 1.5px;
+  background: #c45c2e;
+}
+
+.core-tech-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.core-tech-title-ko {
+  font-size: 14px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 56px;
+}
+
+.core-tech-card {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.core-tech-card:hover {
+  border-color: rgba(196,92,46,0.5);
+}
+
+.core-tech-left {
+  padding: 48px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.core-tech-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: #c45c2e;
+  background: rgba(196,92,46,0.12);
+  border: 1px solid rgba(196,92,46,0.25);
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.core-tech-label::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: #c45c2e;
+  border-radius: 50%;
+}
+
+.core-tech-name {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.core-tech-name-ko {
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 20px;
+}
+
+.core-tech-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 28px;
+}
+
+.core-tech-desc strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+
+.core-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+
+.core-tech-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 5px 12px;
+  border-radius: 100px;
+}
+
+.core-tech-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #c45c2e;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 13px 28px;
+  border-radius: 100px;
+  text-decoration: none;
+  width: fit-content;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.core-tech-link:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.core-tech-link::after {
+  content: '→';
+  transition: transform 0.2s;
+}
+
+.core-tech-link:hover::after {
+  transform: translateX(4px);
+}
+
+.core-tech-right {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.core-tech-right-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 4px;
+}
+
+.core-feature {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.core-feature:hover {
+  border-color: rgba(196,92,46,0.35);
+  background: rgba(196,92,46,0.06);
+}
+
+.core-feature-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: #c45c2e;
+  background: rgba(196,92,46,0.12);
+  border: 1px solid rgba(196,92,46,0.2);
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.core-feature-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 4px;
+}
+
+.core-feature-desc {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+}
+
 /* ── FOOTER ── */
 footer {
   padding: 40px 60px;
@@ -809,6 +1033,10 @@ footer {
   .tech-categories { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .core-tech-section { padding: 60px 24px; }
+  .core-tech-card { grid-template-columns: 1fr; }
+  .core-tech-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 32px 24px; }
+  .core-tech-right { padding: 32px 24px; }
   footer { flex-direction: column; gap: 8px; text-align: center; padding: 32px 24px; }
 }
 </style>
@@ -822,6 +1050,7 @@ footer {
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#core-technology">Core Tech</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
@@ -1109,6 +1338,88 @@ footer {
         </div>
       </a>
 
+    </div>
+  </div>
+</section>
+
+<!-- ── CORE TECHNOLOGY ── -->
+<section class="core-tech-section" id="core-technology">
+  <div class="core-tech-inner">
+    <div class="core-tech-eyebrow">Proprietary Platform</div>
+    <h2 class="core-tech-title">Core Technology</h2>
+    <p class="core-tech-title-ko">핵심 기술 자산</p>
+
+    <div class="core-tech-card reveal">
+
+      <div class="core-tech-left">
+        <div>
+          <div class="core-tech-label">AI Infrastructure</div>
+          <h3 class="core-tech-name">AI Agent Orchestration Platform</h3>
+          <p class="core-tech-name-ko">AI 에이전트 오케스트레이션 플랫폼</p>
+          <p class="core-tech-desc">
+            A <strong>production-grade AI Agent pipeline</strong> built from scratch — not a wrapper around existing tools. It manages the full lifecycle of LLM-powered agents: prompt versioning, schema validation, multi-provider routing (Gemini / OpenAI), real-time execution logging, and structured output persistence to a FHIR R4 database.
+          </p>
+          <p class="core-tech-desc" style="margin-bottom:28px;">
+            Deployed inside <strong>My Health Coach</strong> to power four specialized health analysis agents, with a live Agent Ops control panel that streams each pipeline stage in real time.
+          </p>
+          <div class="core-tech-tags">
+            <span class="core-tech-tag">Prompt Registry</span>
+            <span class="core-tech-tag">Schema Validation</span>
+            <span class="core-tech-tag">Multi-Provider LLM</span>
+            <span class="core-tech-tag">Agent Ops Logging</span>
+            <span class="core-tech-tag">Google Gemini 2.5</span>
+            <span class="core-tech-tag">OpenAI GPT-4</span>
+            <span class="core-tech-tag">Spring Boot</span>
+            <span class="core-tech-tag">FHIR R4</span>
+          </div>
+        </div>
+        <a href="./agent-orchestration/" class="core-tech-link">View Full Architecture</a>
+      </div>
+
+      <div class="core-tech-right">
+        <div class="core-tech-right-label">Platform Capabilities · 핵심 기능</div>
+
+        <div class="core-feature">
+          <div class="core-feature-num">01</div>
+          <div>
+            <div class="core-feature-title">Prompt Registry &amp; Versioning</div>
+            <div class="core-feature-desc">Centralized prompt store with template loading, variable injection, and version control — prompts are managed as first-class assets, not hardcoded strings.</div>
+          </div>
+        </div>
+
+        <div class="core-feature">
+          <div class="core-feature-num">02</div>
+          <div>
+            <div class="core-feature-title">Output Schema Validation</div>
+            <div class="core-feature-desc">Every LLM response is validated against a predefined JSON schema before processing. Malformed outputs are caught at the pipeline boundary, not in downstream code.</div>
+          </div>
+        </div>
+
+        <div class="core-feature">
+          <div class="core-feature-num">03</div>
+          <div>
+            <div class="core-feature-title">Multi-Provider LLM Routing</div>
+            <div class="core-feature-desc">Runtime-selectable AI provider — Google Gemini 2.5 Flash or OpenAI GPT-4 — with a unified interface. Switch providers without changing agent logic.</div>
+          </div>
+        </div>
+
+        <div class="core-feature">
+          <div class="core-feature-num">04</div>
+          <div>
+            <div class="core-feature-title">Real-Time Agent Ops Log</div>
+            <div class="core-feature-desc">Live execution log streams each pipeline stage with timestamps and status — giving full observability into what the agent is doing at every step.</div>
+          </div>
+        </div>
+
+        <div class="core-feature">
+          <div class="core-feature-num">05</div>
+          <div>
+            <div class="core-feature-title">FHIR-Compliant Output Persistence</div>
+            <div class="core-feature-desc">Validated AI outputs are mapped to DTOs and persisted to a KR Core FHIR R4 database — ensuring healthcare data interoperability from AI generation to storage.</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
