@@ -1,1 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinical Nursing EMR — Min Jung Park</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef;
+  --ink: #1a1612;
+  --mid: #6b6560;
+  --light: #c8c3bc;
+  --accent: #1a6b4a;
+  --accent-light: rgba(26,107,74,0.08);
+  --accent-mid: rgba(26,107,74,0.15);
+  --accent2: #c45c2e;
+  --card: #ffffff;
+  --border: rgba(26,22,18,0.08);
+  --green-border: rgba(26,107,74,0.2);
+}
 
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background:var(--bg); color:var(--ink); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 60px;
+  background:rgba(247,244,239,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { font-family:'Fraunces',serif; font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; }
+.nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
+.nav-back:hover { color:var(--accent); }
+.nav-tag { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-light); border:1px solid var(--green-border); padding:6px 14px; border-radius:100px; }
+
+/* HERO */
+.hero { min-height:85vh; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:60px; padding:140px 60px 80px; max-width:1200px; margin:0 auto; }
+.hero-text { }
+.hero-photo { display:flex; justify-content:center; align-items:center; opacity:0; animation:fadeUp 0.7s 0.4s ease forwards; }
+.hero-photo-frame { position:relative; width:420px; height:520px; border-radius:200px 200px 160px 160px; overflow:hidden; box-shadow:0 24px 64px rgba(26,107,74,0.15); }
+.hero-photo-frame img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+.hero-photo-frame::after { content:''; position:absolute; inset:0; background:linear-gradient(to bottom, transparent 60%, rgba(26,107,74,0.08) 100%); pointer-events:none; }
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:24px; opacity:0; animation:fadeUp 0.6s 0.1s ease forwards; }
+.hero-eyebrow::before { content:''; width:24px; height:1.5px; background:var(--accent); }
+.hero-title { font-family:'Fraunces',serif; font-size:clamp(42px,7vw,80px); font-weight:700; line-height:1.05; letter-spacing:-0.02em; margin-bottom:8px; opacity:0; animation:fadeUp 0.6s 0.2s ease forwards; }
+.hero-title-ko { font-size:16px; font-weight:300; color:var(--mid); margin-bottom:28px; opacity:0; animation:fadeUp 0.6s 0.25s ease forwards; }
+.hero-desc { font-size:clamp(15px,2vw,18px); color:var(--mid); line-height:1.75; max-width:640px; margin-bottom:8px; opacity:0; animation:fadeUp 0.6s 0.3s ease forwards; }
+.hero-desc-ko { font-size:13px; color:var(--light); max-width:600px; line-height:1.7; margin-bottom:48px; opacity:0; animation:fadeUp 0.6s 0.35s ease forwards; }
+.hero-stats { display:flex; gap:40px; flex-wrap:wrap; opacity:0; animation:fadeUp 0.6s 0.4s ease forwards; }
+.hero-stat-num { font-family:'Fraunces',serif; font-size:38px; font-weight:700; color:var(--accent); line-height:1; display:block; }
+.hero-stat-en { font-size:12px; font-weight:600; color:var(--ink); margin-top:4px; }
+.hero-stat-ko { font-size:10px; color:var(--light); }
+
+/* SECTIONS */
+.section { padding:80px 60px; max-width:1200px; margin:0 auto; }
+.section-alt { padding:80px 60px; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.section-inner { max-width:1200px; margin:0 auto; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px; }
+.eyebrow::before { content:''; width:20px; height:1.5px; background:var(--accent); }
+.section-title { font-family:'Fraunces',serif; font-size:clamp(28px,4vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:6px; }
+.section-ko { font-size:13px; color:var(--light); margin-bottom:48px; }
+
+/* OVERVIEW */
+.overview-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:60px; align-items:start; }
+.overview-text p { font-size:16px; line-height:1.85; color:var(--mid); margin-bottom:14px; }
+.overview-text p strong { color:var(--ink); font-weight:600; }
+.overview-text-ko { font-size:12px; color:var(--light); line-height:1.8; margin-top:-8px; margin-bottom:16px; }
+.meta-card { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:22px 24px; margin-bottom:14px; transition:border-color 0.2s; }
+.meta-card:hover { border-color:var(--accent); }
+.meta-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.meta-value { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.meta-value-ko { font-size:11px; color:var(--light); }
+
+/* SCREEN CARDS */
+.screen-card { background:var(--card); border:1px solid var(--border); border-radius:20px; overflow:hidden; margin-bottom:24px; transition:border-color 0.25s, transform 0.25s; }
+.screen-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.screen-bar { display:flex; align-items:center; gap:8px; padding:12px 18px; background:var(--bg); border-bottom:1px solid var(--border); }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
+.screen-bar-title { flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
+.screen-img { width:100%; display:block; max-height:480px; object-fit:cover; object-position:top; }
+.screen-desc { padding:24px 28px; }
+.desc-en { font-size:14px; line-height:1.75; color:var(--mid); margin-bottom:12px; }
+.desc-en strong { color:var(--ink); font-weight:600; }
+.desc-divider { width:32px; height:1.5px; background:var(--accent); opacity:0.4; margin-bottom:12px; }
+.desc-ko { font-size:12px; line-height:1.8; color:var(--light); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+
+/* PIPELINE */
+.pipeline { display:flex; align-items:stretch; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:32px 36px; margin-bottom:40px; }
+.pipeline-step { flex:1; text-align:center; padding:16px 8px; position:relative; }
+.pipeline-step::after { content:'→'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); color:var(--accent); font-size:18px; font-weight:600; }
+.pipeline-step:last-child::after { display:none; }
+.pipeline-icon { font-size:28px; margin-bottom:8px; display:block; }
+.pipeline-name { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.pipeline-name-ko { font-size:10px; color:var(--light); }
+
+/* AGENT GRID */
+.agent-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:40px; }
+.agent-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:22px; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.agent-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
+.agent-card:hover { border-color:var(--accent); transform:translateY(-3px); }
+.agent-name { font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); margin-bottom:6px; }
+.agent-target { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.agent-target-ko { font-size:11px; color:var(--light); margin-bottom:8px; }
+.agent-count { font-family:'Fraunces',serif; font-size:28px; font-weight:700; color:var(--accent); }
+
+/* IMPACT */
+.impact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.impact-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px 20px; text-align:center; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.impact-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), rgba(26,107,74,0.2)); }
+.impact-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.impact-num { font-family:'Fraunces',serif; font-size:40px; font-weight:700; color:var(--accent); display:block; margin-bottom:8px; line-height:1; }
+.impact-en { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.impact-ko { font-size:11px; color:var(--light); line-height:1.6; }
+
+/* TECH */
+.tech-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.tech-group { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:24px; transition:border-color 0.2s; }
+.tech-group:hover { border-color:var(--accent); }
+.tech-group-title { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.tech-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.tech-tag { background:var(--accent-light); color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px; padding:4px 10px; border-radius:100px; }
+
+/* BOTTOM NAV */
+.bottom-nav { padding:60px 60px; max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+.back-btn { display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:white; padding:14px 28px; border-radius:100px; font-size:14px; font-weight:600; text-decoration:none; transition:transform 0.2s, box-shadow 0.2s; }
+.back-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(26,107,74,0.3); }
+.next-btn { display:inline-flex; align-items:center; gap:8px; border:1.5px solid var(--border); color:var(--ink); padding:14px 28px; border-radius:100px; font-size:14px; font-weight:500; text-decoration:none; transition:border-color 0.2s, color 0.2s; }
+.next-btn:hover { border-color:var(--accent); color:var(--accent); }
+
+/* FOOTER */
+footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.footer-name { font-family:'Fraunces',serif; font-size:16px; font-weight:600; }
+.footer-copy { font-size:12px; color:var(--light); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+  nav { padding:16px 24px; }
+  .hero { grid-template-columns:1fr; padding:100px 24px 60px; }
+  .hero-photo { order:-1; }
+  .hero-photo-frame { width:280px; height:340px; }
+  .section { padding:60px 24px; }
+  .section-alt { padding:60px 24px; }
+  .overview-grid { grid-template-columns:1fr; gap:32px; }
+  .two-col { grid-template-columns:1fr; }
+  .agent-grid { grid-template-columns:1fr 1fr; }
+  .impact-grid { grid-template-columns:1fr 1fr; }
+  .tech-grid { grid-template-columns:1fr 1fr; }
+  .pipeline { flex-wrap:wrap; }
+  .pipeline-step::after { display:none; }
+  .bottom-nav { padding:40px 24px; flex-direction:column; gap:16px; }
+  footer { flex-direction:column; gap:8px; text-align:center; padding:32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">MJ Park</a>
+  <a href="../index.html#projects" class="nav-back">← Back to Projects</a>
+  <div class="nav-tag">🏥 Healthcare · AI</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Team Project · Apr 2025 – Nov 2025</div>
+    <h1 class="hero-title">Clinical<br>Nursing EMR</h1>
+    <p class="hero-title-ko">AI 기반 간호교육 플랫폼</p>
+    <p class="hero-desc">An AI-powered EMR simulation platform that bridges the gap between clinical practice and nursing education. 6 AI Agents evaluate student performance across 55 criteria in real time.</p>
+    <p class="hero-desc-ko">임상과 교육의 간극을 줄이는 AI 기반 간호 실습 플랫폼 — 6개 AI Agent가 55개 항목을 실시간으로 자동 평가합니다.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-num">6</span><div class="hero-stat-en">AI Agents</div><div class="hero-stat-ko">AI 에이전트</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">55</span><div class="hero-stat-en">Evaluation Criteria</div><div class="hero-stat-ko">평가 항목</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">40K+</span><div class="hero-stat-en">Log Entries</div><div class="hero-stat-ko">누적 로그</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">90%</span><div class="hero-stat-en">Time Reduction</div><div class="hero-stat-ko">평가 시간 단축</div></div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="hero-photo-frame">
+      <img src="../nursing_hero.png" alt="Clinical Nursing EMR">
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Overview</div>
+    <h2 class="section-title">Project Overview</h2>
+    <p class="section-ko">프로젝트 개요</p>
+    <div class="overview-grid">
+      <div class="overview-text">
+        <p>Nursing students practice in a <strong>real hospital EMR environment</strong> — covering OCS, ENR, Lab, and PACS — using GUIDED or EVALUATION simulation modes.</p>
+        <p class="overview-text-ko">간호대학생들이 실제 병원 EMR과 동일한 환경(OCS, ENR, Lab, PACS)에서 GUIDED 또는 EVALUATION 모드로 실습합니다.</p>
+        <p>Upon completion, <strong>6 AI Agents</strong> automatically evaluate each student's performance. The full pipeline — LLM call, JSON validation, professor review, and result publication — is fully automated.</p>
+        <p class="overview-text-ko">실습 완료 후 6개 AI Agent가 자동으로 평가합니다. LLM 호출 → JSON 검증 → 교수 검토 → 결과 공개 전 과정이 자동화되어 있습니다.</p>
+        <p>The system has processed <strong>40,000+ evaluation log entries</strong> and reduced professor evaluation time by <strong>90%</strong>.</p>
+        <p class="overview-text-ko">누적 40,000+건의 평가 로그를 처리했으며, 교수님의 평가 시간을 90% 단축했습니다.</p>
+      </div>
+      <div>
+        <div class="meta-card"><div class="meta-label">Period · 기간</div><div class="meta-value">Apr 2025 – Nov 2025</div><div class="meta-value-ko">2025년 4월 – 11월</div></div>
+        <div class="meta-card"><div class="meta-label">Type · 유형</div><div class="meta-value">Team Project</div><div class="meta-value-ko">팀 프로젝트</div></div>
+        <div class="meta-card"><div class="meta-label">Role · 역할</div><div class="meta-value">Full-Stack Developer</div><div class="meta-value-ko">풀스택 개발자</div></div>
+        <div class="meta-card"><div class="meta-label">Domain · 도메인</div><div class="meta-value">Healthcare · AI · Education</div><div class="meta-value-ko">헬스케어 · AI · 교육</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section">
+  <div class="eyebrow">Architecture</div>
+  <h2 class="section-title">System Architecture</h2>
+  <p class="section-ko">시스템 아키텍처</p>
+  <img class="screen-img" src="../Architecture_Design_Decisions.png" alt="Architecture" style="border-radius:16px; border:1px solid var(--border); margin-bottom:24px;">
+  <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px;">
+    <div class="desc-en"><strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database.</div>
+    <div class="desc-divider"></div>
+    <div class="desc-ko">EvaluationController → OrchestrationService → 실행 레이어(@Transactional) → AI Agent → Google Vertex AI (Gemini 2.0 Flash) 순으로 처리됩니다. 모든 AI 응답은 JSON Schema 검증 후 DB에 저장됩니다.</div>
+  </div>
+</div>
+
+<!-- AI PIPELINE -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">AI Pipeline</div>
+    <h2 class="section-title">How AI Evaluation Works</h2>
+    <p class="section-ko">AI 평가 파이프라인</p>
+    <div class="pipeline">
+      <div class="pipeline-step"><span class="pipeline-icon">📝</span><div class="pipeline-name">Student Submits</div><div class="pipeline-name-ko">실습 제출</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">🤖</span><div class="pipeline-name">6 AI Agents</div><div class="pipeline-name-ko">Agent 실행</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">⚡</span><div class="pipeline-name">Vertex AI Call</div><div class="pipeline-name-ko">LLM 호출</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">✅</span><div class="pipeline-name">JSON Validation</div><div class="pipeline-name-ko">응답 검증</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">👩‍🏫</span><div class="pipeline-name">Prof. Review</div><div class="pipeline-name-ko">교수 검토</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">🎓</span><div class="pipeline-name">Result Published</div><div class="pipeline-name-ko">결과 공개</div></div>
+    </div>
+    <div class="agent-grid">
+      <div class="agent-card"><div class="agent-name">VitalSignsAgent</div><div class="agent-target">Vital Signs</div><div class="agent-target-ko">활력징후 측정</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">IoAgent</div><div class="agent-target">Intake / Output</div><div class="agent-target-ko">섭취/배설량</div><div class="agent-count">2 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">MedicationAgent</div><div class="agent-target">Medication (5 Rights)</div><div class="agent-target-ko">투약 수행</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">NursingRecordAgent</div><div class="agent-target">Nursing Record</div><div class="agent-target-ko">간호기록 (F-DAR)</div><div class="agent-count">4 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">InitialAssessmentAgent</div><div class="agent-target">Initial Assessment</div><div class="agent-target-ko">초기사정</div><div class="agent-count">9 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">ActionLogAgent</div><div class="agent-target">Action Log</div><div class="agent-target-ko">행위 로그 분석</div><div class="agent-count">3 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREENS -->
+<div class="section">
+  <div class="eyebrow">Features</div>
+  <h2 class="section-title">Key Screens</h2>
+  <p class="section-ko">주요 화면</p>
+
+  <div class="screen-card">
+    <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">간호기록 (ENR) · GUIDED MODE</div></div>
+    <img class="screen-img" src="../간호기록.png" alt="Nursing Record">
+    <div class="screen-desc">
+      <div class="desc-en">Students practice in a real hospital EMR environment. Records <strong>Initial Assessment, Vital Signs, I/O, and Nursing Notes</strong> in real time with step-by-step progress tracking.</div>
+      <div class="desc-divider"></div>
+      <div class="desc-ko">실제 병원 EMR과 동일한 환경에서 간호 초기사정, 활력징후, 섭취/배설, 간호노트를 실시간 기록합니다. 우측 패널에서 실습 진행률을 단계별로 확인할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">검사결과 (Lab)</div></div>
+      <img class="screen-img" src="../검사결과.png" alt="Lab">
+      <div class="screen-desc">
+        <div class="desc-en">CBC, biochemistry results with <strong>trend charts</strong>. Critical values highlighted, nursing action reports auto-generated.</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">CBC, 생화학 결과를 추이 차트와 함께 제공. 위험 수치 강조 및 간호 조치 보고서 자동 생성.</div>
+      </div>
+    </div>
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">영상판독 (PACS)</div></div>
+      <img class="screen-img" src="../영상판독.png" alt="PACS">
+      <div class="screen-desc">
+        <div class="desc-en">X-Ray, CT, MRI images with <strong>diagnostic reports</strong>. Findings + Impression sections simulate real clinical reading.</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">X-Ray, CT, MRI 영상과 판독 보고서 제공. Findings/Impression으로 실제 임상 판독 시뮬레이션.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">AI 평가 실행 · Vertex AI (Gemini 2.0 Flash)</div></div>
+    <img class="screen-img" src="../AI평가로그.png" alt="AI Evaluation">
+    <div class="screen-desc">
+      <div class="desc-en">Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time.</div>
+      <div class="desc-divider"></div>
+      <div class="desc-ko">AI 프롬프트, 환자 컨텍스트, JSON 응답이 모두 투명하게 기록되어 교수님이 검증할 수 있습니다. 각 Agent의 점수와 상세 피드백이 실시간으로 표시됩니다.</div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">교수용 평가 관리 대시보드 · Professor View</div></div>
+    <img class="screen-img" src="../평가관리.png" alt="Professor Dashboard">
+    <div class="screen-desc">
+      <div class="desc-en">Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click.</div>
+      <div class="desc-divider"></div>
+      <div class="desc-ko">항목별 상세 피드백(잘한 점/개선할 점/주의사항)을 검토하고 최종 점수를 확정하거나 수정합니다. 원클릭으로 승인 또는 조정이 가능합니다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPACT -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Results</div>
+    <h2 class="section-title">Impact</h2>
+    <p class="section-ko">도입 효과</p>
+    <div class="impact-grid">
+      <div class="impact-card"><span class="impact-num">90%</span><div class="impact-en">Evaluation Time Reduction</div><div class="impact-ko">평가 시간 단축<br>(30분×30명 → 자동화)</div></div>
+      <div class="impact-card"><span class="impact-num">100%</span><div class="impact-en">Evaluation Consistency</div><div class="impact-ko">평가 일관성<br>(통일 기준 적용)</div></div>
+      <div class="impact-card"><span class="impact-num">40%</span><div class="impact-en">Professor Workload Reduction</div><div class="impact-ko">교수 업무 부담 감소</div></div>
+      <div class="impact-card"><span class="impact-num">40K+</span><div class="impact-en">Evaluation Logs Processed</div><div class="impact-ko">누적 평가 로그 처리</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="section">
+  <div class="eyebrow">Technology</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <p class="section-ko">기술 스택</p>
+  <div class="tech-grid">
+    <div class="tech-group"><div class="tech-group-title">Frontend</div><div class="tech-tags"><span class="tech-tag">React 18</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Vite</span><span class="tech-tag">AG Grid</span><span class="tech-tag">WebSocket</span></div></div>
+    <div class="tech-group"><div class="tech-group-title">Backend</div><div class="tech-tags"><span class="tech-tag">Spring Boot 3.x</span><span class="tech-tag">Java 17</span><span class="tech-tag">JPA</span><span class="tech-tag">MariaDB</span><span class="tech-tag">RESTful API</span></div></div>
+    <div class="tech-group"><div class="tech-group-title">AI Engine</div><div class="tech-tags"><span class="tech-tag">Google Vertex AI</span><span class="tech-tag">Gemini 2.0 Flash</span><span class="tech-tag">Prompt Engineering</span><span class="tech-tag">JSON Schema</span></div></div>
+    <div class="tech-group"><div class="tech-group-title">Infrastructure</div><div class="tech-tags"><span class="tech-tag">GCP Cloud Run</span><span class="tech-tag">Cloud SQL</span><span class="tech-tag">Cloud Storage</span></div></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="../index.html#projects" class="back-btn">← Back to Projects</a>
+  <a href="../fhir-emr/" class="next-btn">Next: FHIR EMR →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Min Jung Park (박민정) · MSoftech</div>
+  <div class="footer-copy">© 2025 Min Jung Park · Open to U.S. Remote (EST/PST)</div>
+</footer>
+
+</body>
+</html>
