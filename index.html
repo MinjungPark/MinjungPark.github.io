@@ -794,14 +794,14 @@ footer {
 }
 
 .reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  animation: revealAnim 0.8s ease both;
+}
+
+@keyframes revealAnim {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── RESPONSIVE ── */
@@ -1203,10 +1203,19 @@ footer {
   // Scroll reveal
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        e.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      }
     });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(32px)';
+    observer.observe(el);
+  });
 
   // Nav active state
   const sections = documen
