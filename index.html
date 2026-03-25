@@ -499,46 +499,30 @@ nav {
 }
 
 .project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-  border-color: var(--accent);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.07);
 }
+.project-card:has(.c1):hover { border-color: #1a6b4a; }
+.project-card:has(.c2):hover { border-color: #1e4d7b; }
+.project-card:has(.c3):hover { border-color: #7b3a2e; }
+.project-card:has(.c4):hover { border-color: #2d5a3d; }
+.project-card:has(.c5):hover { border-color: #1a1a2e; }
+.project-card:has(.c6):hover { border-color: #2d2d2d; }
 
+/* 포인트 컬러 띠 */
 .project-card-header {
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
+  height: 7px;
   position: relative;
-  overflow: hidden;
 }
+.project-card-header.c1 { background: #1a6b4a; }
+.project-card-header.c2 { background: #1e4d7b; }
+.project-card-header.c3 { background: #7b3a2e; }
+.project-card-header.c4 { background: #2d5a3d; }
+.project-card-header.c5 { background: #1a1a2e; }
+.project-card-header.c6 { background: #2d2d2d; }
 
-.project-card-header.c1 { background: linear-gradient(135deg, #0a1628, #1a4a8a); }
-.project-card-header.c2 { background: linear-gradient(135deg, #0d2137, #1a6e5a); }
-.project-card-header.c3 { background: linear-gradient(135deg, #2d1a0a, #8a4a1a); }
-.project-card-header.c4 { background: linear-gradient(135deg, #0a2818, #1a6a3a); }
-.project-card-header.c5 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
-.project-card-header.c6 { background: linear-gradient(135deg, #1a0a28, #4a1a8a); }
-
-.project-year {
-  position: absolute;
-  top: 14px; right: 14px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: rgba(255,255,255,0.5);
-}
-
-.project-type {
-  position: absolute;
-  bottom: 14px; left: 14px;
-  font-size: 10px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.1);
-  padding: 3px 10px;
-  border-radius: 100px;
-}
+.project-year { display: none; }
+.project-type { display: none; }
 
 .project-card-body {
   padding: 24px;
@@ -595,8 +579,14 @@ nav {
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent2);
 }
+.project-card:has(.c1) .project-card-link { color: #1a6b4a; }
+.project-card:has(.c2) .project-card-link { color: #1e4d7b; }
+.project-card:has(.c3) .project-card-link { color: #7b3a2e; }
+.project-card:has(.c4) .project-card-link { color: #2d5a3d; }
+.project-card:has(.c5) .project-card-link { color: #1a1a2e; }
+.project-card:has(.c6) .project-card-link { color: #2d2d2d; }
 
 .project-card-link::after {
   content: '→';
@@ -1001,7 +991,6 @@ footer {
 
       <a href="clinical-nursing-emr/" class="project-card">
         <div class="project-card-header c1">
-          🏥
           <span class="project-year">2025</span>
           <span class="project-type">Team Project</span>
         </div>
@@ -1022,7 +1011,6 @@ footer {
 
       <a href="fhir-emr/" class="project-card">
         <div class="project-card-header c2">
-          🩺
           <span class="project-year">2024–25</span>
           <span class="project-type">Solo Project</span>
         </div>
@@ -1043,7 +1031,6 @@ footer {
 
       <a href="my-health-coach/" class="project-card">
         <div class="project-card-header c3">
-          💊
           <span class="project-year">2024</span>
           <span class="project-type">Team Project</span>
         </div>
@@ -1064,7 +1051,6 @@ footer {
 
       <a href="groundwater/" class="project-card">
         <div class="project-card-header c4">
-          💧
           <span class="project-year">2023</span>
           <span class="project-type">Solo Project</span>
         </div>
@@ -1085,7 +1071,6 @@ footer {
 
       <a href="#" class="project-card">
         <div class="project-card-header c5">
-          🏭
           <span class="project-year">2021–22</span>
           <span class="project-type">Remote · U.S. EST</span>
         </div>
@@ -1106,7 +1091,6 @@ footer {
 
       <a href="#" class="project-card">
         <div class="project-card-header c6">
-          🔧
           <span class="project-year">2014–21</span>
           <span class="project-type">Enterprise</span>
         </div>
