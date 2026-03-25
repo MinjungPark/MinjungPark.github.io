@@ -237,7 +237,7 @@ nav {
 .photo-frame {
   position: relative;
   width: 380px;
-  height: 460px;
+  height: 520px;
 }
 
 .photo-frame::before {
@@ -793,16 +793,24 @@ footer {
   to   { opacity:1; transform: translateY(0); }
 }
 
-.reveal {
-  opacity: 1;
-  transform: translateY(0);
-  animation: revealAnim 0.8s ease both;
+/* Scroll reveal base states */
+.reveal        { opacity:0; transform: translateY(40px); transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1); }
+.reveal-left   { opacity:0; transform: translateX(-40px); transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1); }
+.reveal-right  { opacity:0; transform: translateX(40px); transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1); }
+.reveal-scale  { opacity:0; transform: scale(0.92); transition: opacity 0.75s cubic-bezier(.22,1,.36,1), transform 0.75s cubic-bezier(.22,1,.36,1); }
+
+.reveal.visible, .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible {
+  opacity:1; transform: none;
 }
 
-@keyframes revealAnim {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+/* staggered children */
+.stagger > * { opacity:0; transform: translateY(28px); transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1); }
+.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
+.stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.15s; }
+.stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.25s; }
+.stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.35s; }
+.stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.45s; }
+.stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.55s; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
@@ -865,11 +873,11 @@ footer {
 <!-- ── ABOUT ── -->
 <section class="section-full" id="about">
   <div class="section-inner">
-    <div class="eyebrow">About Me</div>
-    <h2 class="section-title">Who I Am</h2>
+    <div class="eyebrow reveal">About Me</div>
+    <h2 class="section-title reveal">Who I Am</h2>
     <p class="section-title-ko">자기소개</p>
-    <div class="about-grid reveal">
-      <div class="about-text">
+    <div class="about-grid">
+      <div class="about-text reveal-left">
         <p>I'm a <strong>Full-Stack Developer</strong> with 10+ years of experience building enterprise-grade systems across manufacturing (MES/ERP), healthcare, and IT asset management.</p>
         <p class="about-text-ko">제조(MES/ERP), 헬스케어, IT 자산관리 등 다양한 엔터프라이즈 시스템을 구축해온 풀스택 개발자입니다.</p>
 
@@ -887,7 +895,7 @@ footer {
         </div>
       </div>
 
-      <div class="about-stats">
+      <div class="about-stats reveal-right">
         <div class="stat-card">
           <div class="stat-card-num">10+</div>
           <div class="stat-card-en">Years of Experience</div>
@@ -910,10 +918,10 @@ footer {
 
 <!-- ── TECH STACK ── -->
 <section class="section" id="skills">
-  <div class="eyebrow">Technical Skills</div>
-  <h2 class="section-title">Tech Stack</h2>
+  <div class="eyebrow reveal">Technical Skills</div>
+  <h2 class="section-title reveal">Tech Stack</h2>
   <p class="section-title-ko">기술 스택</p>
-  <div class="tech-categories reveal">
+  <div class="tech-categories stagger">
 
     <div class="tech-cat">
       <div class="tech-cat-title">AI / LLM</div>
@@ -994,10 +1002,10 @@ footer {
 <!-- ── PROJECTS ── -->
 <section class="section-full" id="projects">
   <div class="section-inner">
-    <div class="eyebrow">Work</div>
-    <h2 class="section-title">Projects</h2>
+    <div class="eyebrow reveal">Work</div>
+    <h2 class="section-title reveal">Projects</h2>
     <p class="section-title-ko">프로젝트</p>
-    <div class="projects-grid reveal">
+    <div class="projects-grid stagger">
 
       <a href="clinical-nursing-emr/" class="project-card">
         <div class="project-card-header c1">
@@ -1131,8 +1139,8 @@ footer {
 
 <!-- ── CONTACT ── -->
 <section class="section" id="contact">
-  <div class="contact-wrap reveal">
-    <div class="contact-text">
+  <div class="contact-wrap">
+    <div class="contact-text reveal-left">
       <div class="eyebrow">Contact</div>
       <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,52px); font-weight:700; line-height:1.1; margin-bottom:6px;">Let's Work<br>Together</h2>
       <p class="contact-text-ko">함께 일해요</p>
@@ -1167,7 +1175,7 @@ footer {
       </div>
     </div>
 
-    <div class="contact-card">
+    <div class="contact-card reveal-right">
       <h3>Open to Remote</h3>
       <p>Looking for U.S. remote opportunities<br>미국 원격 프로젝트 적극 구직 중</p>
       <div class="contact-card-stats">
@@ -1200,21 +1208,18 @@ footer {
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
+  // Scroll reveal — all animation classes
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-        e.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
       }
     });
-  }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
-  document.querySelectorAll('.reveal').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(32px)';
-    observer.observe(el);
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger').forEach(el => {
+    revealObserver.observe(el);
   });
 
   // Nav active state
