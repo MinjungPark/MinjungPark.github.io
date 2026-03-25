@@ -1,4 +1,3 @@
-# MinjungPark.github.io
 # Min Jung Park — Portfolio
 
 🌐 [minjungpark.github.io](https://MinjungPark.github.io)
