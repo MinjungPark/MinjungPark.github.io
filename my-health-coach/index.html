@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Health Coach — Min Jung Park</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef;
+  --ink: #1a1612;
+  --mid: #6b6560;
+  --light: #c8c3bc;
+  --accent: #7b3a2e;
+  --accent-light: rgba(123,58,46,0.08);
+  --accent-mid: rgba(123,58,46,0.15);
+  --accent2: #b87333;
+  --card: #ffffff;
+  --border: rgba(26,22,18,0.08);
+  --terra-border: rgba(123,58,46,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background:var(--bg); color:var(--ink); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 60px;
+  background:rgba(247,244,239,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { font-family:'Fraunces',serif; font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; }
+.nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
+.nav-back:hover { color:var(--accent); }
+.nav-tag { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-light); border:1px solid var(--terra-border); padding:6px 14px; border-radius:100px; }
+
+/* HERO */
+.hero {
+  min-height: 80vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 80px;
+  padding: 140px 60px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:24px; opacity:0; animation:fadeUp 0.6s 0.1s ease forwards; }
+.hero-eyebrow::before { content:''; width:24px; height:1.5px; background:var(--accent); }
+.hero-title { font-family:'Fraunces',serif; font-size:clamp(42px,7vw,80px); font-weight:700; line-height:1.05; letter-spacing:-0.02em; margin-bottom:8px; opacity:0; animation:fadeUp 0.6s 0.2s ease forwards; }
+.hero-title-ko { font-size:16px; font-weight:300; color:var(--mid); margin-bottom:28px; opacity:0; animation:fadeUp 0.6s 0.25s ease forwards; }
+.hero-desc { font-size:clamp(15px,2vw,17px); color:var(--mid); line-height:1.8; margin-bottom:8px; opacity:0; animation:fadeUp 0.6s 0.3s ease forwards; }
+.hero-desc strong { color:var(--ink); font-weight:600; }
+.hero-desc-ko { font-size:13px; color:var(--light); line-height:1.7; margin-bottom:48px; opacity:0; animation:fadeUp 0.6s 0.35s ease forwards; }
+.hero-stats { display:flex; gap:40px; flex-wrap:wrap; opacity:0; animation:fadeUp 0.6s 0.4s ease forwards; }
+.hero-stat-num { font-family:'Fraunces',serif; font-size:38px; font-weight:700; color:var(--accent); line-height:1; display:block; }
+.hero-stat-en { font-size:12px; font-weight:600; color:var(--ink); margin-top:4px; }
+.hero-stat-ko { font-size:10px; color:var(--light); }
+
+/* HERO VISUAL — HTML 생성 앱 모형 */
+.hero-visual {
+  opacity:0;
+  animation:fadeUp 0.7s 0.45s ease forwards;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* App Mockup */
+.app-mockup-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone-frame {
+  width: 280px;
+  background: #1a1612;
+  border-radius: 44px;
+  padding: 12px;
+  box-shadow:
+    0 0 0 2px rgba(123,58,46,0.3),
+    0 32px 80px rgba(123,58,46,0.18),
+    0 8px 32px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.phone-notch {
+  width: 90px;
+  height: 28px;
+  background: #1a1612;
+  border-radius: 0 0 18px 18px;
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.phone-screen {
+  width: 100%;
+  background: #f8f9fb;
+  border-radius: 34px;
+  overflow: hidden;
+  min-height: 560px;
+  position: relative;
+}
+
+/* App UI inside phone */
+.app-statusbar {
+  height: 36px;
+  background: #f8f9fb;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 20px 6px;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #1a1612;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.app-header {
+  background: #ffffff;
+  border-bottom: 0.5px solid rgba(26,22,18,0.08);
+  padding: 14px 16px 10px;
+}
+
+.app-header-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1612;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.app-header-sub {
+  font-size: 10px;
+  color: #7b3a2e;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.app-content {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.app-greeting {
+  font-size: 11px;
+  color: #6b6560;
+  font-family: 'DM Sans', sans-serif;
+  padding: 4px 0 2px;
+}
+
+.app-greeting strong {
+  color: #1a1612;
+  font-weight: 600;
+}
+
+/* Module cards inside mockup */
+.app-module {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0.5px solid rgba(26,22,18,0.07);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: transform 0.15s;
+  cursor: default;
+}
+
+.app-module:hover { transform: scale(1.01); }
+
+.app-module-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.icon-diabetes  { background: rgba(59,130,246,0.12); }
+.icon-bp        { background: rgba(239,68,68,0.12); }
+.icon-weight    { background: rgba(34,197,94,0.12); }
+.icon-cancer    { background: rgba(168,85,247,0.12); }
+.icon-ai        { background: rgba(123,58,46,0.12); }
+.icon-edu       { background: rgba(245,158,11,0.12); }
+
+.app-module-text {}
+.app-module-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a1612;
+  font-family: 'DM Sans', sans-serif;
+}
+.app-module-desc {
+  font-size: 9px;
+  color: #6b6560;
+  font-family: 'DM Sans', sans-serif;
+  margin-top: 1px;
+  line-height: 1.4;
+}
+
+.app-module-arrow {
+  margin-left: auto;
+  color: #c8c3bc;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* AI badge floating */
+.ai-badge {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: linear-gradient(135deg, #7b3a2e, #b87333);
+  color: white;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  padding: 5px 10px;
+  border-radius: 100px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(123,58,46,0.3);
+}
+
+/* floating decoration */
+.hero-deco {
+  position: absolute;
+  right: -30px;
+  top: 40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgba(123,58,46,0.05);
+  pointer-events: none;
+}
+
+/* SECTIONS */
+.section { padding:80px 60px; max-width:1200px; margin:0 auto; }
+.section-alt { padding:80px 60px; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.section-inner { max-width:1200px; margin:0 auto; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px; }
+.eyebrow::before { content:''; width:20px; height:1.5px; background:var(--accent); }
+.section-title { font-family:'Fraunces',serif; font-size:clamp(28px,4vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:6px; }
+.section-ko { font-size:13px; color:var(--light); margin-bottom:48px; }
+
+/* OVERVIEW */
+.overview-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:60px; align-items:start; }
+.overview-text p { font-size:16px; line-height:1.85; color:var(--mid); margin-bottom:14px; }
+.overview-text p strong { color:var(--ink); font-weight:600; }
+.overview-text-ko { font-size:12px; color:var(--light); line-height:1.8; margin-top:-8px; margin-bottom:16px; }
+.meta-card { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:22px 24px; margin-bottom:14px; transition:border-color 0.2s; }
+.meta-card:hover { border-color:var(--accent); }
+.meta-label { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:6px; }
+.meta-value { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.meta-value-ko { font-size:11px; color:var(--light); }
+
+/* MODULE CARDS (핵심 기능 모듈) */
+.module-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:0; }
+.module-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.module-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent); }
+.module-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.module-icon { font-size:28px; margin-bottom:14px; display:block; }
+.module-name-en { font-size:15px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.module-name-ko { font-size:11px; color:var(--accent); font-family:'JetBrains Mono',monospace; margin-bottom:10px; }
+.module-features { display:flex; flex-direction:column; gap:4px; }
+.module-feature { font-size:12px; color:var(--mid); display:flex; align-items:flex-start; gap:6px; line-height:1.5; }
+.module-feature::before { content:'·'; color:var(--accent); flex-shrink:0; }
+
+/* SCREEN CARDS */
+.screen-card { background:var(--card); border:1px solid var(--border); border-radius:20px; overflow:hidden; margin-bottom:24px; transition:border-color 0.25s, transform 0.25s; }
+.screen-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.screen-bar { display:flex; align-items:center; gap:8px; padding:12px 18px; background:var(--bg); border-bottom:1px solid var(--border); }
+.dot { width:10px; height:10px; border-radius:50%; }
+.dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
+.screen-bar-title { flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
+.screen-img { width:100%; display:block; object-fit:cover; }
+.screen-desc { padding:24px 28px; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.desc-en { font-size:14px; line-height:1.75; color:var(--mid); margin-bottom:12px; }
+.desc-en strong { color:var(--ink); font-weight:600; }
+.desc-divider { width:32px; height:1.5px; background:var(--accent); opacity:0.4; margin-bottom:12px; }
+.desc-ko { font-size:12px; line-height:1.8; color:var(--light); }
+
+/* AI FEATURES */
+.ai-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.ai-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.ai-card::after { content:'AI'; position:absolute; top:18px; right:20px; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); background:var(--accent-light); border:1px solid var(--terra-border); padding:3px 8px; border-radius:100px; }
+.ai-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.ai-card-icon { width:48px; height:48px; background:var(--accent-light); border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:16px; }
+.ai-card-title { font-size:15px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.ai-card-ko { font-size:11px; color:var(--accent); font-family:'JetBrains Mono',monospace; margin-bottom:10px; }
+.ai-card-desc { font-size:13px; line-height:1.7; color:var(--mid); }
+
+/* ARCH */
+.arch-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px; }
+.arch-img-wrap { background:var(--card); border:1px solid var(--border); border-radius:20px; overflow:hidden; transition:border-color 0.25s; }
+.arch-img-wrap:hover { border-color:var(--accent); }
+.arch-img-bar { padding:12px 18px; background:var(--bg); border-bottom:1px solid var(--border); font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
+.arch-img-wrap img { width:100%; display:block; }
+
+/* IMPACT */
+.impact-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.impact-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px 24px; text-align:center; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.impact-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), rgba(123,58,46,0.2)); }
+.impact-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.impact-num { font-family:'Fraunces',serif; font-size:40px; font-weight:700; color:var(--accent); display:block; margin-bottom:8px; line-height:1; }
+.impact-en { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.impact-ko { font-size:11px; color:var(--light); line-height:1.6; }
+
+/* TECH */
+.tech-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+.tech-group { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:24px; }
+.tech-group-title { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.tech-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.tech-tag { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink); background:var(--card); border:1px solid var(--border); padding:5px 12px; border-radius:100px; transition:border-color 0.2s, color 0.2s; }
+.tech-tag:hover { border-color:var(--accent); color:var(--accent); }
+
+/* BOTTOM NAV */
+.bottom-nav { display:flex; align-items:center; justify-content:space-between; padding:40px 60px; border-top:1px solid var(--border); max-width:1200px; margin:0 auto; }
+.back-btn { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
+.back-btn:hover { color:var(--accent); }
+.next-btn { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:500; color:var(--ink); text-decoration:none; background:var(--accent); color:#fff; padding:12px 24px; border-radius:100px; transition:opacity 0.2s; }
+.next-btn:hover { opacity:0.85; }
+
+/* FOOTER */
+footer { padding:30px 60px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.footer-name { font-family:'Fraunces',serif; font-size:15px; font-weight:600; }
+.footer-copy { font-size:12px; color:var(--light); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+@media (max-width: 900px) {
+  nav { padding:16px 24px; }
+  .hero { grid-template-columns:1fr; padding:120px 24px 60px; gap:40px; }
+  .overview-grid { grid-template-columns:1fr; }
+  .module-grid { grid-template-columns:1fr; }
+  .two-col { grid-template-columns:1fr; }
+  .ai-grid { grid-template-columns:1fr; }
+  .arch-grid { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:1fr; }
+  .tech-grid { grid-template-columns:1fr; }
+  .section { padding:60px 24px; }
+  .section-alt { padding:60px 24px; }
+  .bottom-nav { flex-direction:column; gap:16px; padding:30px 24px; }
+  footer { flex-direction:column; gap:8px; text-align:center; padding:24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">MJ</a>
+  <a href="../index.html#projects" class="nav-back">← Back to Projects</a>
+  <div class="nav-tag">Mobile · Flutter · AI Health</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Project 03</div>
+    <h1 class="hero-title">My Health Coach</h1>
+    <p class="hero-title-ko">나의 건강 코치 — AI 개인 건강 관리 앱</p>
+    <p class="hero-desc">
+      A <strong>Flutter-based mobile application</strong> that delivers personalized health management across five chronic-condition domains — diabetes, hypertension, obesity, cancer care, and wellness — powered by <strong>Google Gemini &amp; GPT-4</strong> AI analysis and a FHIR-compliant backend.
+    </p>
+    <p class="hero-desc-ko">당뇨·고혈압·비만·암·웰니스 5개 영역을 AI가 통합 분석하는 모바일 헬스케어 앱. Flutter + Spring Boot + Google Gemini 기반 풀스택 단독 개발.</p>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">5</span>
+        <div class="hero-stat-en">Health Domains</div>
+        <div class="hero-stat-ko">질환 관리 카테고리</div>
+      </div>
+      <div>
+        <span class="hero-stat-num">AI</span>
+        <div class="hero-stat-en">Gemini + GPT-4</div>
+        <div class="hero-stat-ko">멀티 AI 파이프라인</div>
+      </div>
+      <div>
+        <span class="hero-stat-num">Solo</span>
+        <div class="hero-stat-en">Full-Stack</div>
+        <div class="hero-stat-ko">기획부터 배포까지</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HTML-Generated App Mockup -->
+  <div class="hero-visual">
+    <div class="app-mockup-wrap">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-statusbar">
+            <span>21:10</span>
+            <span>●●●</span>
+          </div>
+          <div class="app-header">
+            <div class="app-header-title">My Health Coach</div>
+            <div class="app-header-sub">© 2025 MSoftech · KR Core FHIR v1.0</div>
+          </div>
+          <div class="app-content">
+            <div class="app-greeting">어떤 건강 관리에 <strong>가장 관심이 있으신가요?</strong></div>
+
+            <div class="app-module">
+              <div class="app-module-icon icon-diabetes">📈</div>
+              <div class="app-module-text">
+                <div class="app-module-name">당뇨 집중 관리</div>
+                <div class="app-module-desc">혈당, HbA1c, 식단 등을 집중 관리</div>
+              </div>
+              <div class="app-module-arrow">›</div>
+            </div>
+
+            <div class="app-module">
+              <div class="app-module-icon icon-bp">❤️</div>
+              <div class="app-module-text">
+                <div class="app-module-name">고혈압 집중 관리</div>
+                <div class="app-module-desc">혈압, 심전도(ECG), 콜레스테롤 관리</div>
+              </div>
+              <div class="app-module-arrow">›</div>
+            </div>
+
+            <div class="app-module">
+              <div class="app-module-icon icon-weight">⚖️</div>
+              <div class="app-module-text">
+                <div class="app-module-name">체중 및 비만 관리</div>
+                <div class="app-module-desc">체중, BMI, 체지방률, 식단 관리</div>
+              </div>
+              <div class="app-module-arrow">›</div>
+            </div>
+
+            <div class="app-module">
+              <div class="app-module-icon icon-cancer">🛡️</div>
+              <div class="app-module-text">
+                <div class="app-module-name">암 환자 케어</div>
+                <div class="app-module-desc">컨디션, 통증, 복약, 식단 등 관리</div>
+              </div>
+              <div class="app-module-arrow">›</div>
+            </div>
+
+            <div class="app-module">
+              <div class="app-module-icon icon-ai">🤖</div>
+              <div class="app-module-text">
+                <div class="app-module-name">웰니스 AI Agent 센터</div>
+                <div class="app-module-desc">식단·혈당·혈압을 AI로 종합 분석</div>
+              </div>
+              <div class="app-module-arrow">›</div>
+            </div>
+
+            <div class="app-module">
+              <div class="app-module-icon icon-edu">🎓</div>
+              <div class="app-module-text">
+                <div class="app-module-name">AI 건강교실</div>
+                <div class="app-module-desc">내 건강 상태에 맞춰 AI가 1:1 알려드려요</div>
+              </div>
+              <div class="app-module-arrow">›</div>
+            </div>
+          </div>
+          <div class="ai-badge">Powered by Gemini AI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Overview</div>
+    <h2 class="section-title">Project Overview</h2>
+    <p class="section-ko">프로젝트 개요</p>
+    <div class="overview-grid">
+      <div class="overview-text">
+        <p>
+          <strong>My Health Coach</strong> is a comprehensive chronic disease management platform built with Flutter. It consolidates health monitoring across five clinical domains — diabetes, hypertension, obesity, cancer, and general wellness — into a single, AI-assisted mobile experience.
+        </p>
+        <p class="overview-text-ko">당뇨·고혈압·비만·암·웰니스 5개 만성질환 영역을 하나의 앱에서 통합 관리하는 Flutter 기반 헬스케어 플랫폼입니다.</p>
+        <p>
+          Each disease module provides a <strong>5-tab dashboard</strong> (AI Assessment · AI Counseling · Record History · Lab Results · Management Status), enabling continuous health tracking. The backend is built on <strong>Spring Boot 3.5 with KR Core FHIR R4</strong>, ensuring full compliance with Korean healthcare interoperability standards.
+        </p>
+        <p class="overview-text-ko">각 질환 모듈은 종합평가·AI 검진사항·기록이력·검사결과·관리현황 5개 탭으로 구성되며, Spring Boot + KR Core FHIR R4 백엔드로 한국 의료 표준을 준수합니다.</p>
+        <p>
+          A standout feature is the <strong>Wellness AI Agent Control Center</strong>, which orchestrates multiple Gemini-powered agents — Diet Analysis, Blood Sugar Analysis, Blood Pressure Analysis, and Comprehensive Daily Report — through a real-time Agent Ops pipeline with live execution logs.
+        </p>
+        <p class="overview-text-ko">웰니스 AI Agent 컨트롤 센터는 식단·혈당·혈압 분석과 일일 종합 리포트를 Google Gemini 기반 멀티 에이전트로 실시간 실행하며, Agent Ops 로그를 화면에서 직접 확인할 수 있습니다.</p>
+      </div>
+      <div>
+        <div class="meta-card">
+          <div class="meta-label">Role</div>
+          <div class="meta-value">Solo Full-Stack Developer &amp; Founder</div>
+          <div class="meta-value-ko">기획·설계·프론트·백엔드·AI 파이프라인 단독 개발</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Platform</div>
+          <div class="meta-value">Flutter Mobile (Android/iOS)</div>
+          <div class="meta-value-ko">크로스 플랫폼 모바일 앱</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Backend Standard</div>
+          <div class="meta-value">Spring Boot 3.5 · KR Core FHIR R4</div>
+          <div class="meta-value-ko">22개 KR Core 리소스, FHIR R4 스키마</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">AI Engine</div>
+          <div class="meta-value">Google Gemini 2.5 Flash · GPT-4</div>
+          <div class="meta-value-ko">멀티 AI Provider 선택 지원 (Gemini / OpenAI)</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Target Users</div>
+          <div class="meta-value">Chronic Disease Patients &amp; Caregivers</div>
+          <div class="meta-value-ko">만성질환자, 암환자, 보호자</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CORE MODULES -->
+<div class="section">
+  <div class="eyebrow">Features</div>
+  <h2 class="section-title">Core Health Modules</h2>
+  <p class="section-ko">핵심 건강 관리 모듈</p>
+  <div class="module-grid">
+    <div class="module-card">
+      <span class="module-icon">📈</span>
+      <div class="module-name-en">Diabetes Management</div>
+      <div class="module-name-ko">당뇨 집중 관리</div>
+      <div class="module-features">
+        <div class="module-feature">Blood glucose tracking (CGM / manual / hospital)</div>
+        <div class="module-feature">HbA1c trend analysis with AI assessment</div>
+        <div class="module-feature">AI counseling: diet, exercise, stress alerts</div>
+        <div class="module-feature">Lab result timeline (HbA1c, eGFR, lipids)</div>
+        <div class="module-feature">Medication history &amp; prescription management</div>
+      </div>
+    </div>
+    <div class="module-card">
+      <span class="module-icon">❤️</span>
+      <div class="module-name-en">Hypertension Management</div>
+      <div class="module-name-ko">고혈압 집중 관리</div>
+      <div class="module-features">
+        <div class="module-feature">Systolic / diastolic BP trend graphs</div>
+        <div class="module-feature">AI warning: salt intake, aerobic exercise guidance</div>
+        <div class="module-feature">Complication screening (eGFR, lipid panel)</div>
+        <div class="module-feature">Drug safety evaluation &amp; side effect alerts</div>
+        <div class="module-feature">Status scoring: BP control, weight, exercise</div>
+      </div>
+    </div>
+    <div class="module-card">
+      <span class="module-icon">🛡️</span>
+      <div class="module-name-en">Cancer Patient Care</div>
+      <div class="module-name-ko">암 환자 케어</div>
+      <div class="module-features">
+        <div class="module-feature">Pain logging (intensity scale, location, type)</div>
+        <div class="module-feature">Treatment appointment scheduling</div>
+        <div class="module-feature">AI-personalized meal recommendations</div>
+        <div class="module-feature">Blood test AI report (tumor markers, CBC)</div>
+        <div class="module-feature">Medication schedule &amp; safety alerts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY SCREENS -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Key Screens</div>
+    <h2 class="section-title">App Screens</h2>
+    <p class="section-ko">주요 화면</p>
+
+    <!-- Diabetes Dashboard — full width -->
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">당뇨 집중 관리 · 5-Tab Dashboard</div></div>
+      <img class="screen-img" src="img/diabetes_dashboard.png" alt="Diabetes Dashboard">
+      <div class="screen-desc">
+        <div class="desc-en">The diabetes module delivers a <strong>5-tab dashboard</strong>: Comprehensive Assessment (blood glucose trend chart with goal zones), AI Counseling (priority alerts, lifestyle recommendations), Record History (CGM / manual entries), Lab Results (HbA1c, eGFR, lipid timeline), and Management Status (medication history).</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">종합평가(혈당 추이·목표 구간 그래프)·AI 검진사항(우선 경고·생활습관 조언)·기록이력(CGM/직접입력)·검사결과(HbA1c·eGFR·지질 타임라인)·관리현황(복약이력) 5개 탭으로 구성됩니다.</div>
+      </div>
+    </div>
+
+    <!-- Hypertension Dashboard — full width -->
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">고혈압 집중 관리 · 5-Tab Dashboard</div></div>
+      <img class="screen-img" src="img/hypertension_dashboard.png" alt="Hypertension Dashboard">
+      <div class="screen-desc">
+        <div class="desc-en">Hypertension management mirrors the diabetes module's 5-tab structure with domain-specific content: <strong>systolic/diastolic trend graphs</strong>, AI priority warnings (salt restriction, aerobic exercise), blood pressure record timeline, and complication screening lab results (lipid panel, electrolytes).</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">수축기·이완기 혈압 추이 그래프, 우선 경고(염분 제한·유산소 운동 권고), 혈압 기록 타임라인, 합병증 스크리닝 검사(지질·전해질)가 동일한 5탭 구조로 제공됩니다.</div>
+      </div>
+    </div>
+
+    <!-- Cancer + Medication — 2 col -->
+    <div class="two-col">
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">암 환자 케어 · Cancer Care Module</div></div>
+        <img class="screen-img" src="img/cancer_care.png" alt="Cancer Patient Care">
+        <div class="screen-desc">
+          <div class="desc-en">Cancer care hub: <strong>pain logging</strong> (multi-site, intensity scale, type tags), upcoming appointment management, AI meal planner, medication schedule, and blood test results — all tailored for oncology patients.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">통증 기록(복수 부위·강도·유형), 진료 일정, AI 식단 추천, 복약 스케줄, 혈액검사 결과를 암 환자 특화 UI로 통합 제공합니다.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">복약 스케줄 · AI 약물 도우미</div></div>
+        <img class="screen-img" src="img/medication_ai.png" alt="Medication Schedule and AI Drug Assistant">
+        <div class="screen-desc">
+          <div class="desc-en">Medication tracker with calendar view and <strong>AI Drug Assistant</strong>: camera-based OCR identifies prescriptions, AI performs safety analysis (drug interaction check, conflict detection), and generates a structured counseling report.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">캘린더형 복약 스케줄 + AI 약물 도우미: 카메라로 처방전을 촬영하면 AI가 약물 인식·안전성 검토·상호작용 경고·복약 지도 리포트를 자동 생성합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab Report + Wellness Agent — 2 col -->
+    <div class="two-col">
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">혈액검사 AI 리포트 · Lab AI Report</div></div>
+        <img class="screen-img" src="img/lab_report.png" alt="Lab AI Report">
+        <div class="screen-desc">
+          <div class="desc-en"><strong>4-tab blood test report</strong>: Summary (patient profile, current status), Detailed Results (CBC, tumor markers with trend charts), AI Report (positive findings, counseling needs, lifestyle guide), and Treatment History (medication timeline).</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">종합요약(환자 정보·현 상태)·상세결과(CBC·종양표지자 추이)·AI 리포트(긍정소견·주의관찰·생활습관 가이드)·치료이력(복약 타임라인) 4탭으로 구성됩니다.</div>
+        </div>
+      </div>
+      <div class="screen-card">
+        <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">웰니스 AI Agent 컨트롤 센터</div></div>
+        <img class="screen-img" src="img/wellness_agent.png" alt="Wellness AI Agent Control Center">
+        <div class="screen-desc">
+          <div class="desc-en"><strong>Multi-agent orchestration center</strong>: select from Diet Analysis, Blood Sugar Analysis, Blood Pressure Analysis, or Comprehensive Daily Report agents. Displays real-time execution state (LLM engine, patient scope, execution ID) and live Agent Ops logs.</div>
+          <div class="desc-divider"></div>
+          <div class="desc-ko">식단·혈당·혈압 분석 및 일일 종합 리포트 에이전트를 선택 실행. 현재 LLM 모델·환자 범위·실행 ID를 표시하고 실시간 Agent Ops 로그를 스트리밍합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Classroom — full width -->
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">AI 건강교실 · AI Health Education</div></div>
+      <img class="screen-img" src="img/ai_classroom.png" alt="AI Health Education Classroom">
+      <div class="screen-desc">
+        <div class="desc-en">Personalized health education powered by AI: browse categorized health topics (cancer basics, early symptoms, treatment options, nutrition) and open an <strong>AI chat interface</strong> for 1-on-1 Q&amp;A tailored to the user's health profile and condition history.</div>
+        <div class="desc-divider"></div>
+        <div class="desc-ko">암 기초·초기증상·치료법·영양 등 건강 토픽을 카테고리별로 탐색하고, 내 건강 상태에 맞춘 AI 1:1 채팅으로 심화 질문을 할 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI FEATURES -->
+<div class="section">
+  <div class="eyebrow">AI Engine</div>
+  <h2 class="section-title">AI-Powered Features</h2>
+  <p class="section-ko">AI 핵심 기능</p>
+  <div class="ai-grid">
+    <div class="ai-card">
+      <div class="ai-card-icon">🔬</div>
+      <div class="ai-card-title">Health Assessment AI</div>
+      <div class="ai-card-ko">AI 건강 분석 엔진</div>
+      <div class="ai-card-desc">Each disease module generates a personalized AI assessment — priority alerts, counseling recommendations, and positive findings — using Gemini or GPT-4 with patient FHIR data as context.</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-icon">💊</div>
+      <div class="ai-card-title">AI Drug Assistant</div>
+      <div class="ai-card-ko">AI 약물 안전성 분석</div>
+      <div class="ai-card-desc">Camera OCR identifies prescription medications. AI performs drug interaction screening, 409 Conflict detection via Spring Boot safety API, and generates structured counseling reports with clinical recommendations.</div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-card-icon">🤖</div>
+      <div class="ai-card-title">Wellness Multi-Agent</div>
+      <div class="ai-card-ko">웰니스 AI Agent 파이프라인</div>
+      <div class="ai-card-desc">Agent Ops platform orchestrates four specialized agents (diet, blood sugar, blood pressure, daily report) via Prompt Registry, Schema Validation, and Data Mapping layers — with full real-time execution logging.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Architecture</div>
+    <h2 class="section-title">System Architecture</h2>
+    <p class="section-ko">시스템 아키텍처 · 서비스 흐름도</p>
+    <div class="arch-grid">
+      <div class="arch-img-wrap">
+        <div class="arch-img-bar">서비스 흐름도 · Service Flow (Flutter App → Spring Boot → AI / FHIR / External APIs)</div>
+        <img src="img/arch_service_flow.png" alt="Service Flow Diagram">
+      </div>
+      <div class="arch-img-wrap">
+        <div class="arch-img-bar">시스템 아키텍처 · Software Stack (Client → Web Server → Application → Service)</div>
+        <img src="img/arch_system.png" alt="System Architecture Diagram">
+      </div>
+    </div>
+    <div class="arch-img-wrap">
+      <div class="arch-img-bar">AI 피드백 처리 흐름도 · Agent Ops Platform + Tech Stack 전체 상세</div>
+      <img src="img/arch_detail.png" alt="AI Feedback Pipeline and Tech Stack">
+    </div>
+  </div>
+</div>
+
+<!-- IMPACT -->
+<div class="section">
+  <div class="eyebrow">Results</div>
+  <h2 class="section-title">Impact</h2>
+  <p class="section-ko">프로젝트 성과</p>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <span class="impact-num">5</span>
+      <div class="impact-en">Chronic Disease Domains</div>
+      <div class="impact-ko">단일 앱에서 통합 관리<br>(당뇨·고혈압·비만·암·웰니스)</div>
+    </div>
+    <div class="impact-card">
+      <span class="impact-num">22</span>
+      <div class="impact-en">KR Core FHIR Resources</div>
+      <div class="impact-ko">한국 의료 표준 완전 준수<br>FHIR R4 Schema 구현</div>
+    </div>
+    <div class="impact-card">
+      <span class="impact-num">4</span>
+      <div class="impact-en">AI Agents Orchestrated</div>
+      <div class="impact-ko">Agent Ops 파이프라인<br>(식단·혈당·혈압·종합 리포트)</div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Technology</div>
+    <h2 class="section-title">Tech Stack</h2>
+    <p class="section-ko">기술 스택</p>
+    <div class="tech-grid">
+      <div class="tech-group">
+        <div class="tech-group-title">Frontend · Mobile</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Flutter 3.24</span>
+          <span class="tech-tag">Dart</span>
+          <span class="tech-tag">Material Design 3</span>
+          <span class="tech-tag">Android &amp; iOS</span>
+          <span class="tech-tag">Google ML Kit (OCR)</span>
+          <span class="tech-tag">Kakao SDK</span>
+        </div>
+      </div>
+      <div class="tech-group">
+        <div class="tech-group-title">Backend</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Spring Boot 3.5.4</span>
+          <span class="tech-tag">Java 17</span>
+          <span class="tech-tag">Maven</span>
+          <span class="tech-tag">RESTful API</span>
+          <span class="tech-tag">Apache Tomcat 11</span>
+          <span class="tech-tag">JSP Web</span>
+          <span class="tech-tag">React Web</span>
+        </div>
+      </div>
+      <div class="tech-group">
+        <div class="tech-group-title">AI · External Services</div>
+        <div class="tech-tags">
+          <span class="tech-tag">Google Gemini 2.5</span>
+          <span class="tech-tag">OpenAI GPT-4</span>
+          <span class="tech-tag">Vertex AI</span>
+          <span class="tech-tag">Google ML Kit</span>
+          <span class="tech-tag">Agent Ops Platform</span>
+          <span class="tech-tag">Kakao SDK</span>
+        </div>
+      </div>
+      <div class="tech-group">
+        <div class="tech-group-title">Database · Healthcare Standard</div>
+        <div class="tech-tags">
+          <span class="tech-tag">MariaDB</span>
+          <span class="tech-tag">FHIR R4 Schema</span>
+          <span class="tech-tag">KR Core IG (22개)</span>
+          <span class="tech-tag">HAPI FHIR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a href="../index.html#projects" class="back-btn">← Back to Projects</a>
+  <a href="../groundwater/" class="next-btn">Next: Groundwater →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Min Jung Park (박민정) · MSoftech</div>
+  <div class="footer-copy">© 2025 Min Jung Park · Open to U.S. Remote (EST/PST)</div>
+</footer>
+
+</body>
+</html>
