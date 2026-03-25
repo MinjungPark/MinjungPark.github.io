@@ -237,7 +237,7 @@ nav {
 .photo-frame {
   position: relative;
   width: 380px;
-  height: 520px;
+  height: 460px;
 }
 
 .photo-frame::before {
@@ -253,7 +253,7 @@ nav {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: top;
   border-radius: 200px 200px 160px 160px;
   display: block;
   position: relative;
@@ -793,45 +793,16 @@ footer {
   to   { opacity:1; transform: translateY(0); }
 }
 
-/* fade-in: 위에서 아래로 */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+.reveal {
+  opacity: 1;
+  transform: translateY(0);
+  animation: revealAnim 0.8s ease both;
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
 
-/* fade-left: 왼쪽에서 오른쪽으로 */
-.fade-left {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+@keyframes revealAnim {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.fade-left.visible { opacity: 1; transform: translateX(0); }
-
-/* fade-right: 오른쪽에서 왼쪽으로 */
-.fade-right {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.fade-right.visible { opacity: 1; transform: translateX(0); }
-
-/* stagger: 자식 요소 순차 등장 */
-.stagger > * {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-}
-.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
-.stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.12s; }
-.stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.19s; }
-.stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.26s; }
-.stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.33s; }
-.stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.40s; }
-
-/* legacy .reveal = fade-in */
-.reveal { opacity:1; transform:none; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
@@ -894,11 +865,11 @@ footer {
 <!-- ── ABOUT ── -->
 <section class="section-full" id="about">
   <div class="section-inner">
-    <div class="eyebrow fade-in">About Me</div>
-    <h2 class="section-title fade-in">Who I Am</h2>
-    <p class="section-title-ko fade-in">자기소개</p>
+    <div class="eyebrow">About Me</div>
+    <h2 class="section-title">Who I Am</h2>
+    <p class="section-title-ko">자기소개</p>
     <div class="about-grid reveal">
-      <div class="about-text fade-left">
+      <div class="about-text">
         <p>I'm a <strong>Full-Stack Developer</strong> with 10+ years of experience building enterprise-grade systems across manufacturing (MES/ERP), healthcare, and IT asset management.</p>
         <p class="about-text-ko">제조(MES/ERP), 헬스케어, IT 자산관리 등 다양한 엔터프라이즈 시스템을 구축해온 풀스택 개발자입니다.</p>
 
@@ -916,7 +887,7 @@ footer {
         </div>
       </div>
 
-      <div class="about-stats fade-right">
+      <div class="about-stats">
         <div class="stat-card">
           <div class="stat-card-num">10+</div>
           <div class="stat-card-en">Years of Experience</div>
@@ -939,9 +910,9 @@ footer {
 
 <!-- ── TECH STACK ── -->
 <section class="section" id="skills">
-  <div class="eyebrow fade-in">Technical Skills</div>
-  <h2 class="section-title fade-in">Tech Stack</h2>
-  <p class="section-title-ko fade-in">기술 스택</p>
+  <div class="eyebrow">Technical Skills</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <p class="section-title-ko">기술 스택</p>
   <div class="tech-categories reveal">
 
     <div class="tech-cat">
@@ -1023,9 +994,9 @@ footer {
 <!-- ── PROJECTS ── -->
 <section class="section-full" id="projects">
   <div class="section-inner">
-    <div class="eyebrow fade-in">Work</div>
-    <h2 class="section-title fade-in">Projects</h2>
-    <p class="section-title-ko fade-in">프로젝트</p>
+    <div class="eyebrow">Work</div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-title-ko">프로젝트</p>
     <div class="projects-grid reveal">
 
       <a href="clinical-nursing-emr/" class="project-card">
@@ -1161,7 +1132,7 @@ footer {
 <!-- ── CONTACT ── -->
 <section class="section" id="contact">
   <div class="contact-wrap reveal">
-    <div class="contact-text fade-left">
+    <div class="contact-text">
       <div class="eyebrow">Contact</div>
       <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,52px); font-weight:700; line-height:1.1; margin-bottom:6px;">Let's Work<br>Together</h2>
       <p class="contact-text-ko">함께 일해요</p>
@@ -1196,7 +1167,7 @@ footer {
       </div>
     </div>
 
-    <div class="contact-card fade-right">
+    <div class="contact-card">
       <h3>Open to Remote</h3>
       <p>Looking for U.S. remote opportunities<br>미국 원격 프로젝트 적극 구직 중</p>
       <div class="contact-card-stats">
@@ -1233,13 +1204,16 @@ footer {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        e.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
       }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
 
-  document.querySelectorAll('.fade-in, .fade-left, .fade-right, .stagger').forEach(el => {
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(32px)';
     observer.observe(el);
   });
 
