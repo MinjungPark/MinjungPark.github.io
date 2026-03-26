@@ -36,6 +36,22 @@ nav {
 .nav-logo { font-family:'Fraunces',serif; font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; }
 .nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
 .nav-back:hover { color:var(--accent); }
+
+/* ── LANG TOGGLE ── */
+.lang-toggle {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(26,22,18,0.06); border: 1px solid var(--border);
+  border-radius: 100px; padding: 4px;
+}
+.lang-btn {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+  padding: 4px 12px; border-radius: 100px; border: none;
+  background: transparent; color: var(--mid); cursor: pointer;
+  transition: background 0.2s, color 0.2s; letter-spacing: 0.05em;
+}
+.lang-btn.active { background: var(--ink); color: #fff; }
+.lang-btn:hover:not(.active) { color: var(--ink); }
+
 .nav-tag { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-light); border:1px solid var(--green-border); padding:6px 14px; border-radius:100px; }
 
 /* HERO */
@@ -169,6 +185,10 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <a href="../index.html" class="nav-logo">MJ Park</a>
   <a href="../index.html#projects" class="nav-back">← Back to Projects</a>
   <div class="nav-tag">🏥 Healthcare · AI</div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ko')">KR</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -176,14 +196,12 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <div class="hero-text">
     <div class="hero-eyebrow">Team Project · Apr 2025 – Nov 2025</div>
     <h1 class="hero-title">Clinical<br>Nursing EMR</h1>
-    <p class="hero-title-ko">AI 기반 간호교육 플랫폼</p>
-    <p class="hero-desc">An AI-powered EMR simulation platform that bridges the gap between clinical practice and nursing education. 6 AI Agents evaluate student performance across 55 criteria in real time.</p>
-    <p class="hero-desc-ko">임상과 교육의 간극을 줄이는 AI 기반 간호 실습 플랫폼 — 6개 AI Agent가 55개 항목을 실시간으로 자동 평가합니다.</p>
+    <p class="hero-desc" data-en="An AI-powered EMR simulation platform that bridges the gap between clinical practice and nursing education. 6 AI Agents evaluate student performance across 55 criteria in real time." data-ko="임상 실습과 간호 교육의 간극을 줄이는 AI 기반 EMR 시뮬레이션 플랫폼입니다. 6개 AI 에이전트가 학생의 실습 수행을 55개 평가 항목에 걸쳐 실시간으로 자동 채점합니다.">An AI-powered EMR simulation platform that bridges the gap between clinical practice and nursing education. 6 AI Agents evaluate student performance across 55 criteria in real time.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-num">6</span><div class="hero-stat-en">AI Agents</div><div class="hero-stat-ko">AI 에이전트</div></div>
-      <div class="hero-stat"><span class="hero-stat-num">55</span><div class="hero-stat-en">Evaluation Criteria</div><div class="hero-stat-ko">평가 항목</div></div>
-      <div class="hero-stat"><span class="hero-stat-num">40K+</span><div class="hero-stat-en">Log Entries</div><div class="hero-stat-ko">누적 로그</div></div>
-      <div class="hero-stat"><span class="hero-stat-num">90%</span><div class="hero-stat-en">Time Reduction</div><div class="hero-stat-ko">평가 시간 단축</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">6</span><div class="hero-stat-en">AI Agents</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">55</span><div class="hero-stat-en">Evaluation Criteria</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">40K+</span><div class="hero-stat-en">Log Entries</div></div>
+      <div class="hero-stat"><span class="hero-stat-num">90%</span><div class="hero-stat-en">Time Reduction</div></div>
     </div>
   </div>
   <div class="hero-photo">
@@ -198,21 +216,17 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <div class="section-inner">
     <div class="eyebrow">Overview</div>
     <h2 class="section-title">Project Overview</h2>
-    <p class="section-ko">프로젝트 개요</p>
     <div class="overview-grid">
       <div class="overview-text">
-        <p>Nursing students practice in a <strong>real hospital EMR environment</strong> — covering OCS, ENR, Lab, and PACS — using GUIDED or EVALUATION simulation modes.</p>
-        <p class="overview-text-ko">간호대학생들이 실제 병원 EMR과 동일한 환경(OCS, ENR, Lab, PACS)에서 GUIDED 또는 EVALUATION 모드로 실습합니다.</p>
-        <p>Upon completion, <strong>6 AI Agents</strong> automatically evaluate each student's performance. The full pipeline — LLM call, JSON validation, professor review, and result publication — is fully automated.</p>
-        <p class="overview-text-ko">실습 완료 후 6개 AI Agent가 자동으로 평가합니다. LLM 호출 → JSON 검증 → 교수 검토 → 결과 공개 전 과정이 자동화되어 있습니다.</p>
-        <p>The system has processed <strong>40,000+ evaluation log entries</strong> and reduced professor evaluation time by <strong>90%</strong>.</p>
-        <p class="overview-text-ko">누적 40,000+건의 평가 로그를 처리했으며, 교수님의 평가 시간을 90% 단축했습니다.</p>
+        <p data-en="Nursing students practice in a <strong>real hospital EMR environment</strong> — covering OCS, ENR, Lab, and PACS — using GUIDED or EVALUATION simulation modes." data-ko="간호대학생들이 실제 병원 EMR과 동일한 환경(OCS, ENR, Lab, PACS)에서 GUIDED 또는 EVALUATION 모드로 실습합니다.">Nursing students practice in a <strong>real hospital EMR environment</strong> — covering OCS, ENR, Lab, and PACS — using GUIDED or EVALUATION simulation modes.</p>
+        <p data-en="Upon completion, <strong>6 AI Agents</strong> automatically evaluate each student's performance. The full pipeline — LLM call, JSON validation, professor review, and result publication — is fully automated." data-ko="실습 완료 후 6개 AI 에이전트가 학생의 수행을 자동으로 평가합니다. LLM 호출 → JSON 검증 → 교수 검토 → 결과 공개까지 전 과정이 완전히 자동화되어 있습니다.">Upon completion, <strong>6 AI Agents</strong> automatically evaluate each student's performance. The full pipeline — LLM call, JSON validation, professor review, and result publication — is fully automated.</p>
+        <p data-en="The system has processed <strong>40,000+ evaluation log entries</strong> and reduced professor evaluation time by <strong>90%</strong>." data-ko="현재까지 <strong>40,000건 이상의 평가 로그</strong>를 처리했으며, 교수님의 평가 시간을 <strong>90%</strong> 단축했습니다.">The system has processed <strong>40,000+ evaluation log entries</strong> and reduced professor evaluation time by <strong>90%</strong>.</p>
       </div>
       <div>
-        <div class="meta-card"><div class="meta-label">Period · 기간</div><div class="meta-value">Apr 2025 – Nov 2025</div><div class="meta-value-ko">2025년 4월 – 11월</div></div>
-        <div class="meta-card"><div class="meta-label">Type · 유형</div><div class="meta-value">Team Project</div><div class="meta-value-ko">팀 프로젝트</div></div>
-        <div class="meta-card"><div class="meta-label">Role · 역할</div><div class="meta-value">Full-Stack Developer</div><div class="meta-value-ko">풀스택 개발자</div></div>
-        <div class="meta-card"><div class="meta-label">Domain · 도메인</div><div class="meta-value">Healthcare · AI · Education</div><div class="meta-value-ko">헬스케어 · AI · 교육</div></div>
+        <div class="meta-card"><div class="meta-label">Period</div><div class="meta-value">Apr 2025 – Nov 2025</div></div>
+        <div class="meta-card"><div class="meta-label">Type</div><div class="meta-value">Team Project</div></div>
+        <div class="meta-card"><div class="meta-label">Role</div><div class="meta-value">Full-Stack Developer</div></div>
+        <div class="meta-card"><div class="meta-label">Domain</div><div class="meta-value">Healthcare · AI · Education</div></div>
       </div>
     </div>
   </div>
@@ -222,12 +236,9 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 <div class="section">
   <div class="eyebrow">Architecture</div>
   <h2 class="section-title">System Architecture</h2>
-  <p class="section-ko">시스템 아키텍처</p>
   <img src="img/Architecture_Design_Decisions.png" alt="Architecture" style="width:100%; display:block; border-radius:16px; border:1px solid var(--border); margin-bottom:24px;">
   <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px;">
-    <div class="desc-en"><strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database.</div>
-    <div class="desc-divider"></div>
-    <div class="desc-ko">EvaluationController → OrchestrationService → 실행 레이어(@Transactional) → AI Agent → Google Vertex AI (Gemini 2.0 Flash) 순으로 처리됩니다. 모든 AI 응답은 JSON Schema 검증 후 DB에 저장됩니다.</div>
+    <div class="desc-en" data-en="<strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database." data-ko="<strong>계층형 AI 파이프라인:</strong> EvaluationController → NursingEvaluation OrchestrationService → 실행 레이어(@Transactional) → AI Agent 컴포넌트 → Google Vertex AI (Gemini 2.0 Flash) 순서로 처리됩니다. 모든 AI 응답은 JSON Schema로 검증된 후 데이터베이스에 저장됩니다."><strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database.</div>
   </div>
 </div>
 
@@ -236,22 +247,21 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <div class="section-inner">
     <div class="eyebrow">AI Pipeline</div>
     <h2 class="section-title">How AI Evaluation Works</h2>
-    <p class="section-ko">AI 평가 파이프라인</p>
     <div class="pipeline">
-      <div class="pipeline-step"><span class="pipeline-icon">📝</span><div class="pipeline-name">Student Submits</div><div class="pipeline-name-ko">실습 제출</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">🤖</span><div class="pipeline-name">6 AI Agents</div><div class="pipeline-name-ko">Agent 실행</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">⚡</span><div class="pipeline-name">Vertex AI Call</div><div class="pipeline-name-ko">LLM 호출</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">✅</span><div class="pipeline-name">JSON Validation</div><div class="pipeline-name-ko">응답 검증</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">👩‍🏫</span><div class="pipeline-name">Prof. Review</div><div class="pipeline-name-ko">교수 검토</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">🎓</span><div class="pipeline-name">Result Published</div><div class="pipeline-name-ko">결과 공개</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">📝</span><div class="pipeline-name">Student Submits</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">🤖</span><div class="pipeline-name">6 AI Agents</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">⚡</span><div class="pipeline-name">Vertex AI Call</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">✅</span><div class="pipeline-name">JSON Validation</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">👩‍🏫</span><div class="pipeline-name">Prof. Review</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon">🎓</span><div class="pipeline-name">Result Published</div></div>
     </div>
     <div class="agent-grid">
-      <div class="agent-card"><div class="agent-name">VitalSignsAgent</div><div class="agent-target">Vital Signs</div><div class="agent-target-ko">활력징후 측정</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">IoAgent</div><div class="agent-target">Intake / Output</div><div class="agent-target-ko">섭취/배설량</div><div class="agent-count">2 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">MedicationAgent</div><div class="agent-target">Medication (5 Rights)</div><div class="agent-target-ko">투약 수행</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">NursingRecordAgent</div><div class="agent-target">Nursing Record</div><div class="agent-target-ko">간호기록 (F-DAR)</div><div class="agent-count">4 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">InitialAssessmentAgent</div><div class="agent-target">Initial Assessment</div><div class="agent-target-ko">초기사정</div><div class="agent-count">9 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">ActionLogAgent</div><div class="agent-target">Action Log</div><div class="agent-target-ko">행위 로그 분석</div><div class="agent-count">3 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">VitalSignsAgent</div><div class="agent-target">Vital Signs</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">IoAgent</div><div class="agent-target">Intake / Output</div><div class="agent-count">2 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">MedicationAgent</div><div class="agent-target">Medication (5 Rights)</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">NursingRecordAgent</div><div class="agent-target">Nursing Record</div><div class="agent-count">4 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">InitialAssessmentAgent</div><div class="agent-target">Initial Assessment</div><div class="agent-count">9 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card"><div class="agent-name">ActionLogAgent</div><div class="agent-target">Action Log</div><div class="agent-count">3 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
     </div>
   </div>
 </div>
@@ -260,15 +270,12 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 <div class="section">
   <div class="eyebrow">Features</div>
   <h2 class="section-title">Key Screens</h2>
-  <p class="section-ko">주요 화면</p>
 
   <div class="screen-card">
     <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">간호기록 (ENR) · GUIDED MODE</div></div>
     <img class="screen-img" src="img/간호기록.png" alt="Nursing Record">
     <div class="screen-desc">
-      <div class="desc-en">Students practice in a real hospital EMR environment. Records <strong>Initial Assessment, Vital Signs, I/O, and Nursing Notes</strong> in real time with step-by-step progress tracking.</div>
-      <div class="desc-divider"></div>
-      <div class="desc-ko">실제 병원 EMR과 동일한 환경에서 간호 초기사정, 활력징후, 섭취/배설, 간호노트를 실시간 기록합니다. 우측 패널에서 실습 진행률을 단계별로 확인할 수 있습니다.</div>
+      <div class="desc-en" data-en="Students practice in a real hospital EMR environment. Records <strong>Initial Assessment, Vital Signs, I/O, and Nursing Notes</strong> in real time with step-by-step progress tracking." data-ko="실제 병원 EMR과 동일한 환경에서 간호 초기사정, 활력징후, 섭취/배설, 간호노트를 실시간으로 기록합니다. 우측 패널에서 실습 진행률을 단계별로 확인할 수 있습니다.">Students practice in a real hospital EMR environment. Records <strong>Initial Assessment, Vital Signs, I/O, and Nursing Notes</strong> in real time with step-by-step progress tracking.</div>
     </div>
   </div>
 
@@ -277,18 +284,14 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
       <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">검사결과 (Lab)</div></div>
       <img class="screen-img" src="img/검사결과.png" alt="Lab">
       <div class="screen-desc">
-        <div class="desc-en">CBC, biochemistry results with <strong>trend charts</strong>. Critical values highlighted, nursing action reports auto-generated.</div>
-        <div class="desc-divider"></div>
-        <div class="desc-ko">CBC, 생화학 결과를 추이 차트와 함께 제공. 위험 수치 강조 및 간호 조치 보고서 자동 생성.</div>
+        <div class="desc-en" data-en="CBC, biochemistry results with <strong>trend charts</strong>. Critical values highlighted, nursing action reports auto-generated." data-ko="CBC, 생화학 검사 결과를 추이 차트와 함께 제공합니다. 위험 수치는 강조 표시되고, 간호 조치 보고서가 자동으로 생성됩니다.">CBC, biochemistry results with <strong>trend charts</strong>. Critical values highlighted, nursing action reports auto-generated.</div>
       </div>
     </div>
     <div class="screen-card">
       <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">영상판독 (PACS)</div></div>
       <img class="screen-img" src="img/영상판독.png" alt="PACS">
       <div class="screen-desc">
-        <div class="desc-en">X-Ray, CT, MRI images with <strong>diagnostic reports</strong>. Findings + Impression sections simulate real clinical reading.</div>
-        <div class="desc-divider"></div>
-        <div class="desc-ko">X-Ray, CT, MRI 영상과 판독 보고서 제공. Findings/Impression으로 실제 임상 판독 시뮬레이션.</div>
+        <div class="desc-en" data-en="X-Ray, CT, MRI images with <strong>diagnostic reports</strong>. Findings + Impression sections simulate real clinical reading." data-ko="X-Ray, CT, MRI 영상과 판독 보고서를 제공합니다. Findings/Impression 구조로 실제 임상 판독을 시뮬레이션합니다.">X-Ray, CT, MRI images with <strong>diagnostic reports</strong>. Findings + Impression sections simulate real clinical reading.</div>
       </div>
     </div>
   </div>
@@ -297,9 +300,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">AI 평가 실행 · Vertex AI (Gemini 2.0 Flash)</div></div>
     <img class="screen-img" src="img/AI평가로그.png" alt="AI Evaluation">
     <div class="screen-desc">
-      <div class="desc-en">Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time.</div>
-      <div class="desc-divider"></div>
-      <div class="desc-ko">AI 프롬프트, 환자 컨텍스트, JSON 응답이 모두 투명하게 기록되어 교수님이 검증할 수 있습니다. 각 Agent의 점수와 상세 피드백이 실시간으로 표시됩니다.</div>
+      <div class="desc-en" data-en="Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time." data-ko="AI 프롬프트, 환자 컨텍스트, JSON 응답이 모두 투명하게 로그로 기록되어 교수님이 직접 검증할 수 있습니다. 각 에이전트의 점수와 상세 피드백이 실시간으로 표시됩니다.">Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time.</div>
     </div>
   </div>
 
@@ -307,9 +308,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">교수용 평가 관리 대시보드 · Professor View</div></div>
     <img class="screen-img" src="img/평가관리.png" alt="Professor Dashboard">
     <div class="screen-desc">
-      <div class="desc-en">Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click.</div>
-      <div class="desc-divider"></div>
-      <div class="desc-ko">항목별 상세 피드백(잘한 점/개선할 점/주의사항)을 검토하고 최종 점수를 확정하거나 수정합니다. 원클릭으로 승인 또는 조정이 가능합니다.</div>
+      <div class="desc-en" data-en="Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click." data-ko="교수님이 항목별 상세 피드백(정확함/주의/개선 필요)을 검토하고 최종 점수를 확정하거나 수정합니다. 원클릭으로 승인 또는 조정이 가능합니다.">Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click.</div>
     </div>
   </div>
 </div>
@@ -319,12 +318,11 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <div class="section-inner">
     <div class="eyebrow">Results</div>
     <h2 class="section-title">Impact</h2>
-    <p class="section-ko">도입 효과</p>
     <div class="impact-grid">
-      <div class="impact-card"><span class="impact-num">90%</span><div class="impact-en">Evaluation Time Reduction</div><div class="impact-ko">평가 시간 단축<br>(30분×30명 → 자동화)</div></div>
-      <div class="impact-card"><span class="impact-num">100%</span><div class="impact-en">Evaluation Consistency</div><div class="impact-ko">평가 일관성<br>(통일 기준 적용)</div></div>
-      <div class="impact-card"><span class="impact-num">40%</span><div class="impact-en">Professor Workload Reduction</div><div class="impact-ko">교수 업무 부담 감소</div></div>
-      <div class="impact-card"><span class="impact-num">40K+</span><div class="impact-en">Evaluation Logs Processed</div><div class="impact-ko">누적 평가 로그 처리</div></div>
+      <div class="impact-card"><span class="impact-num">90%</span><div class="impact-en">Evaluation Time Reduction</div><div class="impact-ko" data-en="Evaluation Time Reduction" data-ko="평가 시간 단축 (30분×30명 → 자동화)">Evaluation Time Reduction</div></div>
+      <div class="impact-card"><span class="impact-num">100%</span><div class="impact-en">Evaluation Consistency</div><div class="impact-ko" data-en="Evaluation Consistency" data-ko="평가 일관성 (통일 기준 적용)">Evaluation Consistency</div></div>
+      <div class="impact-card"><span class="impact-num">40%</span><div class="impact-en">Professor Workload Reduction</div><div class="impact-ko" data-en="Professor Workload Reduction" data-ko="교수 업무 부담 감소">Professor Workload Reduction</div></div>
+      <div class="impact-card"><span class="impact-num">40K+</span><div class="impact-en">Evaluation Logs Processed</div><div class="impact-ko" data-en="Evaluation Logs Processed" data-ko="누적 평가 로그 처리">Evaluation Logs Processed</div></div>
     </div>
   </div>
 </div>
@@ -333,7 +331,6 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 <div class="section">
   <div class="eyebrow">Technology</div>
   <h2 class="section-title">Tech Stack</h2>
-  <p class="section-ko">기술 스택</p>
   <div class="tech-grid">
     <div class="tech-group"><div class="tech-group-title">Frontend</div><div class="tech-tags"><span class="tech-tag">React 18</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Vite</span><span class="tech-tag">AG Grid</span><span class="tech-tag">WebSocket</span></div></div>
     <div class="tech-group"><div class="tech-group-title">Backend</div><div class="tech-tags"><span class="tech-tag">Spring Boot 3.x</span><span class="tech-tag">Java 17</span><span class="tech-tag">JPA</span><span class="tech-tag">MariaDB</span><span class="tech-tag">RESTful API</span></div></div>
@@ -344,8 +341,8 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
-  <a href="../index.html#projects" class="back-btn">← Back to Projects</a>
-  <a href="../fhir-emr/" class="next-btn">Next: FHIR EMR →</a>
+  <a href="../index.html#projects" class="back-btn" data-en="← Back to Projects" data-ko="← Back to Projects">← Back to Projects</a>
+  <a href="../fhir-emr/" class="next-btn" data-en="Next: FHIR EMR →" data-ko="Next: FHIR EMR →">Next: FHIR EMR →</a>
 </div>
 
 <!-- FOOTER -->
@@ -354,5 +351,20 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   <div class="footer-copy">© 2025 Min Jung Park · Open to U.S. Remote (EST/PST)</div>
 </footer>
 
+<script>
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    localStorage.setItem('lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', (lang === 'en' && btn.textContent === 'EN') || (lang === 'ko' && btn.textContent === 'KR'));
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = lang === 'ko' ? el.getAttribute('data-ko') : el.getAttribute('data-en');
+      if (text !== null && text !== '') el.innerHTML = text;
+    });
+  }
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+</script>
 </body>
 </html>
