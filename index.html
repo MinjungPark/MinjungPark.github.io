@@ -78,6 +78,32 @@ nav {
   color: white !important;
 }
 
+/* ── LANG TOGGLE ── */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(26,22,18,0.06);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px;
+}
+.lang-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: none;
+  background: transparent;
+  color: var(--mid);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.05em;
+}
+.lang-btn.active { background: var(--ink); color: #fff; }
+.lang-btn:hover:not(.active) { color: var(--ink); }
+
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
@@ -1047,26 +1073,31 @@ footer {
 <nav>
   <a href="#" class="nav-logo">MJ Park</a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#core-technology">Core Tech</a></li>
-    <li><a href="#contact" class="nav-cta">Contact</a></li>
+    <li><a href="#about" data-en="About" data-ko="About">About</a></li>
+    <li><a href="#skills" data-en="Skills" data-ko="Skills">Skills</a></li>
+    <li><a href="#projects" data-en="Projects" data-ko="Projects">Projects</a></li>
+    <li><a href="#core-technology" data-en="Core Tech" data-ko="Core Tech">Core Tech</a></li>
+    <li><a href="#contact" class="nav-cta" data-en="Contact" data-ko="Contact">Contact</a></li>
   </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ko')">KR</button>
+  </div>
 </nav>
 
 <!-- ── HERO ── -->
 <section style="max-width:1200px; margin:0 auto; padding:120px 60px 80px; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:60px;">
   <div class="hero-text">
-    <div class="hero-eyebrow">Full-Stack Developer</div>
+    <div class="hero-eyebrow" data-en="Full-Stack Developer" data-ko="Full-Stack Developer">Full-Stack Developer</div>
     <h1 class="hero-name">Min Jung<br>Park</h1>
     <p class="hero-name-ko">박민정</p>
-    <p class="hero-role"><strong>AI Integration · React · Spring Boot</strong><br>Building enterprise systems that matter.</p>
-    <p class="hero-role-ko">AI 연동 · 엔터프라이즈 시스템 · 헬스케어 전문 풀스택 개발자</p>
-    <div class="hero-remote">🌐 Available full-time on U.S. EST / PST · 미국 시간대 풀타임 근무 가능</div>
+    <p class="hero-role">
+      <span data-en="<strong>AI Integration · React · Spring Boot</strong><br>Building enterprise systems that matter." data-ko="<strong>AI Integration · React · Spring Boot</strong><br>가치 있는 엔터프라이즈 시스템을 만듭니다."><strong>AI Integration · React · Spring Boot</strong><br>Building enterprise systems that matter.</span>
+    </p>
+    <div class="hero-remote" data-en="🌐 Available full-time on U.S. EST / PST" data-ko="🌐 Available full-time on U.S. EST / PST">🌐 Available full-time on U.S. EST / PST · 미국 시간대 풀타임 근무 가능</div>
     <div class="hero-btns">
-      <a href="#projects" class="btn-primary">View Projects →</a>
-      <a href="#contact" class="btn-secondary">Get in Touch</a>
+      <a href="#projects" class="btn-primary" data-en="View Projects →" data-ko="View Projects →">View Projects →</a>
+      <a href="#contact" class="btn-secondary" data-en="Get in Touch" data-ko="Get in Touch">Get in Touch</a>
     </div>
   </div>
 
@@ -1075,7 +1106,7 @@ footer {
       <img src="profile.png" style="object-position: top center;" alt="Min Jung Park">
       <div class="photo-badge">
         <span>10+</span>
-        Years of<br>Experience
+        <span data-en="Years of<br>Experience" data-ko="Years of<br>Experience">Years of<br>Experience</span>
       </div>
     </div>
   </div>
@@ -1084,43 +1115,37 @@ footer {
 <!-- ── ABOUT ── -->
 <section class="section-full" id="about">
   <div class="section-inner">
-    <div class="eyebrow">About Me</div>
-    <h2 class="section-title">Who I Am</h2>
-    <p class="section-title-ko">자기소개</p>
+    <div class="eyebrow" data-en="About Me" data-ko="About Me">About Me</div>
+    <h2 class="section-title" data-en="Who I Am" data-ko="Who I Am">Who I Am</h2>
+    <p class="section-title-ko"></p>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>I'm a <strong>Full-Stack Developer</strong> with 10+ years of experience building enterprise-grade systems across manufacturing (MES/ERP), healthcare, and IT asset management.</p>
-        <p class="about-text-ko">제조(MES/ERP), 헬스케어, IT 자산관리 등 다양한 엔터프라이즈 시스템을 구축해온 풀스택 개발자입니다.</p>
+        <p data-en="I'm a <strong>Full-Stack Developer</strong> with 10+ years of experience building enterprise-grade systems across manufacturing (MES/ERP), healthcare, and IT asset management." data-ko="저는 <strong>풀스택 개발자</strong>로, 10년 이상의 경력을 바탕으로 제조(MES/ERP), 헬스케어, IT 자산관리 등 다양한 엔터프라이즈 시스템을 구축해왔습니다.">I'm a <strong>Full-Stack Developer</strong> with 10+ years of experience building enterprise-grade systems across manufacturing (MES/ERP), healthcare, and IT asset management.</p>
 
-        <p>I have <strong>proven full-time remote experience</strong> with Samsung SDSA (Samsung Electronics America), operating on U.S. Eastern Standard Time — and I'm available to work fully aligned with U.S. time zones (EST/PST).</p>
-        <p class="about-text-ko">삼성전자 미국법인(Samsung SDSA)에서 미국 EST 풀타임 기준으로 원격 근무를 수행한 검증된 이력이 있으며, 미국 EST/PST 시간대에 맞춰 풀타임 근무가 가능합니다.</p>
+        <p data-en="I have <strong>proven full-time remote experience</strong> with Samsung SDSA (Samsung Electronics America), operating on U.S. Eastern Standard Time — and I'm available to work fully aligned with U.S. time zones (EST/PST)." data-ko="삼성전자 미국법인(Samsung SDSA)에서 미국 EST 기준 <strong>풀타임 원격 근무</strong>를 수행한 검증된 이력이 있으며, 미국 EST/PST 시간대에 맞춰 풀타임 근무가 가능합니다.">I have <strong>proven full-time remote experience</strong> with Samsung SDSA (Samsung Electronics America), operating on U.S. Eastern Standard Time — and I'm available to work fully aligned with U.S. time zones (EST/PST).</p>
 
-        <p>Recently, I've been focused on <strong>AI API integration</strong> and <strong>FHIR-based healthcare systems</strong> — building production-grade AI pipelines with Google Vertex AI and OpenAI GPT-4.</p>
-        <p class="about-text-ko">최근에는 AI API 연동과 FHIR 기반 헬스케어 시스템 개발에 집중하며, Google Vertex AI와 GPT-4를 활용한 프로덕션 수준의 AI 파이프라인을 구축하고 있습니다.</p>
+        <p data-en="Recently, I've been focused on <strong>AI API integration</strong> and <strong>FHIR-based healthcare systems</strong> — building production-grade AI pipelines with Google Vertex AI and OpenAI GPT-4, and developing my own <strong>AI Agent Orchestration Platform</strong> that manages the full lifecycle of LLM-powered agents." data-ko="최근에는 <strong>AI API 연동</strong>과 <strong>FHIR 기반 헬스케어 시스템</strong> 개발에 집중하고 있습니다. Google Vertex AI와 GPT-4를 활용한 프로덕션 수준의 AI 파이프라인을 구축했으며, LLM 에이전트의 전체 생명주기를 관리하는 <strong>AI Agent Orchestration Platform</strong>을 자체 개발했습니다.">Recently, I've been focused on <strong>AI API integration</strong> and <strong>FHIR-based healthcare systems</strong> — building production-grade AI pipelines with Google Vertex AI and OpenAI GPT-4, and developing my own <strong>AI Agent Orchestration Platform</strong> that manages the full lifecycle of LLM-powered agents.</p>
 
         <div class="about-info">
-          <div class="info-item"><span class="info-icon">📍</span> Suwon-si, Gyeonggi-do, South Korea · 경기도 수원시</div>
-          <div class="info-item"><span class="info-icon">🏢</span> Founder, MSoftech (주식회사 엠소프텍)</div>
-          <div class="info-item"><span class="info-icon">📧</span> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e18c888f8b948f86d3d7d3d2a1868c80888dcf828e8c">[email&#160;protected]</a></div>
-          <div class="info-item"><span class="info-icon">🎓</span> B.E. Computer Software Engineering, Sungshin Women's University</div>
+          <div class="info-item"><span class="info-icon">📍</span> <span data-en="Suwon-si, Gyeonggi-do, South Korea" data-ko="Suwon-si, Gyeonggi-do, South Korea">Suwon-si, Gyeonggi-do, South Korea</span></div>
+          <div class="info-item"><span class="info-icon">🏢</span> <span data-en="Founder, MSoftech" data-ko="Founder, MSoftech">Founder, MSoftech (주식회사 엠소프텍)</span></div>
+          <div class="info-item"><span class="info-icon">📧</span> <a href="/cdn-cgi/l/email-protection#deb3b7b0b4abb0b9ece8eced9eb9b3bfb7b2f0bdb1b3"><span class="__cf_email__" data-cfemail="b2dfdbdcd8c7dcd580848081f2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a></div>
+          <div class="info-item"><span class="info-icon">🎓</span> <span data-en="B.E. Computer Software Engineering, Sungshin Women's University" data-ko="B.E. Computer Software Engineering, Sungshin Women's University">B.E. Computer Software Engineering, Sungshin Women's University</span></div>
         </div>
       </div>
 
       <div class="about-stats">
         <div class="stat-card">
           <div class="stat-card-num">10+</div>
-          <div class="stat-card-en">Years of Experience</div>
-          <div class="stat-card-ko">개발 경력</div>
+          <div class="stat-card-en" data-en="Years of Experience" data-ko="Years of Experience">Years of Experience</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-num">6</div>
-          <div class="stat-card-en">Major Project Domains</div>
-          <div class="stat-card-ko">주요 프로젝트 도메인</div>
+          <div class="stat-card-en" data-en="Major Project Domains" data-ko="Major Project Domains">Major Project Domains</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-num">EST</div>
-          <div class="stat-card-en">U.S. Remote Ready</div>
-          <div class="stat-card-ko">미국 시간대 원격 근무 가능</div>
+          <div class="stat-card-en" data-en="U.S. Remote Ready" data-ko="U.S. Remote Ready">U.S. Remote Ready</div>
         </div>
       </div>
     </div>
@@ -1129,9 +1154,9 @@ footer {
 
 <!-- ── TECH STACK ── -->
 <section class="section" id="skills">
-  <div class="eyebrow">Technical Skills</div>
-  <h2 class="section-title">Tech Stack</h2>
-  <p class="section-title-ko">기술 스택</p>
+  <div class="eyebrow" data-en="Technical Skills" data-ko="Technical Skills">Technical Skills</div>
+  <h2 class="section-title" data-en="Tech Stack" data-ko="Tech Stack">Tech Stack</h2>
+  <p class="section-title-ko"></p>
   <div class="tech-categories reveal">
 
     <div class="tech-cat">
@@ -1213,155 +1238,121 @@ footer {
 <!-- ── PROJECTS ── -->
 <section class="section-full" id="projects">
   <div class="section-inner">
-    <div class="eyebrow">Work</div>
-    <h2 class="section-title">Projects</h2>
-    <p class="section-title-ko">프로젝트</p>
+    <div class="eyebrow" data-en="Work" data-ko="Work">Work</div>
+    <h2 class="section-title" data-en="Projects" data-ko="Projects">Projects</h2>
+    <p class="section-title-ko"></p>
     <div class="projects-grid reveal">
 
       <a href="clinical-nursing-emr/" class="project-card">
-        <div class="project-card-header c1">
-          <span class="project-year">2025</span>
-          <span class="project-type">Team Project</span>
-        </div>
+        <div class="project-card-header c1"></div>
         <div class="project-card-body">
-          <div class="project-card-title">Clinical Nursing EMR</div>
-          <div class="project-card-title-ko">AI 기반 간호교육 플랫폼</div>
-          <div class="project-card-desc">AI-powered EMR simulation platform for nursing students with 6 AI Agents evaluating 55 criteria in real time.</div>
-          <div class="project-card-desc-ko">6개 AI Agent가 55개 항목을 실시간 자동 평가하는 간호대학생 EMR 실습 플랫폼</div>
+          <div class="project-card-title" data-en="Clinical Nursing EMR" data-ko="Clinical Nursing EMR">Clinical Nursing EMR</div>
+          <div class="project-card-desc" data-en="AI-powered EMR simulation platform for nursing students with 6 AI Agents evaluating 55 criteria in real time." data-ko="간호대학생을 위한 AI 기반 EMR 실습 플랫폼. 6개 AI 에이전트가 55개 평가 항목을 실시간으로 자동 채점합니다.">AI-powered EMR simulation platform for nursing students with 6 AI Agents evaluating 55 criteria in real time.</div>
           <div class="project-card-tags">
             <span class="project-card-tag">React 18</span>
             <span class="project-card-tag">Spring Boot</span>
             <span class="project-card-tag">Vertex AI</span>
             <span class="project-card-tag">MariaDB</span>
           </div>
-          <span class="project-card-link">View Project</span>
+          <span class="project-card-link" data-en="View Project" data-ko="View Project">View Project</span>
         </div>
       </a>
 
       <a href="fhir-emr/" class="project-card">
-        <div class="project-card-header c2">
-          <span class="project-year">2024–25</span>
-          <span class="project-type">Solo Project</span>
-        </div>
+        <div class="project-card-header c2"></div>
         <div class="project-card-body">
-          <div class="project-card-title">FHIR EMR</div>
-          <div class="project-card-title-ko">전자의무기록 시스템</div>
-          <div class="project-card-desc">KR Core FHIR R4-based full EMR system covering the complete clinical workflow end-to-end.</div>
-          <div class="project-card-desc-ko">KR Core FHIR R4 기반 진료 전 주기 전자의무기록 시스템 (솔로 개발)</div>
+          <div class="project-card-title" data-en="FHIR EMR" data-ko="FHIR EMR">FHIR EMR</div>
+          <div class="project-card-desc" data-en="KR Core FHIR R4-based full EMR system covering the complete clinical workflow end-to-end." data-ko="KR Core FHIR R4 표준을 준수하는 풀스택 전자의무기록 시스템. 진료 전 과정을 단독으로 설계·개발했습니다.">KR Core FHIR R4-based full EMR system covering the complete clinical workflow end-to-end.</div>
           <div class="project-card-tags">
             <span class="project-card-tag">React</span>
             <span class="project-card-tag">FHIR R4</span>
             <span class="project-card-tag">Spring Boot</span>
             <span class="project-card-tag">HAPI FHIR</span>
           </div>
-          <span class="project-card-link">View Project</span>
+          <span class="project-card-link" data-en="View Project" data-ko="View Project">View Project</span>
         </div>
       </a>
 
       <a href="my-health-coach/" class="project-card">
-        <div class="project-card-header c3">
-          <span class="project-year">2024</span>
-          <span class="project-type">Team Project</span>
-        </div>
+        <div class="project-card-header c3"></div>
         <div class="project-card-body">
-          <div class="project-card-title">My Health Coach</div>
-          <div class="project-card-title-ko">AI 기반 헬스케어 플랫폼</div>
-          <div class="project-card-desc">Diabetes & hypertension management app powered by GPT-4 and Google Gemini with FHIR R4 data standards.</div>
-          <div class="project-card-desc-ko">GPT-4 · Gemini 기반 당뇨·고혈압 통합 관리 플랫폼 (Flutter + React)</div>
+          <div class="project-card-title" data-en="My Health Coach" data-ko="My Health Coach">My Health Coach</div>
+          <div class="project-card-desc" data-en="Diabetes & hypertension management app powered by GPT-4 and Google Gemini with FHIR R4 data standards." data-ko="GPT-4 · Google Gemini 기반 당뇨·고혈압 통합 관리 모바일 앱. FHIR R4 데이터 표준을 준수하며 Flutter로 개발했습니다.">Diabetes & hypertension management app powered by GPT-4 and Google Gemini with FHIR R4 data standards.</div>
           <div class="project-card-tags">
             <span class="project-card-tag">Flutter</span>
             <span class="project-card-tag">GPT-4</span>
             <span class="project-card-tag">Gemini</span>
             <span class="project-card-tag">HAPI FHIR</span>
           </div>
-          <span class="project-card-link">View Project</span>
+          <span class="project-card-link" data-en="View Project" data-ko="View Project">View Project</span>
         </div>
       </a>
 
       <a href="groundwater/" class="project-card">
-        <div class="project-card-header c4">
-          <span class="project-year">2023</span>
-          <span class="project-type">Solo Project</span>
-        </div>
+        <div class="project-card-header c4"></div>
         <div class="project-card-body">
-          <div class="project-card-title">Groundwater Platform</div>
-          <div class="project-card-title-ko">지하수 개발 관리 플랫폼</div>
-          <div class="project-card-desc">Full-cycle groundwater development management system with automated water quality analysis reports.</div>
-          <div class="project-card-desc-ko">지하수 개발 전 주기 관리 및 수질 분석 자동 리포트 생성 플랫폼 (솔로)</div>
+          <div class="project-card-title" data-en="Groundwater Platform" data-ko="Groundwater Platform">Groundwater Platform</div>
+          <div class="project-card-desc" data-en="Full-cycle groundwater development management system with automated water quality analysis reports." data-ko="지하수 개발 전 주기를 관리하고 수질 분석 리포트를 자동 생성하는 통합 플랫폼. 단독으로 설계·개발했습니다.">Full-cycle groundwater development management system with automated water quality analysis reports.</div>
           <div class="project-card-tags">
             <span class="project-card-tag">React</span>
             <span class="project-card-tag">Next.js</span>
             <span class="project-card-tag">Node.js</span>
             <span class="project-card-tag">GCP</span>
           </div>
-          <span class="project-card-link">View Project</span>
+          <span class="project-card-link" data-en="View Project" data-ko="View Project">View Project</span>
         </div>
       </a>
 
       <a href="#" class="project-card">
-        <div class="project-card-header c5">
-          <span class="project-year">2021–22</span>
-          <span class="project-type">Remote · U.S. EST</span>
-        </div>
+        <div class="project-card-header c5"></div>
         <div class="project-card-body">
-          <div class="project-card-title">Samsung SDSA</div>
-          <div class="project-card-title-ko">IT 디바이스 서비스 관리</div>
-          <div class="project-card-desc">Full-time remote project with Samsung Electronics America (EST). IT Device Service Management System.</div>
-          <div class="project-card-desc-ko">삼성전자 미국법인 미국 EST 풀타임 원격 근무 · eProcess IT 디바이스 관리 시스템</div>
+          <div class="project-card-title" data-en="Samsung SDSA" data-ko="Samsung SDSA">Samsung SDSA</div>
+          <div class="project-card-desc" data-en="Full-time remote project with Samsung Electronics America (EST). IT Device Service Management System." data-ko="삼성전자 미국법인(SDSA)에서 미국 EST 기준 풀타임 원격으로 수행한 IT 기기 서비스 관리 시스템 개발 프로젝트입니다.">Full-time remote project with Samsung Electronics America (EST). IT Device Service Management System.</div>
           <div class="project-card-tags">
             <span class="project-card-tag">Java</span>
             <span class="project-card-tag">Spring</span>
             <span class="project-card-tag">Oracle</span>
             <span class="project-card-tag">Highcharts</span>
           </div>
-          <span class="project-card-link">View Details</span>
+          <span class="project-card-link" data-en="View Details" data-ko="View Details">View Details</span>
         </div>
       </a>
 
       <a href="#" class="project-card">
-        <div class="project-card-header c6">
-          <span class="project-year">2014–21</span>
-          <span class="project-type">Enterprise</span>
-        </div>
+        <div class="project-card-header c6"></div>
         <div class="project-card-body">
-          <div class="project-card-title">Samsung Electronics</div>
-          <div class="project-card-title-ko">MES / PLM 엔터프라이즈</div>
-          <div class="project-card-desc">Large-scale MES 4.0 Smart Factory and PLM systems across multiple Samsung sites (Vietnam, Korea).</div>
-          <div class="project-card-desc-ko">삼성전자 MES 4.0 스마트팩토리 · PLM 반도체/배터리 시스템 다수 수행</div>
+          <div class="project-card-title" data-en="Samsung Electronics" data-ko="Samsung Electronics">Samsung Electronics</div>
+          <div class="project-card-desc" data-en="Large-scale MES 4.0 Smart Factory and PLM systems across multiple Samsung sites (Vietnam, Korea)." data-ko="삼성전자 베트남·한국 사업장에 걸친 MES 4.0 스마트팩토리 및 PLM 반도체·배터리 시스템 대형 프로젝트 다수 수행.">Large-scale MES 4.0 Smart Factory and PLM systems across multiple Samsung sites (Vietnam, Korea).</div>
           <div class="project-card-tags">
             <span class="project-card-tag">Java</span>
             <span class="project-card-tag">Spring</span>
             <span class="project-card-tag">Nexacro</span>
             <span class="project-card-tag">Oracle</span>
           </div>
-          <span class="project-card-link">View Details</span>
+          <span class="project-card-link" data-en="View Details" data-ko="View Details">View Details</span>
         </div>
       </a>
 
     </div>
   </div>
 </section>
+</section>
 
 <!-- ── CORE TECHNOLOGY ── -->
 <section class="core-tech-section" id="core-technology">
   <div class="core-tech-inner">
-    <div class="core-tech-eyebrow">Proprietary Platform</div>
-    <h2 class="core-tech-title">Core Technology</h2>
-    <p class="core-tech-title-ko">핵심 기술 자산</p>
+    <div class="core-tech-eyebrow" data-en="Proprietary Platform" data-ko="Proprietary Platform">Proprietary Platform</div>
+    <h2 class="core-tech-title" data-en="Core Technology" data-ko="Core Technology">Core Technology</h2>
+    <p class="core-tech-title-ko"></p>
 
     <div class="core-tech-card reveal">
-
       <div class="core-tech-left">
         <div>
-          <div class="core-tech-label">AI Infrastructure</div>
-          <h3 class="core-tech-name">AI Agent Orchestration Platform</h3>
-          <p class="core-tech-name-ko">AI 에이전트 오케스트레이션 플랫폼</p>
-          <p class="core-tech-desc">
-            A <strong>production-grade AI Agent pipeline</strong> built from scratch — not a wrapper around existing tools. It manages the full lifecycle of LLM-powered agents: prompt versioning, schema validation, multi-provider routing (Gemini / OpenAI), real-time execution logging, and structured output persistence to a FHIR R4 database.
-          </p>
-          <p class="core-tech-desc" style="margin-bottom:28px;">
-            Deployed inside <strong>My Health Coach</strong> to power four specialized health analysis agents, with a live Agent Ops control panel that streams each pipeline stage in real time.
-          </p>
+          <div class="core-tech-label" data-en="AI Infrastructure" data-ko="AI Infrastructure">AI Infrastructure</div>
+          <h3 class="core-tech-name" data-en="AI Agent Orchestration Platform" data-ko="AI Agent Orchestration Platform">AI Agent Orchestration Platform</h3>
+          <p class="core-tech-name-ko"></p>
+          <p class="core-tech-desc" data-en="A <strong>production-grade AI Agent pipeline</strong> built from scratch — not a wrapper around existing tools. It manages the full lifecycle of LLM-powered agents: prompt versioning, schema validation, multi-provider routing (Gemini / OpenAI), real-time execution logging, and structured output persistence to a FHIR R4 database." data-ko="기존 도구를 감싼 래퍼가 아닌, <strong>처음부터 직접 설계·구현한 프로덕션 수준의 AI 에이전트 파이프라인</strong>입니다. 프롬프트 버전 관리, 스키마 검증, 멀티 프로바이더 라우팅(Gemini / OpenAI), 실시간 실행 로그, FHIR R4 데이터베이스 저장까지 LLM 에이전트의 전체 생명주기를 관리합니다.">A <strong>production-grade AI Agent pipeline</strong> built from scratch — not a wrapper around existing tools. It manages the full lifecycle of LLM-powered agents: prompt versioning, schema validation, multi-provider routing (Gemini / OpenAI), real-time execution logging, and structured output persistence to a FHIR R4 database.</p>
+          <p class="core-tech-desc" style="margin-bottom:28px;" data-en="Deployed inside <strong>My Health Coach</strong> to power four specialized health analysis agents, with a live Agent Ops control panel that streams each pipeline stage in real time." data-ko="<strong>My Health Coach</strong>에 배포되어 4개의 특화 건강 분석 에이전트를 구동하고 있으며, 각 파이프라인 단계를 실시간으로 스트리밍하는 Agent Ops 컨트롤 패널을 탑재하고 있습니다.">Deployed inside <strong>My Health Coach</strong> to power four specialized health analysis agents, with a live Agent Ops control panel that streams each pipeline stage in real time.</p>
           <div class="core-tech-tags">
             <span class="core-tech-tag">Prompt Registry</span>
             <span class="core-tech-tag">Schema Validation</span>
@@ -1373,49 +1364,49 @@ footer {
             <span class="core-tech-tag">FHIR R4</span>
           </div>
         </div>
-        <a href="./agent-orchestration/" class="core-tech-link">View Full Architecture</a>
+        <a href="./agent-orchestration/" class="core-tech-link" data-en="View Full Architecture" data-ko="View Full Architecture">View Full Architecture</a>
       </div>
 
       <div class="core-tech-right">
-        <div class="core-tech-right-label">Platform Capabilities · 핵심 기능</div>
+        <div class="core-tech-right-label" data-en="Platform Capabilities" data-ko="Platform Capabilities">Platform Capabilities · 핵심 기능</div>
 
         <div class="core-feature">
           <div class="core-feature-num">01</div>
           <div>
-            <div class="core-feature-title">Prompt Registry &amp; Versioning</div>
-            <div class="core-feature-desc">Centralized prompt store with template loading, variable injection, and version control — prompts are managed as first-class assets, not hardcoded strings.</div>
+            <div class="core-feature-title" data-en="Prompt Registry &amp; Versioning" data-ko="Prompt Registry &amp; Versioning">Prompt Registry &amp; Versioning</div>
+            <div class="core-feature-desc" data-en="Centralized prompt store with template loading, variable injection, and version control — prompts are managed as first-class assets, not hardcoded strings." data-ko="템플릿 로딩, 변수 주입, 버전 관리를 지원하는 중앙화된 프롬프트 저장소입니다. 프롬프트를 하드코딩 문자열이 아닌 독립적인 자산으로 관리합니다.">Centralized prompt store with template loading, variable injection, and version control — prompts are managed as first-class assets, not hardcoded strings.</div>
           </div>
         </div>
 
         <div class="core-feature">
           <div class="core-feature-num">02</div>
           <div>
-            <div class="core-feature-title">Output Schema Validation</div>
-            <div class="core-feature-desc">Every LLM response is validated against a predefined JSON schema before processing. Malformed outputs are caught at the pipeline boundary, not in downstream code.</div>
+            <div class="core-feature-title" data-en="Output Schema Validation" data-ko="Output Schema Validation">Output Schema Validation</div>
+            <div class="core-feature-desc" data-en="Every LLM response is validated against a predefined JSON schema before processing. Malformed outputs are caught at the pipeline boundary, not in downstream code." data-ko="모든 LLM 응답은 사전 정의된 JSON 스키마와 대조하여 검증됩니다. 형식 오류는 다운스트림 코드가 아닌 파이프라인 경계에서 즉시 차단됩니다.">Every LLM response is validated against a predefined JSON schema before processing. Malformed outputs are caught at the pipeline boundary, not in downstream code.</div>
           </div>
         </div>
 
         <div class="core-feature">
           <div class="core-feature-num">03</div>
           <div>
-            <div class="core-feature-title">Multi-Provider LLM Routing</div>
-            <div class="core-feature-desc">Runtime-selectable AI provider — Google Gemini 2.5 Flash or OpenAI GPT-4 — with a unified interface. Switch providers without changing agent logic.</div>
+            <div class="core-feature-title" data-en="Multi-Provider LLM Routing" data-ko="Multi-Provider LLM Routing">Multi-Provider LLM Routing</div>
+            <div class="core-feature-desc" data-en="Runtime-selectable AI provider — Google Gemini 2.5 Flash or OpenAI GPT-4 — with a unified interface. Switch providers without changing agent logic." data-ko="런타임에서 Google Gemini 2.5 Flash 또는 OpenAI GPT-4를 선택할 수 있는 통합 인터페이스. 에이전트 로직 변경 없이 AI 프로바이더를 전환할 수 있습니다.">Runtime-selectable AI provider — Google Gemini 2.5 Flash or OpenAI GPT-4 — with a unified interface. Switch providers without changing agent logic.</div>
           </div>
         </div>
 
         <div class="core-feature">
           <div class="core-feature-num">04</div>
           <div>
-            <div class="core-feature-title">Real-Time Agent Ops Log</div>
-            <div class="core-feature-desc">Live execution log streams each pipeline stage with timestamps and status — giving full observability into what the agent is doing at every step.</div>
+            <div class="core-feature-title" data-en="Real-Time Agent Ops Log" data-ko="Real-Time Agent Ops Log">Real-Time Agent Ops Log</div>
+            <div class="core-feature-desc" data-en="Live execution log streams each pipeline stage with timestamps and status — giving full observability into what the agent is doing at every step." data-ko="각 파이프라인 단계를 타임스탬프와 상태와 함께 실시간으로 스트리밍합니다. 에이전트가 매 단계에서 무엇을 하는지 완전히 관찰할 수 있는 XAI 기능입니다.">Live execution log streams each pipeline stage with timestamps and status — giving full observability into what the agent is doing at every step.</div>
           </div>
         </div>
 
         <div class="core-feature">
           <div class="core-feature-num">05</div>
           <div>
-            <div class="core-feature-title">FHIR-Compliant Output Persistence</div>
-            <div class="core-feature-desc">Validated AI outputs are mapped to DTOs and persisted to a KR Core FHIR R4 database — ensuring healthcare data interoperability from AI generation to storage.</div>
+            <div class="core-feature-title" data-en="FHIR-Compliant Output Persistence" data-ko="FHIR-Compliant Output Persistence">FHIR-Compliant Output Persistence</div>
+            <div class="core-feature-desc" data-en="Validated AI outputs are mapped to DTOs and persisted to a KR Core FHIR R4 database — ensuring healthcare data interoperability from AI generation to storage." data-ko="검증된 AI 출력을 DTO로 매핑하여 KR Core FHIR R4 데이터베이스에 저장합니다. AI 생성부터 저장까지 헬스케어 데이터 상호운용성을 보장합니다.">Validated AI outputs are mapped to DTOs and persisted to a KR Core FHIR R4 database — ensuring healthcare data interoperability from AI generation to storage.</div>
           </div>
         </div>
 
@@ -1428,18 +1419,17 @@ footer {
 <section class="section" id="contact">
   <div class="contact-wrap reveal">
     <div class="contact-text">
-      <div class="eyebrow">Contact</div>
-      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,52px); font-weight:700; line-height:1.1; margin-bottom:6px;">Let's Work<br>Together</h2>
-      <p class="contact-text-ko">함께 일해요</p>
-      <p>I'm actively looking for <strong>U.S. remote opportunities</strong> and available full-time on EST/PST schedules.</p>
-      <p style="font-size:13px; color:var(--light); margin-bottom:28px;">미국 원격 프로젝트를 적극적으로 찾고 있으며, 미국 EST/PST 시간대에 맞춰 풀타임 근무 가능합니다.</p>
+      <div class="eyebrow" data-en="Contact" data-ko="Contact">Contact</div>
+      <h2 style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,52px); font-weight:700; line-height:1.1; margin-bottom:6px;" data-en="Let's Work<br>Together" data-ko="Let's Work<br>Together">Let's Work<br>Together</h2>
+      <p style="font-size:14px;color:var(--light);margin-bottom:20px;" data-en="" data-ko=""></p>
+      <p data-en="I'm actively looking for <strong>U.S. remote opportunities</strong> and available full-time on EST/PST schedules." data-ko="미국 원격 프로젝트를 적극적으로 찾고 있으며, <strong>미국 EST/PST 시간대</strong>에 맞춰 풀타임 근무가 가능합니다.">I'm actively looking for <strong>U.S. remote opportunities</strong> and available full-time on EST/PST schedules.</p>
 
       <div class="contact-links">
-        <a href="/cdn-cgi/l/email-protection#9ef3f7f0f4ebf0f9aca8acaddef9f3fff7f2b0fdf1f3" class="contact-link">
+        <a href="/cdn-cgi/l/email-protection#93fefafdf9e6fdf4a1a5a1a0d3f4fef2faffbdf0fcfe" class="contact-link">
           <span class="contact-link-icon">✉️</span>
           <div class="contact-link-text">
             <div class="contact-link-label">Email</div>
-            <div class="contact-link-value"><span class="__cf_email__" data-cfemail="96fbfff8fce3f8f1a4a0a4a5d6f1fbf7fffab8f5f9fb">[email&#160;protected]</span></div>
+            <div class="contact-link-value"><span class="__cf_email__" data-cfemail="a8c5c1c6c2ddc6cf9a9e9a9be8cfc5c9c1c486cbc7c5">[email&#160;protected]</span></div>
           </div>
           <span class="contact-link-arrow">→</span>
         </a>
@@ -1463,27 +1453,27 @@ footer {
     </div>
 
     <div class="contact-card">
-      <h3>Open to Remote</h3>
-      <p>Looking for U.S. remote opportunities<br>미국 원격 프로젝트 적극 구직 중</p>
+      <h3 data-en="Open to Remote" data-ko="Open to Remote">Open to Remote</h3>
+      <p data-en="Looking for U.S. remote opportunities" data-ko="미국 원격 프로젝트 적극 구직 중">Looking for U.S. remote opportunities<br>미국 원격 프로젝트 적극 구직 중</p>
       <div class="contact-card-stats">
         <div class="contact-stat">
           <div class="contact-stat-num">EST</div>
-          <div class="contact-stat-label">Time Zone Ready</div>
+          <div class="contact-stat-label" data-en="Time Zone Ready" data-ko="Time Zone Ready">Time Zone Ready</div>
         </div>
         <div class="contact-stat">
           <div class="contact-stat-num">10+</div>
-          <div class="contact-stat-label">Years Exp.</div>
+          <div class="contact-stat-label" data-en="Years Exp." data-ko="Years Exp.">Years Exp.</div>
         </div>
         <div class="contact-stat">
           <div class="contact-stat-num">AI</div>
-          <div class="contact-stat-label">Integration</div>
+          <div class="contact-stat-label" data-en="Integration" data-ko="Integration">Integration</div>
         </div>
         <div class="contact-stat">
           <div class="contact-stat-num">FHIR</div>
-          <div class="contact-stat-label">Healthcare</div>
+          <div class="contact-stat-label" data-en="Healthcare" data-ko="Healthcare">Healthcare</div>
         </div>
       </div>
-      <a href="/cdn-cgi/l/email-protection#cca1a5a2a6b9a2abfefafeff8caba1ada5a0e2afa3a1" class="contact-btn">Send a Message ✉</a>
+      <a href="/cdn-cgi/l/email-protection#dbb6b2b5b1aeb5bce9ede9e89bbcb6bab2b7f5b8b4b6" class="contact-btn" data-en="Send a Message ✉" data-ko="Send a Message ✉">Send a Message ✉</a>
     </div>
   </div>
 </section>
@@ -1491,11 +1481,34 @@ footer {
 <!-- ── FOOTER ── -->
 <footer>
   <div class="footer-name">Min Jung Park (박민정) · MSoftech</div>
-  <div class="footer-copy">© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)</div>
+  <div class="footer-copy" data-en="© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)" data-ko="© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)">© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)</div>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Scroll reveal
+  // ── LANG TOGGLE ──
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    localStorage.setItem('lang', lang);
+
+    // 버튼 active 상태
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.toLowerCase() === lang || (lang === 'ko' && btn.textContent === 'KR') || (lang === 'en' && btn.textContent === 'EN'));
+    });
+
+    // data-en / data-ko 속성을 가진 모든 요소 텍스트 전환
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = lang === 'ko' ? el.getAttribute('data-ko') : el.getAttribute('data-en');
+      if (text !== null && text !== '') {
+        el.innerHTML = text;
+      }
+    });
+  }
+
+  // 페이지 로드 시 저장된 언어 적용 (기본값 EN)
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
+
+  // ── SCROLL REVEAL ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -1512,5 +1525,21 @@ footer {
     observer.observe(el);
   });
 
-  // Nav active state
-  const sections = documen
+  // ── NAV ACTIVE STATE ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector('.nav-links a[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
