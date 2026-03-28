@@ -149,7 +149,75 @@ nav {
 .dot { width:10px; height:10px; border-radius:50%; }
 .dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
 .screen-bar-title { flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
-.screen-img { width:100%; display:block; }
+
+/* 이미지 높이 통일 */
+.screen-img {
+  width: 100%;
+  display: block;
+  height: 360px;
+  object-fit: cover;
+  object-position: top;
+}
+/* 전체 너비 카드는 조금 더 높게 */
+.screen-card-full .screen-img {
+  height: 480px;
+}
+
+/* 클릭 확장 기능 */
+.screen-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.screen-img-wrap.collapsible {
+  cursor: pointer;
+}
+.screen-img-wrap.collapsible .screen-img {
+  transition: height 0.4s ease;
+}
+.screen-img-wrap.collapsible.expanded .screen-img {
+  height: auto !important;
+  max-height: none !important;
+}
+.screen-img-wrap.collapsible::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(247,244,239,0.95));
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.screen-img-wrap.collapsible.expanded::after {
+  opacity: 0;
+}
+.expand-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 0;
+  background: var(--bg);
+  border: none;
+  border-top: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.05em;
+}
+.expand-btn:hover { background: var(--accent-light); }
+.expand-btn .expand-icon {
+  display: inline-block;
+  transition: transform 0.3s;
+  font-style: normal;
+}
+.screen-img-wrap.expanded ~ .expand-btn .expand-icon {
+  transform: rotate(180deg);
+}
+
 .screen-desc { padding:24px 28px; }
 .two-col { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
 
@@ -355,9 +423,16 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <h2 class="section-title">Key Screens</h2>
 
     <!-- Patient Dashboard -->
-    <div class="screen-card">
+    <div class="screen-card screen-card-full">
       <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">환자 대시보드 · Patient Dashboard</div></div>
-      <img class="screen-img" src="img/0_환자대시보드_전체.JPG" alt="Patient Dashboard">
+      <div class="screen-img-wrap collapsible" id="wrap-dashboard">
+        <div class="screen-img-wrap" id="wrap-0환자대시보드전체">
+        <img class="screen-img" src="img/0_환자대시보드_전체.JPG" alt="Patient Dashboard">
+      </div>
+      </div>
+      <button class="expand-btn" onclick="toggleExpand('wrap-dashboard', this)">
+        <i class="expand-icon">↓</i> View Full Dashboard
+      </button>
       <div class="screen-desc">
         <div class="desc-en" data-en="A comprehensive dashboard aggregating all clinical data — <strong>10 key lab metrics</strong> with trend charts, AI-generated comprehensive assessment, medication history across 5 visits, exam timeline, and lifestyle guidance. Shows &ldquo;Positive Recovery Trend&rdquo; with AI analysis." data-ko="모든 진료 데이터를 한 화면에 집약한 종합 대시보드입니다. CA 15-3, CEA, 백혈구 등 10개 주요 검사 수치 추이 차트, AI 자동 종합 평가, 5회차 복용 약물 이력, 검사 타임라인, 생활 습관 가이드를 제공합니다.">A comprehensive dashboard aggregating all clinical data — <strong>10 key lab metrics</strong> with trend charts, AI-generated comprehensive assessment, medication history across 5 visits, exam timeline, and lifestyle guidance. Shows "Positive Recovery Trend" with AI analysis.</div>
       </div>
@@ -367,14 +442,18 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="two-col">
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진료 흐름 가이드</div></div>
+        <div class="screen-img-wrap" id="wrap-1진료흐름가이드">
         <img class="screen-img" src="img/1_진료흐름가이드.JPG" alt="Clinical Flow Guide">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Step-by-step guide for the complete FHIR clinical workflow, linking each step to the <strong>KR Core Implementation Guide</strong>." data-ko="FHIR 진료 흐름을 5단계로 안내하며, 각 단계별 KR Core Implementation Guide 링크를 제공합니다.">Step-by-step guide for the complete FHIR clinical workflow, linking each step to the <strong>KR Core Implementation Guide</strong>.</div>
         </div>
       </div>
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">FHIR 서비스 포트폴리오</div></div>
+        <div class="screen-img-wrap" id="wrap-2fhir포트폴리오">
         <img class="screen-img" src="img/2_FHIR포트폴리오.JPG" alt="FHIR Portfolio">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="System architecture: <strong>Data Source → KR Core IG FHIR Hub → Applications</strong> (monitoring dashboard, mobile app, big data analytics)." data-ko="데이터 소스 → KR Core IG FHIR 허브 → 의료진 대시보드/환자 모바일 앱/빅데이터 분석으로 이어지는 전체 아키텍처입니다.">System architecture: <strong>Data Source → KR Core IG FHIR Hub → Applications</strong> (monitoring dashboard, mobile app, big data analytics).</div>
         </div>
@@ -385,14 +464,18 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="two-col">
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">환자 등록 · KR Core Patient</div></div>
+        <div class="screen-img-wrap" id="wrap-3환자등록">
         <img class="screen-img" src="img/3_환자등록.JPG" alt="Patient Registration">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Patient registration compliant with <strong>KR Core FHIR Patient</strong>. Supports national ID, address lookup, insurance type, and guardian contacts." data-ko="KR Core FHIR Patient 표준을 준수합니다. 주민등록번호, 주소 검색, 보험 유형, 보호자 연락처를 지원합니다.">Patient registration compliant with <strong>KR Core FHIR Patient</strong>. Supports national ID, address lookup, insurance type, and guardian contacts.</div>
         </div>
       </div>
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">의사 등록 · KR Core Practitioner</div></div>
+        <div class="screen-img-wrap" id="wrap-4의사등록">
         <img class="screen-img" src="img/4_의사등록.JPG" alt="Doctor Registration">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Practitioner registration with <strong>medical license ID</strong>, specialty, role (Primary Performer/PPRF), and clinic schedule (days + hours)." data-ko="의사면허번호, 전문과목, 역할(Primary Performer/PPRF), 진료 요일 및 시간까지 등록합니다.">Practitioner registration with <strong>medical license ID</strong>, specialty, role (Primary Performer/PPRF), and clinic schedule (days + hours).</div>
         </div>
@@ -403,14 +486,18 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="two-col">
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진료 등록 · KR Core Encounter</div></div>
+        <div class="screen-img-wrap" id="wrap-5진료등록">
         <img class="screen-img" src="img/5_진료등록.JPG" alt="Encounter Registration">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Encounter registration with <strong>SNOMED-CT coded symptoms</strong>, visit type, assigned doctor, location, and insurance information." data-ko="SNOMED-CT 코드 기반 진료 사유, 외래/입원 구분, 담당 의사, 진료 기관 정보를 등록합니다.">Encounter registration with <strong>SNOMED-CT coded symptoms</strong>, visit type, assigned doctor, location, and insurance information.</div>
         </div>
       </div>
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">관찰 결과 등록 · KR Core Observation</div></div>
+        <div class="screen-img-wrap" id="wrap-6관찰결과등록1">
         <img class="screen-img" src="img/6_관찰결과등록1.JPG" alt="Observation Registration">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Comprehensive observation entry: <strong>Vital Signs, Lab Results, Function Tests</strong> (EKG, Pulmonary), Blood Pressure, Height, Weight, SpO2, Heart Rate, Respiratory Rate — all with LOINC codes." data-ko="활력징후, 검사 결과, 기능 검사(EKG, 폐기능), 혈압, 신장, 체중, SpO2, 맥박, 호흡수를 LOINC 코드 기반으로 등록합니다.">Comprehensive observation entry: <strong>Vital Signs, Lab Results, Function Tests</strong> (EKG, Pulmonary), Blood Pressure, Height, Weight, SpO2, Heart Rate, Respiratory Rate — all with LOINC codes.</div>
         </div>
@@ -420,7 +507,9 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <!-- Diagnostic Report -->
     <div class="screen-card">
       <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진단 보고서 등록 · KR Core DiagnosticReport</div></div>
-      <img class="screen-img" src="img/7_진단보고서등록.JPG" alt="Diagnostic Report">
+      <div class="screen-img-wrap" id="wrap-7진단보고서등록">
+        <img class="screen-img" src="img/7_진단보고서등록.JPG" alt="Diagnostic Report">
+      </div>
       <div class="screen-desc">
         <div class="desc-en" data-en="4-tab diagnostic report: <strong>Diagnostic Imaging</strong> (X-Ray, CT, MRI with file attachments), <strong>Function Tests</strong>, <strong>Laboratory Results</strong>, and <strong>Pathology Results</strong>. Each includes EDI codes, Observation linkage, and reading physician assignment." data-ko="Diagnostic Imaging(영상/CT/MRI 파일 첨부), Function Tests, Laboratory Results, Pathology Results 4개 탭으로 구성됩니다. EDI 코드, Observation 연동, 판독 의사 지정을 지원합니다.">4-tab diagnostic report: <strong>Diagnostic Imaging</strong> (X-Ray, CT, MRI with file attachments), <strong>Function Tests</strong>, <strong>Laboratory Results</strong>, and <strong>Pathology Results</strong>. Each includes EDI codes, Observation linkage, and reading physician assignment.</div>
       </div>
@@ -430,14 +519,18 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="two-col">
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">진단(상병) 등록 · KR Core Condition</div></div>
+        <div class="screen-img-wrap" id="wrap-8진단상병등록1">
         <img class="screen-img" src="img/8_진단상병등록1.JPG" alt="Condition Registration">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Condition registration with <strong>SNOMED-CT diagnosis codes</strong>, linked to observations, diagnostic reports, prior visit history, and health checkup records." data-ko="SNOMED-CT 상병 코드 기반으로 진단을 등록합니다. 관찰 이력, 진단 보고서, 타병원 내역, 건강검진 내역이 자동 연동됩니다.">Condition registration with <strong>SNOMED-CT diagnosis codes</strong>, linked to observations, diagnostic reports, prior visit history, and health checkup records.</div>
         </div>
       </div>
       <div class="screen-card">
         <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">약품 처방 등록 · KR Core MedicationRequest</div></div>
+        <div class="screen-img-wrap" id="wrap-9약품처방등록">
         <img class="screen-img" src="img/9_약품처방등록.jpg" alt="Medication Request">
+      </div>
         <div class="screen-desc">
           <div class="desc-en" data-en="Medication request with <strong>EDI/ATC codes</strong>, dosage, frequency, and duration. Includes drug information tabs (basic info, efficacy, dosage, precautions) and prescribing doctor assignment." data-ko="EDI/ATC 코드 기반 약품 처방. 복용량, 복용 시기, 처방 기간을 입력하고 기본정보/효능효과/용법용량/주의사항 탭을 제공합니다.">Medication request with <strong>EDI/ATC codes</strong>, dosage, frequency, and duration. Includes drug information tabs (basic info, efficacy, dosage, precautions) and prescribing doctor assignment.</div>
         </div>
@@ -528,7 +621,50 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 </footer>
 
 <script>
-  function setLang(lang) {
+  // 클릭 확장 토글
+  function toggleExpand(wrapId, btn) {
+    const wrap = document.getElementById(wrapId);
+    const isExpanded = wrap.classList.contains('expanded');
+    wrap.classList.toggle('expanded');
+    const icon = btn.querySelector('.expand-icon');
+    const label = btn.querySelector('.expand-label');
+    if (isExpanded) {
+      icon.textContent = '↓';
+      if (label) label.textContent = btn.getAttribute('data-expand-text') || 'View Full Image';
+    } else {
+      icon.textContent = '↑';
+      if (label) label.textContent = 'Collapse';
+    }
+  }
+
+  // 페이지 로드 후 — 이미지 실제 높이가 600px 초과인 경우 자동으로 collapsible 적용
+  window.addEventListener('load', function() {
+    document.querySelectorAll('.screen-img-wrap').forEach(function(wrap) {
+      const img = wrap.querySelector('.screen-img');
+      if (!img) return;
+
+      // 이미지 자연 높이 확인
+      const naturalH = img.naturalHeight;
+      const naturalW = img.naturalWidth;
+      const renderedW = img.offsetWidth;
+      const renderedH = renderedW * (naturalH / naturalW);
+
+      if (renderedH > 600 && !wrap.classList.contains('collapsible')) {
+        // 자동으로 collapsible 처리
+        wrap.classList.add('collapsible');
+        const card = wrap.closest('.screen-card');
+        if (card) {
+          // expand 버튼 삽입
+          const btn = document.createElement('button');
+          btn.className = 'expand-btn';
+          btn.innerHTML = '<i class="expand-icon">↓</i> <span class="expand-label">View Full Image</span>';
+          btn.onclick = function() { toggleExpand(wrap.id, btn); };
+          wrap.after(btn);
+        }
+      }
+    });
+  });
+</script>
     document.documentElement.setAttribute('data-lang', lang);
     localStorage.setItem('lang', lang);
     document.querySelectorAll('.lang-btn').forEach(btn => {
