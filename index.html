@@ -1016,6 +1016,39 @@ nav {
   line-height: 1.6;
 }
 
+/* ── SCROLL TO TOP ── */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 44px;
+  height: 44px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(196,92,46,0.3);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 99;
+  pointer-events: none;
+}
+.scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scroll-top-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
 /* ── FOOTER ── */
 footer {
   padding: 40px 60px;
@@ -1517,10 +1550,12 @@ footer {
   <div class="footer-copy" data-en="© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)" data-ko="© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)">© 2025 Min Jung Park. Built with ❤️ · Open to U.S. Remote (EST/PST)</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><!-- SCROLL TO TOP -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<script>
   // ── LANG TOGGLE ──
-  function setLang(lang) {
-    document.documentElement.setAttribute('data-lang', lang);
+  function setLang(lang) {    document.documentElement.setAttribute('data-lang', lang);
     localStorage.setItem('lang', lang);
 
     // 버튼 active 상태
@@ -1540,6 +1575,12 @@ footer {
   // 페이지 로드 시 저장된 언어 적용 (기본값 EN)
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
+
+  // ── SCROLL TO TOP ──
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', function() {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  });
 
   // ── SCROLL REVEAL ──
   const observer = new IntersectionObserver((entries) => {
@@ -1574,5 +1615,6 @@ footer {
 
   sections.forEach(s => navObserver.observe(s));
 </script>
+
 </body>
 </html>
