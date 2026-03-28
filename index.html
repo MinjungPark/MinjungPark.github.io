@@ -252,10 +252,22 @@ nav {
 }
 
 /* ── HERO PHOTO ── */
+/* ── HERO SECTION ── */
+.hero-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 60px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 60px;
+}
+
 .hero-photo {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 20px;
   opacity: 0;
   animation: fadeUp 0.7s 0.4s ease forwards;
 }
@@ -287,17 +299,14 @@ nav {
 }
 
 .photo-badge {
-  position: absolute;
-  bottom: 32px; right: -24px;
   background: white;
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 14px 18px;
+  padding: 14px 24px;
   font-size: 11px;
   font-weight: 600;
   color: var(--ink);
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-  z-index: 2;
   text-align: center;
   line-height: 1.5;
 }
@@ -1048,11 +1057,22 @@ footer {
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
   .nav-links { display: none; }
-  .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
-  .hero-photo { order: -1; }
-  .photo-frame { width: 260px; height: 320px; }
+
+  /* Hero */
+  .hero-section {
+    grid-template-columns: 1fr;
+    padding: 100px 24px 60px;
+    text-align: center;
+    gap: 40px;
+  }
+  .hero-text { order: 1; }
+  .hero-photo { order: 2; }
+  .photo-frame { width: 240px; height: 290px; }
+  .photo-frame::before { display: none; }
   .hero-btns { justify-content: center; }
-  .hero-remote { margin: 0 auto 40px; }
+  .hero-remote { margin: 0 auto 32px; }
+
+  /* Sections */
   .section { padding: 60px 24px; }
   .section-full { padding: 60px 24px; }
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -1064,6 +1084,19 @@ footer {
   .core-tech-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 32px 24px; }
   .core-tech-right { padding: 32px 24px; }
   footer { flex-direction: column; gap: 8px; text-align: center; padding: 32px 24px; }
+}
+
+@media (max-width: 480px) {
+  .hero-section { padding: 90px 20px 48px; }
+  .hero-name { font-size: clamp(44px, 14vw, 72px); }
+  .photo-frame { width: 200px; height: 240px; }
+  .photo-badge { padding: 10px 18px; font-size: 10px; }
+  .photo-badge span { font-size: 18px; }
+  .section { padding: 48px 20px; }
+  .section-full { padding: 48px 20px; }
+  .stat-card { padding: 20px 16px; }
+  .projects-grid { gap: 16px; }
+  .core-tech-section { padding: 48px 20px; }
 }
 </style>
 </head>
@@ -1086,7 +1119,7 @@ footer {
 </nav>
 
 <!-- ── HERO ── -->
-<section style="max-width:1200px; margin:0 auto; padding:120px 60px 80px; display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:60px;">
+<section class="hero-section">
   <div class="hero-text">
     <div class="hero-eyebrow" data-en="Full-Stack Developer" data-ko="Full-Stack Developer">Full-Stack Developer</div>
     <h1 class="hero-name">Min Jung<br>Park</h1>
@@ -1094,7 +1127,7 @@ footer {
     <p class="hero-role">
       <span data-en="<strong>AI Integration · React · Spring Boot</strong><br>Building enterprise systems that matter." data-ko="<strong>AI Integration · React · Spring Boot</strong><br>가치 있는 엔터프라이즈 시스템을 만듭니다."><strong>AI Integration · React · Spring Boot</strong><br>Building enterprise systems that matter.</span>
     </p>
-    <div class="hero-remote" data-en="🌐 Available full-time on U.S. EST / PST" data-ko="🌐 Available full-time on U.S. EST / PST">🌐 Available full-time on U.S. EST / PST · 미국 시간대 풀타임 근무 가능</div>
+    <div class="hero-remote" data-en="🌐 Available full-time on U.S. EST / PST" data-ko="🌐 Available full-time on U.S. EST / PST">🌐 Available full-time on U.S. EST / PST</div>
     <div class="hero-btns">
       <a href="#projects" class="btn-primary" data-en="View Projects →" data-ko="View Projects →">View Projects →</a>
       <a href="#contact" class="btn-secondary" data-en="Get in Touch" data-ko="Get in Touch">Get in Touch</a>
@@ -1104,10 +1137,10 @@ footer {
   <div class="hero-photo">
     <div class="photo-frame">
       <img src="profile.png" style="object-position: top center;" alt="Min Jung Park">
-      <div class="photo-badge">
-        <span>10+</span>
-        <span data-en="Years of<br>Experience" data-ko="Years of<br>Experience">Years of<br>Experience</span>
-      </div>
+    </div>
+    <div class="photo-badge">
+      <span>10+</span>
+      <span data-en="Years of<br>Experience" data-ko="Years of<br>Experience">Years of<br>Experience</span>
     </div>
   </div>
 </section>
