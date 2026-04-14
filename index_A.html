@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Min Jung Park — AI Solutions Engineering Lead @ MSoftech</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+:root {
+  --bg: #ecf0fb;
+  --bg-card: #ffffff;
+  --bg-deep: #e6ebf7;
+  --text: #0f1c3f;
+  --text-sub: #4a5a80;
+  --text-dim: #5a6e90;
+  --accent: #2a52d4;
+  --accent-glow: rgba(42,82,212,0.08);
+  --border: rgba(42,82,212,0.20);
+  --border-hover: rgba(42,82,212,0.35);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Pretendard', -apple-system, sans-serif; overflow-x: hidden; line-height: 1.6; word-break: keep-all; overflow-wrap: break-word; }
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 60px;
+  background: rgba(245,247,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 500; color: var(--text-sub); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+.nav-cta { color: var(--accent) !important; border: 1px solid var(--accent); padding: 7px 18px; border-radius: 100px; transition: all 0.2s !important; }
+.nav-cta:hover { background: var(--accent) !important; color: var(--bg) !important; }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.lang-toggle { display: inline-flex; align-items: center; gap: 2px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 100px; padding: 3px; }
+.lang-btn { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: none; background: transparent; color: var(--text-dim); cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
+.lang-btn.active { background: var(--accent); color: var(--bg); }
+.lang-btn:hover:not(.active) { color: var(--text-sub); }
+
+/* MOBILE NAV */
+.nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text-sub); margin: 5px 0; transition: all 0.3s; border-radius: 2px; }
+.mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(245,247,255,0.98); backdrop-filter: blur(16px); padding: 24px; border-bottom: 1px solid var(--border); z-index: 99; }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 14px 0; color: var(--text-sub); text-decoration: none; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.mobile-menu a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  max-width: 1200px; margin: 0 auto;
+  padding: 130px 60px 70px;
+  display: grid; grid-template-columns: 1.1fr 0.9fr;
+  align-items: center; gap: 80px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 28px; opacity: 0; animation: fadeUp 0.6s 0.2s ease forwards;
+}
+.hero-eyebrow::before { content: ''; width: 28px; height: 1.5px; background: var(--accent); }
+.hero-name {
+  font-family: 'Fraunces', serif; font-size: clamp(52px, 7vw, 86px);
+  font-weight: 700; line-height: 1.0; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 10px;
+  opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards;
+}
+.hero-name-ko {
+  font-size: 18px; font-weight: 300; color: var(--text-dim);
+  margin-bottom: 32px; opacity: 0; animation: fadeUp 0.6s 0.35s ease forwards;
+}
+.hero-role {
+  font-size: clamp(17px, 2vw, 20px); font-weight: 400; color: var(--text-sub);
+  line-height: 1.7; margin-bottom: 12px; max-width: 540px;
+  opacity: 0; animation: fadeUp 0.6s 0.4s ease forwards;
+}
+.hero-role strong { color: var(--text); font-weight: 600; }
+.hero-remote {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(42,82,212,0.06); border: 1px solid var(--border);
+  border-radius: 100px; padding: 8px 20px;
+  font-size: 13px; font-weight: 500; color: var(--accent);
+  margin: 24px 0 36px; opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
+}
+.hero-remote::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: blink 2s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero-btns { display: flex; gap: 14px; opacity: 0; animation: fadeUp 0.6s 0.55s ease forwards; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: var(--bg); padding: 14px 30px;
+  border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(42,82,212,0.25); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--border-hover); color: var(--text-sub); padding: 14px 30px;
+  border-radius: 100px; font-size: 14px; font-weight: 500;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* HERO PHOTO */
+.hero-photo {
+  display: flex; justify-content: center; align-items: center;
+  opacity: 0; animation: fadeUp 0.7s 0.4s ease forwards;
+}
+.photo-wrapper {
+  position: relative; width: 380px; height: 460px;
+}
+.photo-wrapper img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top;
+  border-radius: 200px 200px 160px 160px;
+  border: 3px solid rgba(0,0,0,0.10);
+  position: relative; z-index: 1;
+}
+.photo-glow {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,82,212,0.12) 0%, transparent 70%);
+  z-index: 0; filter: blur(40px);
+}
+
+/* SECTIONS */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+.section { padding: 120px 0; }
+.section-alt { padding: 120px 0; background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.section-alt .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+}
+.eyebrow::before { content: ''; width: 24px; height: 1.5px; background: var(--accent); }
+.section-title {
+  font-family: 'Fraunces', serif; font-size: clamp(36px, 5vw, 56px);
+  font-weight: 700; line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--text); margin-bottom: 56px;
+}
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 80px; align-items: start; }
+.about-text p { font-size: 17px; line-height: 1.85; color: var(--text-sub); margin-bottom: 20px; }
+.about-text p strong { color: var(--text); font-weight: 600; }
+.about-info { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+.info-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text-sub); }
+.info-item a { color: var(--accent); text-decoration: none; }
+.info-icon { font-size: 16px; width: 20px; text-align: center; }
+.about-sidebar { display: flex; flex-direction: column; gap: 16px; }
+.about-sidebar-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 28px 24px; text-align: center; transition: border-color 0.2s;
+  box-shadow: 0 2px 12px rgba(42,82,212,0.07);
+}
+.about-sidebar-card:hover { border-color: var(--border-hover); }
+.sidebar-num { font-family: 'Fraunces', serif; font-size: 40px; font-weight: 700; color: var(--accent); }
+.sidebar-label { font-size: 12px; font-weight: 500; color: var(--text-dim); margin-top: 4px; }
+
+/* MSOFTECH */
+.msoftech-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.msoftech-logo { width: 200px; margin-bottom: 28px; }
+.msoftech-text p { font-size: 16px; line-height: 1.8; color: var(--text-sub); margin-bottom: 16px; }
+.msoftech-text p strong { color: var(--text); font-weight: 600; }
+.msoftech-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.msoftech-feature {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px; transition: all 0.2s;
+  box-shadow: 0 2px 10px rgba(42,82,212,0.07);
+}
+.msoftech-feature:hover { border-color: var(--border-hover); background: rgba(42,82,212,0.06); }
+.feature-icon { width: 32px; height: 32px; margin-bottom: 12px; color: var(--accent); display: flex; align-items: center; justify-content: center; }
+.feature-icon svg { width: 26px; height: 26px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+.feature-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.feature-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* PROJECTS */
+.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.project-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text);
+  transition: all 0.3s; box-shadow: 0 2px 12px rgba(42,82,212,0.07);
+}
+.project-card:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+.project-card-header { height: 7px; }
+.c1{background:#4a7fa5} .c2{background:#3d8b7a} .c3{background:#8b7355} .c4{background:#6b5b8b} .c5{background:#8b5b72} .c6{background:#8b6040} .c7{background:#4a7b5b}
+.project-card-body { padding: 28px; }
+.project-card-title { font-family: 'Pretendard', -apple-system, sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+.project-card-desc { font-size: 14px; color: var(--text-sub); line-height: 1.7; margin-bottom: 18px; }
+.project-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.project-card-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500; padding: 4px 10px; border-radius: 6px; background: rgba(42,82,212,0.08); color: var(--accent); }
+.project-card-link { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+/* CORE TECH */
+.core-tech-section { background: var(--bg-deep); padding: 120px 0; border-top: 1px solid var(--border); }
+.core-tech-inner { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+.core-tech-card {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  border-radius: 20px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
+}
+.core-tech-left { padding: 48px; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; }
+.core-tech-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.core-tech-name { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 20px; }
+.core-tech-desc { font-size: 14px; line-height: 1.8; color: var(--text-sub); margin-bottom: 28px; }
+.core-tech-desc strong { color: var(--text); font-weight: 600; }
+.core-tech-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+.core-tech-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px; }
+.core-tech-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent); color: var(--bg); font-size: 13px; font-weight: 600;
+  padding: 13px 28px; border-radius: 100px; text-decoration: none; width: fit-content; transition: all 0.2s;
+}
+.core-tech-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(42,82,212,0.2); }
+.core-tech-link::after { content: '→'; transition: transform 0.2s; }
+.core-tech-link:hover::after { transform: translateX(4px); }
+.core-tech-right { padding: 48px; display: flex; flex-direction: column; gap: 14px; }
+.core-tech-right-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+.core-feature {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  border-radius: 14px; padding: 18px 20px; display: flex; align-items: flex-start; gap: 16px;
+  transition: all 0.2s;
+}
+.core-feature:hover { border-color: var(--border-hover); background: rgba(42,82,212,0.04); }
+.core-feature-num {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600;
+  color: var(--accent); background: rgba(42,82,212,0.1); border: 1px solid rgba(42,82,212,0.2);
+  width: 26px; height: 26px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.core-feature-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.core-feature-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+
+/* CONTACT */
+.contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.contact-link {
+  display: flex; align-items: center; gap: 16px; padding: 18px 22px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  text-decoration: none; color: var(--text); transition: all 0.2s;
+}
+.contact-link:hover { border-color: var(--accent); transform: translateX(4px); }
+.contact-link-icon { font-size: 20px; }
+.contact-link-label { font-size: 11px; font-weight: 600; color: var(--text-dim); letter-spacing: 0.05em; text-transform: uppercase; }
+.contact-link-value { font-size: 14px; font-weight: 500; color: var(--text); }
+.contact-link-arrow { margin-left: auto; color: var(--text-dim); font-size: 18px; }
+.contact-card {
+  background: linear-gradient(135deg, #eef1fa 0%, #e5eaf8 100%);
+  border: 1px solid var(--border); border-radius: 20px; padding: 44px;
+}
+.contact-card h3 { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+.contact-card p { font-size: 14px; color: var(--text-sub); margin-bottom: 28px; line-height: 1.6; }
+.contact-card-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 28px; }
+.contact-stat { text-align: center; padding: 16px; background: rgba(42,82,212,0.05); border: 1px solid var(--border); border-radius: 12px; }
+.contact-stat-num { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--accent); }
+.contact-stat-label { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+.contact-btn {
+  display: block; text-align: center; background: var(--accent); color: var(--bg);
+  padding: 14px; border-radius: 100px; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: all 0.2s;
+}
+.contact-btn:hover { box-shadow: 0 8px 24px rgba(42,82,212,0.25); transform: translateY(-2px); }
+
+/* FOOTER */
+footer { padding: 40px 60px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+.footer-name { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600; color: var(--text); }
+.footer-copy { font-size: 12px; color: var(--text-dim); }
+
+/* SCROLL TOP */
+.scroll-top-btn {
+  position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px;
+  background: var(--accent); color: var(--bg); border: none; border-radius: 50%;
+  font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(42,82,212,0.3);
+  opacity: 0; transform: translateY(12px); transition: all 0.3s; z-index: 99; pointer-events: none;
+}
+.scroll-top-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.scroll-top-btn:hover { transform: translateY(-2px); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity:0; transform: translateY(28px); } to { opacity:1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 14px 24px; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: block; }
+  .hero { grid-template-columns: 1fr; padding: 120px 24px 50px; text-align: center; gap: 40px; }
+  .hero-text { order: 1; }
+  .hero-photo { order: 2; }
+  .photo-wrapper { width: 260px; height: 320px; }
+  .hero-role { max-width: 100%; }
+  .hero-btns { justify-content: center; }
+  .hero-remote { margin: 20px auto 32px; }
+  .section { padding: 80px 0; }
+  .section-alt { padding: 80px 0; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .msoftech-grid { grid-template-columns: 1fr; gap: 40px; }
+  .msoftech-features { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .core-tech-section { padding: 80px 0; }
+  .core-tech-card { grid-template-columns: 1fr; }
+  .core-tech-left { border-right: none; border-bottom: 1px solid var(--border); padding: 32px 24px; }
+  .core-tech-right { padding: 32px 24px; }
+  footer { flex-direction: column; gap: 8px; text-align: center; padding: 32px 24px; }
+}
+@media (max-width: 480px) {
+  .hero { padding: 110px 20px 40px; }
+  .hero-name { font-size: clamp(42px, 13vw, 68px); }
+  .photo-wrapper { width: 220px; height: 270px; }
+  .section { padding: 60px 0; }
+  .section-alt { padding: 60px 0; }
+  .core-tech-section { padding: 60px 0; }
+  .contact-card { padding: 28px; }
+}
+
+/* Core Tech readability override */
+.core-tech-section .core-feature-desc { color: var(--text-sub); }
+.core-tech-section .core-tech-right-label { color: var(--text-sub); opacity: 0.7; }
+.core-tech-section .core-tech-desc { color: var(--text); opacity: 0.75; }
+
+/* Contact section white background */
+#contact { background: var(--bg-card); }
+
+/* ── Core Technology: Dark section ── */
+.core-tech-section {
+  background: #0d1b2a !important;
+  border-top: none !important;
+}
+.core-tech-section .eyebrow {
+  color: #4fc3f7 !important;
+}
+.core-tech-section .eyebrow::before {
+  background: #4fc3f7 !important;
+}
+.core-tech-section .section-title {
+  color: #f0f4f8 !important;
+}
+.core-tech-section .core-tech-card {
+  background: rgba(255,255,255,0.03) !important;
+  border-color: rgba(79,195,247,0.15) !important;
+}
+.core-tech-section .core-tech-left {
+  border-right-color: rgba(79,195,247,0.15) !important;
+}
+.core-tech-section .core-tech-label {
+  color: #4fc3f7 !important;
+}
+.core-tech-section .core-tech-name {
+  color: #f0f4f8 !important;
+}
+.core-tech-section .core-tech-desc {
+  color: #8ba4bc !important;
+  opacity: 1 !important;
+}
+.core-tech-section .core-tech-desc strong {
+  color: #f0f4f8 !important;
+}
+.core-tech-section .core-tech-tag {
+  color: #8ba4bc !important;
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(79,195,247,0.15) !important;
+}
+.core-tech-section .core-tech-link {
+  background: #4fc3f7 !important;
+  color: #0d1b2a !important;
+}
+.core-tech-section .core-feature {
+  background: rgba(255,255,255,0.03) !important;
+  border-color: rgba(79,195,247,0.12) !important;
+}
+.core-tech-section .core-feature:hover {
+  background: rgba(79,195,247,0.06) !important;
+  border-color: rgba(79,195,247,0.3) !important;
+}
+.core-tech-section .core-feature-num {
+  color: #4fc3f7 !important;
+  background: rgba(79,195,247,0.12) !important;
+  border-color: rgba(79,195,247,0.25) !important;
+}
+.core-tech-section .core-feature-title {
+  color: #f0f4f8 !important;
+}
+.core-tech-section .core-feature-desc {
+  color: #8ba4bc !important;
+}
+.core-tech-section .core-tech-right-label {
+  color: #4a6278 !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 900px) {
+  .container, .section-alt .section-inner, .core-tech-inner { padding: 0 24px; }
+}
+@media (max-width: 480px) {
+  .container, .section-alt .section-inner, .core-tech-inner { padding: 0 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">M<span>Softech</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#msoftech">MSoftech</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#core-technology">Core Tech</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ko')">KR</button>
+    </div>
+    <button class="nav-hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="this.parentElement.classList.remove('open')">About</a>
+  <a href="#msoftech" onclick="this.parentElement.classList.remove('open')">MSoftech</a>
+  <a href="#projects" onclick="this.parentElement.classList.remove('open')">Projects</a>
+  <a href="#core-technology" onclick="this.parentElement.classList.remove('open')">Core Tech</a>
+  <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Engineering Lead @ MSoftech</div>
+    <h1 class="hero-name">Min Jung<br>Park</h1>
+    <p class="hero-name-ko">박민정</p>
+    <p class="hero-role" data-en="I lead a focused AI engineering team building <strong>production-grade AI systems</strong> for healthcare, enterprise, and complex domains. We design and operate our own <strong>AI Agent Orchestration Platform</strong> — managing full multi-agent LLM pipelines in production, not just API integrations. Backed by <strong>25+ combined years</strong> of enterprise experience and verified remote collaboration with Samsung SDS America." data-ko="헬스케어, 엔터프라이즈, 복잡한 도메인을 위한 <strong>프로덕션 등급 AI 시스템</strong>을 구축하는 팀을 이끌고 있습니다. 단순 API 연동이 아닌, 자체 개발한 <strong>AI Agent Orchestration Platform</strong>으로 멀티 에이전트 LLM 파이프라인 전체를 프로덕션 환경에서 설계하고 운영합니다. <strong>합산 25년 이상</strong>의 엔터프라이즈 경험과 Samsung SDS America 검증 원격 협업이 그 기반입니다.">I lead a focused AI engineering team building <strong>production-grade AI systems</strong> for healthcare, enterprise, and complex domains. We design and operate our own <strong>AI Agent Orchestration Platform</strong> — managing full multi-agent LLM pipelines in production, not just API integrations. Backed by <strong>25+ combined years</strong> of enterprise experience and verified remote collaboration with Samsung SDS America.</p>
+    <div class="hero-remote" data-en="Proven Remote — Samsung SDS America · EST/PST" data-ko="검증된 원격 협업 — Samsung SDS America · EST/PST">Proven Remote — Samsung SDS America · EST/PST</div>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary" data-en="View Our Work →" data-ko="프로젝트 보기 →">View Our Work →</a>
+      <a href="#contact" class="btn-secondary" data-en="Get in Touch" data-ko="문의하기">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-wrapper">
+      <div class="photo-glow"></div>
+      <img src="minjung_A.png" alt="Min Jung Park">
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-alt" id="about">
+  <div class="section-inner">
+    <div class="eyebrow" data-en="About Me" data-ko="About Me">About Me</div>
+    <h2 class="section-title" data-en="Who I Am" data-ko="Who I Am">Who I Am</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p data-en="I lead a boutique AI engineering team with <strong>25+ combined years of enterprise experience</strong>, specializing in projects where domain complexity meets technical depth." data-ko="<strong>합산 25년 이상의 엔터프라이즈 경험</strong>을 보유한 소규모 전문 AI 엔지니어링 팀을 이끌고 있으며, 도메인 복잡성과 기술적 깊이가 동시에 요구되는 프로젝트에 집중합니다.">I lead a boutique AI engineering team with <strong>25+ combined years of enterprise experience</strong>, specializing in projects where domain complexity meets technical depth.</p>
+        <p data-en="Our team is backed by a <strong>senior engineer with 25+ years at Samsung global projects</strong> (MES, PLM, GSCM across 6 countries), who leads system architecture, AI orchestration, and all core development." data-ko="삼성 글로벌 프로젝트(MES, PLM, GSCM — 6개국)에서 <strong>25년 이상의 경험</strong>을 보유한 시니어 엔지니어가 시스템 아키텍처, AI 오케스트레이션, 핵심 개발을 직접 이끕니다.">Our team is backed by a <strong>senior engineer with 25+ years at Samsung global projects</strong> (MES, PLM, GSCM across 6 countries), who leads system architecture, AI orchestration, and all core development.</p>
+        <p data-en="We don't just integrate AI APIs — we designed and operate our own <strong>AI Agent Orchestration Platform</strong>, a proprietary engine that manages multi-agent LLM workflows in production. We rapidly absorb any domain — healthcare, environmental science, regulated industries — and turn it into production-grade AI systems." data-ko="단순한 AI API 연동이 아닌, 자체 개발한 <strong>AI Agent Orchestration Platform</strong>으로 멀티 에이전트 LLM 워크플로우를 프로덕션 환경에서 설계하고 운영합니다. 헬스케어, 환경과학, 규제 산업 등 어떤 도메인이든 빠르게 습득하여 프로덕션 등급의 AI 시스템으로 구현합니다.">We don't just integrate AI APIs — we designed and operate our own <strong>AI Agent Orchestration Platform</strong>, a proprietary engine that manages multi-agent LLM workflows in production. We rapidly absorb any domain — healthcare, environmental science, regulated industries — and turn it into production-grade AI systems.</p>
+        <div class="about-info">
+          <div class="info-item"><span class="info-icon">📍</span> Suwon-si, Gyeonggi-do, South Korea</div>
+          <div class="info-item"><span class="info-icon">🏢</span> <span data-en="Engineering Lead / Founder, MSoftech" data-ko="기술 총괄 / 창업자, MSoftech (주식회사 엠소프텍)">Engineering Lead / Founder, MSoftech</span></div>
+          <div class="info-item"><span class="info-icon">📧</span> <a href="/cdn-cgi/l/email-protection#721f1b1c18071c154044404132151f131b1e5c111d1f"><span class="__cf_email__" data-cfemail="036e6a6d69766d643135313043646e626a6f2d606c6e">[email&#160;protected]</span></a></div>
+          <div class="info-item"><span class="info-icon">🎓</span> B.E. Computer Software Engineering, Sungshin Women's University</div>
+        </div>
+      </div>
+      <div class="about-sidebar">
+        <div class="about-sidebar-card"><div class="sidebar-num">14+</div><div class="sidebar-label" data-en="AI Agents in Production" data-ko="프로덕션 AI 에이전트">AI Agents in Production</div></div>
+        <div class="about-sidebar-card"><div class="sidebar-num">7</div><div class="sidebar-label" data-en="Production Systems" data-ko="프로덕션 시스템">Production Systems</div></div>
+        <div class="about-sidebar-card"><div class="sidebar-num">90%</div><div class="sidebar-label" data-en="AI Evaluation Accuracy" data-ko="AI 평가 정확도">AI Evaluation Accuracy</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MSOFTECH -->
+<section class="section" id="msoftech">
+<div class="container">
+  <div class="eyebrow" data-en="Our Studio" data-ko="Our Studio">Our Studio</div>
+  <h2 class="section-title">MSoftech</h2>
+  <div class="msoftech-grid reveal">
+    <div class="msoftech-text">
+      <p data-en="<strong>MSoftech</strong> is a boutique AI engineering studio based in South Korea. We build production-grade AI systems for healthcare, enterprise, and complex domains." data-ko="<strong>MSoftech(주식회사 엠소프텍)</strong>는 대한민국 기반의 소규모 전문 AI 엔지니어링 스튜디오입니다. 헬스케어, 엔터프라이즈, 복잡한 도메인을 위한 프로덕션 등급 AI 시스템을 구축합니다."><strong>MSoftech</strong> is a boutique AI engineering studio based in South Korea. We build production-grade AI systems for healthcare, enterprise, and complex domains.</p>
+      <p data-en="Structured as a lean, senior-level team — you get direct access to the engineers who architect and build your system. No layers, no overhead. Proven remote collaboration with Samsung SDS America on U.S. EST, 100% text-based async communication." data-ko="시니어급 엔지니어가 아키텍처 설계부터 구현까지 직접 참여하는 소규모 정예 팀입니다. 삼성 SDS America와 미국 EST 기준 100% 텍스트 기반 비동기 커뮤니케이션으로 원격 협업을 검증했습니다.">Structured as a lean, senior-level team — you get direct access to the engineers who architect and build your system. No layers, no overhead. Proven remote collaboration with Samsung SDS America on U.S. EST, 100% text-based async communication.</p>
+      <p data-en="Open to project-based, retainer, or full-time remote engagements." data-ko="프로젝트 단위, 리테이너, 풀타임 원격 계약 모두 가능합니다.">Open to project-based, retainer, or full-time remote engagements.</p>
+    </div>
+    <div class="msoftech-features">
+      <div class="msoftech-feature"><div class="feature-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></div><div class="feature-title" data-en="AI Agent Systems" data-ko="AI 에이전트 시스템">AI Agent Systems</div><div class="feature-desc" data-en="Multi-agent orchestration at production scale" data-ko="프로덕션 규모의 멀티 에이전트 오케스트레이션">Multi-agent orchestration at production scale</div></div>
+      <div class="msoftech-feature"><div class="feature-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.34 6.5a4.5 4.5 0 0 1 7.07-.55L12 7.5l1.59-1.55a4.5 4.5 0 0 1 6.91 5.72L12 20 3.5 11.67a4.5 4.5 0 0 1-.16-5.17z"/><polyline points="2 12 6 12 8 9 10 15 12 12 16 12"/></svg></div><div class="feature-title" data-en="Healthcare IT" data-ko="Healthcare IT">Healthcare IT</div><div class="feature-desc" data-en="FHIR R4, EMR systems, clinical workflows" data-ko="FHIR R4, EMR 시스템, 임상 워크플로우">FHIR R4, EMR systems, clinical workflows</div></div>
+      <div class="msoftech-feature"><div class="feature-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div><div class="feature-title" data-en="Domain Expertise" data-ko="도메인 전문성">Domain Expertise</div><div class="feature-desc" data-en="Rapidly absorb any industry domain" data-ko="어떤 산업 도메인이든 빠르게 습득">Rapidly absorb any industry domain</div></div>
+      <div class="msoftech-feature"><div class="feature-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="feature-title" data-en="U.S. Remote Ready" data-ko="미국 원격 준비">U.S. Remote Ready</div><div class="feature-desc" data-en="EST/PST aligned, Samsung SDS America verified" data-ko="EST/PST 대응, Samsung SDS America 검증">EST/PST aligned, Samsung SDS America verified</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section-alt" id="projects">
+  <div class="section-inner">
+    <div class="eyebrow" data-en="Our Work" data-ko="Our Work">Our Work</div>
+    <h2 class="section-title" data-en="What We've Built" data-ko="What We've Built">What We've Built</h2>
+    <div class="projects-grid reveal">
+
+      <a href="clinical-nursing-emr/" class="project-card"><div class="project-card-header c1"></div><div class="project-card-body"><div class="project-card-title">Clinical Nursing EMR</div><div class="project-card-desc" data-en="AI Agent-based nursing education platform. 6 evaluation agents assess 55 criteria in real time. 40,000+ logs processed. 90% accuracy, 40% workload reduction." data-ko="AI 에이전트 기반 간호 교육 플랫폼. 6개 평가 에이전트, 55개 기준, 40,000건 이상의 로그. 평가 정확도 90%, 교수 업무량 40% 감소.">AI Agent-based nursing education platform. 6 evaluation agents assess 55 criteria in real time. 40,000+ logs processed. 90% accuracy, 40% workload reduction.</div><div class="project-card-tags"><span class="project-card-tag">React 18</span><span class="project-card-tag">Spring Boot</span><span class="project-card-tag">Vertex AI</span><span class="project-card-tag">FHIR R4</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
+
+      <a href="fhir-emr/" class="project-card"><div class="project-card-header c2"></div><div class="project-card-body"><div class="project-card-title">FHIR EMR</div><div class="project-card-desc" data-en="Complete KR Core FHIR R4-based EMR system. 7 FHIR resources implemented covering the full clinical workflow from encounter to medication." data-ko="KR Core FHIR R4 기반 풀 EMR 시스템. 7개 FHIR 리소스, 전체 임상 워크플로우 구현.">Complete KR Core FHIR R4-based EMR system. 7 FHIR resources implemented covering the full clinical workflow from encounter to medication.</div><div class="project-card-tags"><span class="project-card-tag">React</span><span class="project-card-tag">FHIR R4</span><span class="project-card-tag">Spring Boot</span><span class="project-card-tag">HAPI FHIR</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
+
+      <a href="my-health-coach/" class="project-card"><div class="project-card-header c3"></div><div class="project-card-body"><div class="project-card-title">My Health Coach</div><div class="project-card-desc" data-en="Flutter-based AI health management app covering 5 chronic conditions. 4 AI agents with 22 prompt templates. Built-in Multi-Agent Orchestration Center." data-ko="Flutter 기반 AI 건강관리 앱. 5개 만성질환, 4개 AI 에이전트, 22개 프롬프트 템플릿. 자체 Multi-Agent Orchestration Center 내장.">Flutter-based AI health management app covering 5 chronic conditions. 4 AI agents with 22 prompt templates. Built-in Multi-Agent Orchestration Center.</div><div class="project-card-tags"><span class="project-card-tag">Flutter</span><span class="project-card-tag">GPT-4</span><span class="project-card-tag">Gemini</span><span class="project-card-tag">FHIR R4</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
+
+      <a href="#" class="project-card"><div class="project-card-header c4"></div><div class="project-card-body"><div class="project-card-title">AI AquaLab</div><div class="project-card-desc" data-en="Groundwater quality analysis platform. 4 AI agents evaluate 56 criteria. AI-generated reports with mineral balance, safety scoring, and brand comparison." data-ko="지하수 수질분석 플랫폼. 4개 AI 에이전트가 56개 기준으로 분석. 미네랄 밸런스, 안전성 평가, 브랜드별 비교 리포트 자동 생성.">Groundwater quality analysis platform. 4 AI agents evaluate 56 criteria. AI-generated reports with mineral balance, safety scoring, and brand comparison.</div><div class="project-card-tags"><span class="project-card-tag">React 18</span><span class="project-card-tag">Vertex AI</span><span class="project-card-tag">Spring Boot</span><span class="project-card-tag">PostgreSQL</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
+
+      <a href="#" class="project-card"><div class="project-card-header c5"></div><div class="project-card-body"><div class="project-card-title" data-en="AI Geological Analysis" data-ko="AI 지질분석">AI Geological Analysis</div><div class="project-card-desc" data-en="Address-based geological survey system for hot spring feasibility. AI-scored reports with development grade, estimated yield, cost projections, and risk assessment." data-ko="주소 기반 온천 개발 가능성 지질 분석 시스템. AI 등급 리포트(등급, 산출량, 비용, 리스크) 생성.">Address-based geological survey system for hot spring feasibility. AI-scored reports with development grade, estimated yield, cost projections, and risk assessment.</div><div class="project-card-tags"><span class="project-card-tag">React 18</span><span class="project-card-tag">Vertex AI</span><span class="project-card-tag">Spring Boot</span><span class="project-card-tag">GCP</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
+
+      <a href="#" class="project-card"><div class="project-card-header c6"></div><div class="project-card-body"><div class="project-card-title" data-en="Hot Spring Cost Simulator" data-ko="온천 견적 시뮬레이터">Hot Spring Cost Simulator</div><div class="project-card-desc" data-en="End-to-end development cost and timeline simulation engine. Interactive drilling options, multi-scenario risk analysis, and automated proposal generation." data-ko="온천 개발 비용/일정 시뮬레이션 엔진. 다중 시나리오 리스크 분석, 제안서 자동 생성.">End-to-end development cost and timeline simulation engine. Interactive drilling options, multi-scenario risk analysis, and automated proposal generation.</div><div class="project-card-tags"><span class="project-card-tag">React 18</span><span class="project-card-tag">TypeScript</span><span class="project-card-tag">Spring Boot</span><span class="project-card-tag">PostgreSQL</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
+
+      <a href="#" class="project-card"><div class="project-card-header c7"></div><div class="project-card-body"><div class="project-card-title">Samsung SDS America</div><div class="project-card-desc" data-en="Full-time remote project on U.S. EST. IT Device Service Management System for Samsung Electronics America. 3.5 years of verified remote collaboration." data-ko="미국 EST 기준 풀타임 원격 프로젝트. 삼성전자 미국법인 IT 기기 서비스 관리 시스템. 3.5년 원격 협업 검증.">Full-time remote project on U.S. EST. IT Device Service Management System for Samsung Electronics America. 3.5 years of verified remote collaboration.</div><div class="project-card-tags"><span class="project-card-tag">Java</span><span class="project-card-tag">Spring</span><span class="project-card-tag">Oracle</span><span class="project-card-tag">Highcharts</span></div><span class="project-card-link" data-en="View Details →" data-ko="View Details →">View Details →</span></div></a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CORE TECHNOLOGY -->
+<section class="core-tech-section" id="core-technology">
+  <div class="core-tech-inner">
+    <div class="eyebrow" data-en="Proprietary Platform" data-ko="Proprietary Platform">Proprietary Platform</div>
+    <h2 class="section-title" data-en="Core Technology" data-ko="Core Technology">Core Technology</h2>
+    <div class="core-tech-card reveal">
+      <div class="core-tech-left">
+        <div>
+          <div class="core-tech-label">AI Infrastructure</div>
+          <h3 class="core-tech-name">AI Agent Orchestration Platform</h3>
+          <p class="core-tech-desc" data-en="A <strong>production-grade AI Agent pipeline</strong> built from scratch — not a wrapper around existing tools. It manages the full lifecycle of LLM-powered agents: prompt versioning, schema validation, multi-provider routing (Gemini / OpenAI), real-time execution logging, and structured output persistence to a FHIR R4 database." data-ko="기존 도구를 감싼 래퍼가 아닌, <strong>처음부터 직접 설계·구현한 프로덕션 수준의 AI 에이전트 파이프라인</strong>입니다. 프롬프트 버전 관리, 스키마 검증, 멀티 프로바이더 라우팅(Gemini / OpenAI), 실시간 실행 로그, FHIR R4 데이터베이스 저장까지 LLM 에이전트의 전체 생명주기를 관리합니다.">A <strong>production-grade AI Agent pipeline</strong> built from scratch — not a wrapper around existing tools. It manages the full lifecycle of LLM-powered agents: prompt versioning, schema validation, multi-provider routing (Gemini / OpenAI), real-time execution logging, and structured output persistence to a FHIR R4 database.</p>
+          <p class="core-tech-desc" data-en="Deployed across <strong>Clinical Nursing EMR</strong> (6 agents), <strong>My Health Coach</strong> (4 agents), and <strong>AI AquaLab</strong> (4 agents) — powering 14+ specialized agents in production." data-ko="<strong>Clinical Nursing EMR</strong>(6개 에이전트), <strong>My Health Coach</strong>(4개 에이전트), <strong>AI AquaLab</strong>(4개 에이전트)에 배포되어 14개 이상의 전문 에이전트를 프로덕션 환경에서 구동하고 있습니다.">Deployed across <strong>Clinical Nursing EMR</strong> (6 agents), <strong>My Health Coach</strong> (4 agents), and <strong>AI AquaLab</strong> (4 agents) — powering 14+ specialized agents in production.</p>
+          <div class="core-tech-tags"><span class="core-tech-tag">Prompt Registry</span><span class="core-tech-tag">Schema Validation</span><span class="core-tech-tag">Multi-Provider LLM</span><span class="core-tech-tag">Agent Ops Logging</span><span class="core-tech-tag">Google Gemini 2.5</span><span class="core-tech-tag">OpenAI GPT-4</span><span class="core-tech-tag">Spring Boot</span><span class="core-tech-tag">FHIR R4</span></div>
+        </div>
+        <a href="./agent-orchestration/" class="core-tech-link" data-en="View Full Architecture" data-ko="View Full Architecture">View Full Architecture</a>
+      </div>
+      <div class="core-tech-right">
+        <div class="core-tech-right-label">Platform Capabilities</div>
+        <div class="core-feature"><div class="core-feature-num">01</div><div><div class="core-feature-title">Prompt Registry & Versioning</div><div class="core-feature-desc" data-en="Centralized prompt store with template loading, variable injection, and version control — prompts are managed as first-class assets, not hardcoded strings." data-ko="템플릿 로딩, 변수 주입, 버전 관리를 지원하는 중앙화된 프롬프트 저장소입니다.">Centralized prompt store with template loading, variable injection, and version control — prompts are managed as first-class assets, not hardcoded strings.</div></div></div>
+        <div class="core-feature"><div class="core-feature-num">02</div><div><div class="core-feature-title">Output Schema Validation</div><div class="core-feature-desc" data-en="Every LLM response is validated against a predefined JSON schema before processing. Malformed outputs are caught at the pipeline boundary." data-ko="모든 LLM 응답은 사전 정의된 JSON 스키마와 대조하여 검증됩니다.">Every LLM response is validated against a predefined JSON schema before processing. Malformed outputs are caught at the pipeline boundary.</div></div></div>
+        <div class="core-feature"><div class="core-feature-num">03</div><div><div class="core-feature-title">Multi-Provider LLM Routing</div><div class="core-feature-desc" data-en="Runtime-selectable AI provider — Google Gemini 2.5 Flash or OpenAI GPT-4 — with a unified interface. Switch providers without changing agent logic." data-ko="런타임에서 Gemini 또는 GPT-4를 선택할 수 있는 통합 인터페이스입니다.">Runtime-selectable AI provider — Google Gemini 2.5 Flash or OpenAI GPT-4 — with a unified interface. Switch providers without changing agent logic.</div></div></div>
+        <div class="core-feature"><div class="core-feature-num">04</div><div><div class="core-feature-title">Real-Time Agent Ops Log</div><div class="core-feature-desc" data-en="Live execution log streams each pipeline stage with timestamps and status — giving full observability into what the agent is doing at every step." data-ko="각 파이프라인 단계를 타임스탬프와 상태와 함께 실시간으로 스트리밍합니다.">Live execution log streams each pipeline stage with timestamps and status — giving full observability into what the agent is doing at every step.</div></div></div>
+        <div class="core-feature"><div class="core-feature-num">05</div><div><div class="core-feature-title">FHIR-Compliant Output Persistence</div><div class="core-feature-desc" data-en="Validated AI outputs are mapped to DTOs and persisted to a KR Core FHIR R4 database — ensuring healthcare data interoperability." data-ko="검증된 AI 출력을 DTO로 매핑하여 KR Core FHIR R4 데이터베이스에 저장합니다.">Validated AI outputs are mapped to DTOs and persisted to a KR Core FHIR R4 database — ensuring healthcare data interoperability.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+<div class="container">
+  <div class="eyebrow" data-en="Contact" data-ko="Contact">Contact</div>
+  <h2 class="section-title" data-en="Let's Work Together" data-ko="Let's Work Together">Let's Work Together</h2>
+  <div class="contact-wrap reveal">
+    <div class="contact-text">
+      <p style="font-size:16px;color:var(--text-sub);line-height:1.7;margin-bottom:8px;" data-en="We're open to <strong>U.S. remote</strong> and <strong>project-based</strong> engagements. Our team operates fully aligned with U.S. time zones (EST/PST)." data-ko="<strong>미국 원격</strong> 및 <strong>프로젝트 단위</strong> 협업을 적극적으로 찾고 있습니다. 미국 EST/PST 시간대에 맞춰 풀타임 근무가 가능합니다.">We're open to <strong>U.S. remote</strong> and <strong>project-based</strong> engagements. Our team operates fully aligned with U.S. time zones (EST/PST).</p>
+      <p style="font-size:14px;color:var(--text-dim);margin-bottom:0;" data-en="Available for project-based, retainer, or full-time remote contracts." data-ko="프로젝트 단위, 리테이너, 풀타임 원격 계약 모두 가능합니다.">Available for project-based, retainer, or full-time remote contracts.</p>
+      <div class="contact-links">
+        <a href="/cdn-cgi/l/email-protection#e9848087839c878edbdfdbdaa98e84888085c78a8684" class="contact-link"><span class="contact-link-icon">✉️</span><div class="contact-link-text"><div class="contact-link-label">Email</div><div class="contact-link-value"><span class="__cf_email__" data-cfemail="523f3b3c38273c356064606112353f333b3e7c313d3f">[email&#160;protected]</span></div></div><span class="contact-link-arrow">→</span></a>
+        <a href="https://linkedin.com/in/minjungpark1218" target="_blank" class="contact-link"><span class="contact-link-icon">💼</span><div class="contact-link-text"><div class="contact-link-label">LinkedIn</div><div class="contact-link-value">linkedin.com/in/minjungpark1218</div></div><span class="contact-link-arrow">→</span></a>
+        <a href="https://github.com/MinjungPark" target="_blank" class="contact-link"><span class="contact-link-icon">🐙</span><div class="contact-link-text"><div class="contact-link-label">GitHub</div><div class="contact-link-value">github.com/MinjungPark</div></div><span class="contact-link-arrow">→</span></a>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3 data-en="Open to Remote" data-ko="Open to Remote">Open to Remote</h3>
+      <p data-en="Looking for U.S. remote opportunities" data-ko="미국 원격 프로젝트 적극 구직 중">Looking for U.S. remote opportunities</p>
+      <div class="contact-card-stats">
+        <div class="contact-stat"><div class="contact-stat-num">EST</div><div class="contact-stat-label">Time Zone Ready</div></div>
+        <div class="contact-stat"><div class="contact-stat-num">25+</div><div class="contact-stat-label" data-en="Combined Exp." data-ko="합산 경력">Combined Exp.</div></div>
+        <div class="contact-stat"><div class="contact-stat-num">AI</div><div class="contact-stat-label">Multi-Agent</div></div>
+        <div class="contact-stat"><div class="contact-stat-num">FHIR</div><div class="contact-stat-label">Healthcare</div></div>
+      </div>
+      <a href="/cdn-cgi/l/email-protection#bad7d3d4d0cfd4dd888c8889faddd7dbd3d694d9d5d7" class="contact-btn" data-en="Send a Message ✉" data-ko="메시지 보내기 ✉">Send a Message ✉</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Min Jung Park (박민정) · MSoftech</div>
+  <div class="footer-copy">© 2025 MSoftech. Open to U.S. Remote (EST/PST)</div>
+</footer>
+
+<!-- SCROLL TOP -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  localStorage.setItem('lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', (lang === 'ko' && btn.textContent === 'KR') || (lang === 'en' && btn.textContent === 'EN'));
+  });
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = lang === 'ko' ? el.getAttribute('data-ko') : el.getAttribute('data-en');
+    if (text !== null && text !== '') el.innerHTML = text;
+  });
+}
+const savedLang = localStorage.getItem('lang') || 'en';
+setLang(savedLang);
+
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400));
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  const current = [...sections].find(s => window.scrollY >= s.offsetTop - 100);
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + (current?.id || '')));
+});
+</script>
+</body>
+</html>
