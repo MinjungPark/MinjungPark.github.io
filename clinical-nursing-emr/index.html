@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clinical Nursing EMR — Min Jung Park</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -22,18 +23,17 @@
 
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
-body { background:var(--bg); color:var(--ink); font-family:'DM Sans',sans-serif; overflow-x:hidden; }
+body { background:var(--bg); color:var(--ink); font-family:'Pretendard',-apple-system,sans-serif; overflow-x:hidden; word-break:keep-all; overflow-wrap:break-word; }
 
 /* NAV */
 nav {
   position:fixed; top:0; left:0; right:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center;
   padding:20px 60px;
-  background:rgba(247,244,239,0.92);
+  background:rgba(247,244,239,0.80);
   backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
+  border-bottom:none;
 }
-.nav-logo { font-family:'Fraunces',serif; font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; }
 .nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
 .nav-back:hover { color:var(--accent); }
 
@@ -73,9 +73,10 @@ nav {
 .hero-stat-ko { font-size:10px; color:var(--light); }
 
 /* SECTIONS */
-.section { padding:80px 60px; max-width:1200px; margin:0 auto; }
-.section-alt { padding:80px 60px; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-.section-inner { max-width:1200px; margin:0 auto; }
+.container { max-width:1200px; margin:0 auto; padding:0 60px; }
+.section { padding:80px 0; }
+.section-alt { padding:80px 0; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.section-inner { max-width:1200px; margin:0 auto; padding:0 60px; }
 .eyebrow { display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:12px; }
 .eyebrow::before { content:''; width:20px; height:1.5px; background:var(--accent); }
 .section-title { font-family:'Fraunces',serif; font-size:clamp(28px,4vw,44px); font-weight:700; line-height:1.1; letter-spacing:-0.02em; margin-bottom:6px; }
@@ -112,7 +113,8 @@ nav {
 .pipeline-step { flex:1; text-align:center; padding:16px 8px; position:relative; }
 .pipeline-step::after { content:'→'; position:absolute; right:-10px; top:50%; transform:translateY(-50%); color:var(--accent); font-size:18px; font-weight:600; }
 .pipeline-step:last-child::after { display:none; }
-.pipeline-icon { font-size:28px; margin-bottom:8px; display:block; }
+.pipeline-icon { width:32px; height:32px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; color:var(--accent); }
+.pipeline-icon svg { width:26px; height:26px; stroke:currentColor; stroke-width:1.5; fill:none; }
 .pipeline-name { font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:var(--ink); margin-bottom:4px; }
 .pipeline-name-ko { font-size:10px; color:var(--light); }
 
@@ -160,12 +162,12 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
 /* RESPONSIVE */
 @media (max-width:900px) {
-  nav { padding:16px 24px; }
+  nav { padding:14px 24px; }
   .hero { grid-template-columns:1fr; padding:100px 24px 60px; }
   .hero-photo { order:-1; }
   .hero-photo-frame { width:280px; height:340px; }
-  .section { padding:60px 24px; }
-  .section-alt { padding:60px 24px; }
+  .section { padding:60px 0; }
+  .section-alt { padding:60px 0; }
   .overview-grid { grid-template-columns:1fr; gap:32px; }
   .two-col { grid-template-columns:1fr; }
   .agent-grid { grid-template-columns:1fr 1fr; }
@@ -176,18 +178,44 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   .bottom-nav { padding:40px 24px; flex-direction:column; gap:16px; }
   footer { flex-direction:column; gap:8px; text-align:center; padding:32px 24px; }
 }
+
+@media (max-width:900px) {
+  .container, .section-inner { padding:0 24px; }
+}
+@media (max-width:480px) {
+  .container, .section-inner { padding:0 20px; }
+}
+
+/* Lang toggle */
+.nav-right { display:flex; align-items:center; gap:16px; margin-left:auto; }
+.lang-toggle { display:inline-flex; align-items:center; gap:2px; background:rgba(26,22,18,0.05); border:1px solid rgba(26,22,18,0.12); border-radius:100px; padding:3px; }
+.lang-btn { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:500; padding:4px 12px; border-radius:100px; border:none; background:transparent; color:var(--mid); cursor:pointer; transition:all 0.2s; letter-spacing:0.05em; }
+.lang-btn.active { background:var(--ink); color:#fff; }
+.lang-btn:hover:not(.active) { color:var(--ink); }
+
+/* Scroll top */
+.scroll-top-btn {
+  position:fixed; bottom:32px; right:32px; width:44px; height:44px;
+  background:var(--accent); color:#fff; border:none; border-radius:50%;
+  font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 16px rgba(26,107,74,0.25);
+  opacity:0; transform:translateY(12px); transition:all 0.3s; z-index:99; pointer-events:none;
+}
+.scroll-top-btn.visible { opacity:1; transform:translateY(0); pointer-events:auto; }
+.scroll-top-btn:hover { transform:translateY(-2px); }
 </style>
+
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="../index.html" class="nav-logo">MJ Park</a>
   <a href="../index.html#projects" class="nav-back">← Back to Projects</a>
-  <div class="nav-tag">🏥 Healthcare · AI</div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('ko')">KR</button>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ko')">KR</button>
+    </div>
   </div>
 </nav>
 
@@ -218,14 +246,14 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <h2 class="section-title">Project Overview</h2>
     <div class="overview-grid">
       <div class="overview-text">
-        <p data-en="Nursing students practice in a <strong>real hospital EMR environment</strong> — covering OCS, ENR, Lab, and PACS — using GUIDED or EVALUATION simulation modes." data-ko="간호대학생들이 실제 병원 EMR과 동일한 환경(OCS, ENR, Lab, PACS)에서 GUIDED 또는 EVALUATION 모드로 실습합니다.">Nursing students practice in a <strong>real hospital EMR environment</strong> — covering OCS, ENR, Lab, and PACS — using GUIDED or EVALUATION simulation modes.</p>
-        <p data-en="Upon completion, <strong>6 AI Agents</strong> automatically evaluate each student's performance. The full pipeline — LLM call, JSON validation, professor review, and result publication — is fully automated." data-ko="실습 완료 후 6개 AI 에이전트가 학생의 수행을 자동으로 평가합니다. LLM 호출 → JSON 검증 → 교수 검토 → 결과 공개까지 전 과정이 완전히 자동화되어 있습니다.">Upon completion, <strong>6 AI Agents</strong> automatically evaluate each student's performance. The full pipeline — LLM call, JSON validation, professor review, and result publication — is fully automated.</p>
-        <p data-en="The system has processed <strong>40,000+ evaluation log entries</strong> and reduced professor evaluation time by <strong>90%</strong>." data-ko="현재까지 <strong>40,000건 이상의 평가 로그</strong>를 처리했으며, 교수님의 평가 시간을 <strong>90%</strong> 단축했습니다.">The system has processed <strong>40,000+ evaluation log entries</strong> and reduced professor evaluation time by <strong>90%</strong>.</p>
+        <p data-en="Nursing students practice clinical workflows in a <strong>real hospital-grade EMR environment</strong> — covering OCS, ENR, Lab, and PACS — exactly as they would on an actual ward. Every action, every input, every decision is captured as a structured evaluation log in real time." data-ko="간호대학생들이 실제 병동과 동일한 <strong>병원급 EMR 환경</strong>(OCS, ENR, Lab, PACS)에서 임상 워크플로우를 실습합니다. 모든 행동, 모든 입력, 모든 판단이 실시간 구조화된 평가 로그로 기록됩니다.">Nursing students practice clinical workflows in a <strong>real hospital-grade EMR environment</strong> — covering OCS, ENR, Lab, and PACS — exactly as they would on an actual ward. Every action, every input, every decision is captured as a structured evaluation log in real time.</p>
+        <p data-en="The evaluation engine was built on domain knowledge, not just code. We mapped actual clinical nursing protocols — ward rounds, medication administration, vital sign assessment, intake/output management — and translated them into <strong>55 structured evaluation criteria</strong> that mirror real professional standards. Upon completing a simulation, <strong>6 specialized AI Agents</strong> automatically assess each student's performance: identifying what they did well, what needs improvement, and why — with structured, actionable feedback." data-ko="평가 엔진의 기반은 코드가 아니라 도메인 지식입니다. 실제 임상 간호 프로토콜 — 병동 순회, 투약 관리, 활력징후 사정, 섭취·배설 관리 — 을 직접 분석하고, 현장 전문 기준을 반영한 <strong>55개 구조화된 평가 기준</strong>으로 설계했습니다. 실습 완료 후 <strong>6개 전문 AI 에이전트</strong>가 학생의 수행을 자동 분석하여 잘한 점, 부족한 점, 개선 방향을 구조화된 피드백으로 제공합니다.">The evaluation engine was built on domain knowledge, not just code. We mapped actual clinical nursing protocols — ward rounds, medication administration, vital sign assessment, intake/output management — and translated them into <strong>55 structured evaluation criteria</strong> that mirror real professional standards. Upon completing a simulation, <strong>6 specialized AI Agents</strong> automatically assess each student's performance: identifying what they did well, what needs improvement, and why — with structured, actionable feedback.</p>
+        <p data-en="For students, it means going beyond pass/fail into genuine clinical growth. For professors, automated evaluation reduces grading workload by <strong>40%</strong> — freeing them to focus on higher-quality, personalized feedback. Over <strong>40,000+ evaluation logs</strong> processed in production." data-ko="학생에게는 단순한 합격·불합격을 넘어 실질적인 임상 역량 성장을 의미합니다. 교수에게는 반복적인 채점 부담을 <strong>40%</strong> 줄여 더 깊이 있는 개인화 피드백에 집중할 수 있게 합니다. 현재까지 <strong>40,000건 이상의 평가 로그</strong>를 프로덕션 환경에서 처리했습니다.">For students, it means going beyond pass/fail into genuine clinical growth. For professors, automated evaluation reduces grading workload by <strong>40%</strong> — freeing them to focus on higher-quality, personalized feedback. Over <strong>40,000+ evaluation logs</strong> processed in production.</p>
       </div>
       <div>
         <div class="meta-card"><div class="meta-label">Period</div><div class="meta-value">Apr 2025 – Nov 2025</div></div>
-        <div class="meta-card"><div class="meta-label">Type</div><div class="meta-value">Team Project</div></div>
-        <div class="meta-card"><div class="meta-label">Role</div><div class="meta-value">Full-Stack Developer</div></div>
+        <div class="meta-card"><div class="meta-label">Type</div><div class="meta-value" data-en="MSoftech Product" data-ko="엠소프텍 자체 개발">MSoftech Product</div></div>
+        <div class="meta-card"><div class="meta-label">Role</div><div class="meta-value" data-en="AI Solutions Architect · Full-Stack Engineer" data-ko="AI 솔루션 아키텍트 · 풀스택 엔지니어">AI Solutions Architect · Full-Stack Engineer</div></div>
         <div class="meta-card"><div class="meta-label">Domain</div><div class="meta-value">Healthcare · AI · Education</div></div>
       </div>
     </div>
@@ -234,12 +262,14 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
 <!-- ARCHITECTURE -->
 <div class="section">
+<div class="container">
   <div class="eyebrow">Architecture</div>
   <h2 class="section-title">System Architecture</h2>
   <img src="img/Architecture_Design_Decisions.png" alt="Architecture" style="width:100%; display:block; border-radius:16px; border:1px solid var(--border); margin-bottom:24px;">
   <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px;">
     <div class="desc-en" data-en="<strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database." data-ko="<strong>계층형 AI 파이프라인:</strong> EvaluationController → NursingEvaluation OrchestrationService → 실행 레이어(@Transactional) → AI Agent 컴포넌트 → Google Vertex AI (Gemini 2.0 Flash) 순서로 처리됩니다. 모든 AI 응답은 JSON Schema로 검증된 후 데이터베이스에 저장됩니다."><strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database.</div>
   </div>
+</div>
 </div>
 
 <!-- AI PIPELINE -->
@@ -248,12 +278,12 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="eyebrow">AI Pipeline</div>
     <h2 class="section-title">How AI Evaluation Works</h2>
     <div class="pipeline">
-      <div class="pipeline-step"><span class="pipeline-icon">📝</span><div class="pipeline-name">Student Submits</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">🤖</span><div class="pipeline-name">6 AI Agents</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">⚡</span><div class="pipeline-name">Vertex AI Call</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">✅</span><div class="pipeline-name">JSON Validation</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">👩‍🏫</span><div class="pipeline-name">Prof. Review</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon">🎓</span><div class="pipeline-name">Result Published</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span><div class="pipeline-name">Student Submits</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span><div class="pipeline-name">6 AI Agents</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div class="pipeline-name">Vertex AI Call</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div class="pipeline-name">JSON Validation</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></span><div class="pipeline-name">Prof. Review</div></div>
+      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></span><div class="pipeline-name">Result Published</div></div>
     </div>
     <div class="agent-grid">
       <div class="agent-card"><div class="agent-name">VitalSignsAgent</div><div class="agent-target">Vital Signs</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
@@ -268,6 +298,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
 <!-- SCREENS -->
 <div class="section">
+<div class="container">
   <div class="eyebrow">Features</div>
   <h2 class="section-title">Key Screens</h2>
 
@@ -312,6 +343,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     </div>
   </div>
 </div>
+</div>
 
 <!-- IMPACT -->
 <div class="section-alt">
@@ -329,6 +361,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
 <!-- TECH STACK -->
 <div class="section">
+<div class="container">
   <div class="eyebrow">Technology</div>
   <h2 class="section-title">Tech Stack</h2>
   <div class="tech-grid">
@@ -338,12 +371,15 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <div class="tech-group"><div class="tech-group-title">Infrastructure</div><div class="tech-tags"><span class="tech-tag">GCP Cloud Run</span><span class="tech-tag">Cloud SQL</span><span class="tech-tag">Cloud Storage</span></div></div>
   </div>
 </div>
+</div>
 
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
   <a href="../index.html#projects" class="back-btn" data-en="← Back to Projects" data-ko="← Back to Projects">← Back to Projects</a>
   <a href="../fhir-emr/" class="next-btn" data-en="Next: FHIR EMR →" data-ko="Next: FHIR EMR →">Next: FHIR EMR →</a>
 </div>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 
 <!-- FOOTER -->
 <footer>
@@ -365,6 +401,11 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   }
   const savedLang = localStorage.getItem('lang') || 'en';
   setLang(savedLang);
+
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (scrollTopBtn) {
+      window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400));
+    }
 </script>
 </body>
 </html>
