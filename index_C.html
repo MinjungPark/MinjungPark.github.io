@@ -8,9 +8,9 @@
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
 :root {
-  --bg: #f0ebe3;
+  --bg: #f7f4ef;
   --bg-card: #ffffff;
-  --bg-deep: #e9e0d4;
+  --bg-deep: #ede8e0;
   --text: #1a1510;
   --text-sub: #5a5048;
   --text-dim: #6e6258;
@@ -405,6 +405,26 @@ footer { padding: 40px 60px; border-top: 1px solid var(--border); display: flex;
 @media (max-width: 480px) {
   .container, .section-alt .section-inner, .core-tech-inner { padding: 0 20px; }
 }
+
+/* ── Dark Nav override ── */
+nav {
+  background: #2c1a08 !important;
+  backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+}
+.nav-logo { color: #ffffff !important; }
+.nav-logo span { color: #e8a060 !important; }
+.nav-links a { color: rgba(255,255,255,0.55) !important; }
+.nav-links a:hover, .nav-links a.active { color: #ffffff !important; }
+.nav-cta { color: #ffffff !important; border-color: rgba(255,255,255,0.4) !important; }
+.nav-cta:hover { background: #ffffff !important; color: #2c1a08 !important; }
+.lang-toggle { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.15) !important; }
+.lang-btn { color: rgba(255,255,255,0.45) !important; }
+.lang-btn.active { background: #ffffff !important; color: #2c1a08 !important; }
+.nav-hamburger span { background: rgba(255,255,255,0.7) !important; }
+.mobile-menu { background: rgba(44,26,8,0.98) !important; }
+.mobile-menu a { color: rgba(255,255,255,0.65) !important; border-bottom-color: rgba(255,255,255,0.06) !important; }
+.mobile-menu a:hover { color: #ffffff !important; }
 </style>
 </head>
 <body>
