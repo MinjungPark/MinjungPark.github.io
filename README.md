@@ -1,7 +1,7 @@
 <div align="center">
 
 ![MSoftech](https://img.shields.io/badge/MSoftech-0e1f35?style=for-the-badge)
-![AI Solutions Engineering](https://img.shields.io/badge/AI_Solutions_Engineering_Lead-1e3a5f?style=for-the-badge)
+![AI Solutions Engineering Lead](https://img.shields.io/badge/AI_Solutions_Engineering_Lead-1e3a5f?style=for-the-badge)
 ![U.S. Remote Ready](https://img.shields.io/badge/U.S._Remote_Ready-1a6b4a?style=for-the-badge)
 
 # Min Jung Park
@@ -44,11 +44,11 @@ MSoftech is a boutique AI engineering studio — a **senior-only team of two** t
 
 | Project | What It Does | Stack |
 |---|---|---|
-| **Clinical Nursing EMR** | AI nursing education platform. 6 agents, 55 criteria, 90% accuracy | ![React 18](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white) ![Vertex AI](https://img.shields.io/badge/Vertex_AI-4285F4?style=flat-square&logo=googlecloud&logoColor=white) ![FHIR R4](https://img.shields.io/badge/FHIR_R4-1a6b4a?style=flat-square) |
-| **FHIR EMR** | Complete KR Core FHIR R4-based EMR. 7 resources, full clinical workflow | ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black) ![HAPI FHIR](https://img.shields.io/badge/HAPI_FHIR-1e3a5f?style=flat-square) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white) |
-| **My Health Coach** | AI health app. 5 chronic conditions, 4 agents, 22 prompt templates | ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white) ![GPT-4](https://img.shields.io/badge/GPT--4-412991?style=flat-square&logo=openai&logoColor=white) ![Gemini](https://img.shields.io/badge/Gemini-4285F4?style=flat-square&logo=googlegemini&logoColor=white) |
-| **AI AquaLab** | Groundwater quality analysis. 4 agents, 56 criteria | ![React 18](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![Vertex AI](https://img.shields.io/badge/Vertex_AI-4285F4?style=flat-square&logo=googlecloud&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white) |
-| **Samsung SDS America** | IT Service Management System. 3.5-year remote engagement | ![Full-Stack](https://img.shields.io/badge/Full--Stack-0e1f35?style=flat-square) ![U.S. EST](https://img.shields.io/badge/U.S._EST-1e3a5f?style=flat-square) ![3.5 Years](https://img.shields.io/badge/3.5_Years-1a6b4a?style=flat-square) |
+| **Clinical Nursing EMR** | AI nursing education platform. 6 agents, 55 criteria, 90% accuracy | `React 18` · `Spring Boot` · `Vertex AI` · `FHIR R4` |
+| **FHIR EMR** | Complete KR Core FHIR R4-based EMR. 7 resources, full clinical workflow | `React` · `FHIR R4` · `Spring Boot` · `HAPI FHIR` |
+| **My Health Coach** | AI health app. 5 chronic conditions, 4 agents, 22 prompt templates | `Flutter` · `GPT-4` · `Gemini` · `FHIR R4` |
+| **AI AquaLab** | Groundwater quality analysis. 4 agents, 56 criteria | `React 18` · `Vertex AI` · `Spring Boot` · `PostgreSQL` |
+| **Samsung SDS America** | IT Service Management System. 3.5-year remote engagement | `Full-Stack` · `U.S. EST` · `3.5 Years` |
 
 ---
 
@@ -68,14 +68,14 @@ Google Gemini 2.5 + OpenAI GPT-4 — runtime-selectable, unified interface.
 
 ### Tech Stack
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![GCP](https://img.shields.io/badge/GCP-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)
-![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Java](https://img.shields.io/badge/Java-1e3a5f?style=for-the-badge)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-1e3a5f?style=for-the-badge)
+![React](https://img.shields.io/badge/React-1e3a5f?style=for-the-badge)
+![TypeScript](https://img.shields.io/badge/TypeScript-1e3a5f?style=for-the-badge)
+![Flutter](https://img.shields.io/badge/Flutter-1e3a5f?style=for-the-badge)
+![GCP](https://img.shields.io/badge/GCP-1e3a5f?style=for-the-badge)
+![AWS](https://img.shields.io/badge/AWS-1e3a5f?style=for-the-badge)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-1e3a5f?style=for-the-badge)
 
 ---
 
