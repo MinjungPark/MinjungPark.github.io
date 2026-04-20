@@ -183,7 +183,7 @@ nav {
 .feature-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
 
 /* PROJECTS */
-.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .project-card {
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text);
@@ -191,7 +191,7 @@ nav {
 }
 .project-card:hover { transform: translateY(-4px); border-color: var(--border-hover); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
 .project-card-header { height: 7px; }
-.c1{background:#4a7fa5} .c2{background:#3d8b7a} .c3{background:#8b7355} .c4{background:#6b5b8b} .c5{background:#8b5b72} .c6{background:#8b6040} .c7{background:#4a7b5b}
+.c1{background:#1a6b4a} .c2{background:#1e3a5f} .c3{background:#7b2e2e} .c4{background:#1a5280} .c5{background:#5a3e28} .c6{background:#8b4520} .c7{background:#2a3f5f}
 .project-card-body { padding: 28px; }
 .project-card-title { font-family: 'Pretendard', -apple-system, sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
 .project-card-desc { font-size: 14px; color: var(--text-sub); line-height: 1.7; margin-bottom: 18px; }
@@ -306,7 +306,8 @@ footer { padding: 40px 60px; border-top: 1px solid var(--border); display: flex;
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .msoftech-grid { grid-template-columns: 1fr; gap: 40px; }
   .msoftech-features { grid-template-columns: 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .sds-body { grid-template-columns: 1fr; gap: 24px; }
   .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
   .core-tech-section { padding: 80px 0; }
   .core-tech-card { grid-template-columns: 1fr; }
@@ -315,6 +316,7 @@ footer { padding: 40px 60px; border-top: 1px solid var(--border); display: flex;
   footer { flex-direction: column; gap: 8px; text-align: center; padding: 32px 24px; }
 }
 @media (max-width: 480px) {
+  .projects-grid { grid-template-columns: 1fr; }
   .hero { padding: 110px 20px 40px; }
   .hero-name { font-size: clamp(42px, 13vw, 68px); }
   .photo-wrapper { width: 220px; height: 270px; }
@@ -332,70 +334,70 @@ footer { padding: 40px 60px; border-top: 1px solid var(--border); display: flex;
 /* Contact section white background */
 #contact { background: var(--bg-card); }
 
-/* ── Core Technology: Dark section ── */
+/* ── Core Technology: Dark section (Option 2) ── */
 .core-tech-section {
-  background: #0d1b2a !important;
+  background: #0f172a !important;
   border-top: none !important;
 }
 .core-tech-section .eyebrow {
-  color: #4fc3f7 !important;
+  color: #7dd3fc !important;
 }
 .core-tech-section .eyebrow::before {
-  background: #4fc3f7 !important;
+  background: #7dd3fc !important;
 }
 .core-tech-section .section-title {
-  color: #f0f4f8 !important;
+  color: #f1f5f9 !important;
 }
 .core-tech-section .core-tech-card {
-  background: rgba(255,255,255,0.03) !important;
-  border-color: rgba(79,195,247,0.15) !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(125,211,252,0.18) !important;
 }
 .core-tech-section .core-tech-left {
-  border-right-color: rgba(79,195,247,0.15) !important;
+  border-right-color: rgba(125,211,252,0.18) !important;
 }
 .core-tech-section .core-tech-label {
-  color: #4fc3f7 !important;
+  color: #7dd3fc !important;
 }
 .core-tech-section .core-tech-name {
-  color: #f0f4f8 !important;
+  color: #f1f5f9 !important;
 }
 .core-tech-section .core-tech-desc {
-  color: #8ba4bc !important;
+  color: #cbd5e1 !important;
   opacity: 1 !important;
 }
 .core-tech-section .core-tech-desc strong {
-  color: #f0f4f8 !important;
+  color: #f1f5f9 !important;
 }
 .core-tech-section .core-tech-tag {
-  color: #8ba4bc !important;
-  background: rgba(255,255,255,0.05) !important;
-  border-color: rgba(79,195,247,0.15) !important;
+  color: #7dd3fc !important;
+  background: rgba(125,211,252,0.10) !important;
+  border-color: rgba(125,211,252,0.22) !important;
 }
 .core-tech-section .core-tech-link {
-  background: #4fc3f7 !important;
-  color: #0d1b2a !important;
+  background: #7dd3fc !important;
+  color: #0f172a !important;
 }
 .core-tech-section .core-feature {
-  background: rgba(255,255,255,0.03) !important;
-  border-color: rgba(79,195,247,0.12) !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(125,211,252,0.18) !important;
 }
 .core-tech-section .core-feature:hover {
-  background: rgba(79,195,247,0.06) !important;
-  border-color: rgba(79,195,247,0.3) !important;
+  background: rgba(125,211,252,0.08) !important;
+  border-color: rgba(125,211,252,0.35) !important;
 }
 .core-tech-section .core-feature-num {
-  color: #4fc3f7 !important;
-  background: rgba(79,195,247,0.12) !important;
-  border-color: rgba(79,195,247,0.25) !important;
+  color: #7dd3fc !important;
+  background: rgba(125,211,252,0.12) !important;
+  border-color: rgba(125,211,252,0.25) !important;
 }
 .core-tech-section .core-feature-title {
-  color: #f0f4f8 !important;
+  color: #f1f5f9 !important;
 }
 .core-tech-section .core-feature-desc {
-  color: #8ba4bc !important;
+  color: #94a3b8 !important;
 }
 .core-tech-section .core-tech-right-label {
-  color: #4a6278 !important;
+  color: #64748b !important;
   opacity: 1 !important;
 }
 
@@ -403,12 +405,13 @@ footer { padding: 40px 60px; border-top: 1px solid var(--border); display: flex;
   .container, .section-alt .section-inner, .core-tech-inner { padding: 0 24px; }
 }
 @media (max-width: 480px) {
+  .projects-grid { grid-template-columns: 1fr; }
   .container, .section-alt .section-inner, .core-tech-inner { padding: 0 20px; }
 }
 
 /* ── Dark Nav override ── */
 nav {
-  background: #1e3a5f !important;
+  background: #0e1f35 !important;
   backdrop-filter: none !important;
   border-bottom: 1px solid rgba(255,255,255,0.08) !important;
 }
@@ -417,14 +420,30 @@ nav {
 .nav-links a { color: rgba(255,255,255,0.55) !important; }
 .nav-links a:hover, .nav-links a.active { color: #ffffff !important; }
 .nav-cta { color: #ffffff !important; border-color: rgba(255,255,255,0.4) !important; }
-.nav-cta:hover { background: #ffffff !important; color: #1e3a5f !important; }
+.nav-cta:hover { background: #ffffff !important; color: #0e1f35 !important; }
 .lang-toggle { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,255,0.15) !important; }
 .lang-btn { color: rgba(255,255,255,0.45) !important; }
-.lang-btn.active { background: #ffffff !important; color: #1e3a5f !important; }
+.lang-btn.active { background: #ffffff !important; color: #0e1f35 !important; }
 .nav-hamburger span { background: rgba(255,255,255,0.7) !important; }
 .mobile-menu { background: rgba(30,58,95,0.98) !important; }
 .mobile-menu a { color: rgba(255,255,255,0.65) !important; border-bottom-color: rgba(255,255,255,0.06) !important; }
 .mobile-menu a:hover { color: #ffffff !important; }
+
+
+@media (max-width: 900px) {
+}
+
+
+
+
+/* Samsung SDS — full width */
+.project-card-full { grid-column: 1 / -1; }
+.project-card-full .project-card-body { padding: 28px 32px; }
+.sds-body { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: center; }
+.sds-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sds-stat { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; }
+.sds-stat-num { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+.sds-stat-label { font-size: 11px; color: var(--text-dim); font-weight: 500; }
 </style>
 </head>
 <body>
@@ -544,7 +563,19 @@ nav {
 
       <a href="#" class="project-card"><div class="project-card-header c6"></div><div class="project-card-body"><div class="project-card-title" data-en="Hot Spring Cost Simulator" data-ko="온천 견적 시뮬레이터">Hot Spring Cost Simulator</div><div class="project-card-desc" data-en="End-to-end development cost and timeline simulation engine. Interactive drilling options, multi-scenario risk analysis, and automated proposal generation." data-ko="온천 개발 비용/일정 시뮬레이션 엔진. 다중 시나리오 리스크 분석, 제안서 자동 생성.">End-to-end development cost and timeline simulation engine. Interactive drilling options, multi-scenario risk analysis, and automated proposal generation.</div><div class="project-card-tags"><span class="project-card-tag">React 18</span><span class="project-card-tag">TypeScript</span><span class="project-card-tag">Spring Boot</span><span class="project-card-tag">PostgreSQL</span></div><span class="project-card-link" data-en="View Project →" data-ko="View Project →">View Project →</span></div></a>
 
-      <a href="#" class="project-card"><div class="project-card-header c7"></div><div class="project-card-body"><div class="project-card-title">Samsung SDS America</div><div class="project-card-desc" data-en="Full-time remote project on U.S. EST. IT Device Service Management System for Samsung Electronics America. 3.5 years of verified remote collaboration." data-ko="미국 EST 기준 풀타임 원격 프로젝트. 삼성전자 미국법인 IT 기기 서비스 관리 시스템. 3.5년 원격 협업 검증.">Full-time remote project on U.S. EST. IT Device Service Management System for Samsung Electronics America. 3.5 years of verified remote collaboration.</div><div class="project-card-tags"><span class="project-card-tag">Java</span><span class="project-card-tag">Spring</span><span class="project-card-tag">Oracle</span><span class="project-card-tag">Highcharts</span></div><span class="project-card-link" data-en="View Details →" data-ko="View Details →">View Details →</span></div></a>
+      <a href="#" class="project-card project-card-full"><div class="project-card-header c7"></div><div class="project-card-body"><div class="project-card-title">Samsung SDS America</div>
+          <div class="sds-body">
+            <div>
+              <p class="project-card-desc" data-en="A 3.5-year remote engagement with Samsung SDS America, building an <strong>IT Device Service Management System</strong> for Samsung Electronics America's U.S. operations. We analyzed end-to-end business workflows, identified gaps where departmental silos were causing operational breakdowns, and delivered system design, full-stack development, executive-grade dashboards, and a cross-department workflow manual." data-ko="Samsung SDS America와의 3.5년 원격 계약으로, 삼성전자 미국법인의 <strong>IT 기기 서비스 관리 시스템</strong>을 구축했습니다. 단순 개발이 아닌 전체 업무 흐름을 분석하고, 부서 간 단절로 인한 운영 문제를 직접 파악해 해결했습니다. 시스템 설계, 풀스택 개발, 임원 보고용 대시보드, 그리고 각 부서가 개별적으로는 볼 수 없었던 업무 흐름 전체를 정리한 매뉴얼까지 — 기술 파트너이자 비즈니스 문제 해결사로서 프로젝트를 완수했습니다.">A 3.5-year remote engagement with Samsung SDS America, building an <strong>IT Device Service Management System</strong> for Samsung Electronics America's U.S. operations. We analyzed end-to-end business workflows, identified gaps where departmental silos were causing operational breakdowns, and delivered system design, full-stack development, executive-grade dashboards, and a cross-department workflow manual.</p>
+              <span class="project-card-link" data-en="View Details →" data-ko="View Details →">View Details →</span>
+            </div>
+            <div class="sds-stats">
+              <div class="sds-stat"><div class="sds-stat-num">3.5<span style="font-size:14px">yrs</span></div><div class="sds-stat-label" data-en="Remote Engagement" data-ko="원격 계약 기간">Remote Engagement</div></div>
+              <div class="sds-stat"><div class="sds-stat-num">EST</div><div class="sds-stat-label" data-en="U.S. Time Zone" data-ko="미국 시간대 기준">U.S. Time Zone</div></div>
+              <div class="sds-stat"><div class="sds-stat-num">SEA</div><div class="sds-stat-label" data-en="Samsung Electronics America" data-ko="삼성전자 미국법인">Samsung Electronics America</div></div>
+              <div class="sds-stat"><div class="sds-stat-num">E2E</div><div class="sds-stat-label" data-en="From Analysis to Delivery" data-ko="분석부터 납품까지">From Analysis to Delivery</div></div>
+            </div>
+          </div></div></a>
 
     </div>
   </div>
@@ -617,7 +648,7 @@ nav {
 <!-- SCROLL TOP -->
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 function setLang(lang) {
   document.documentElement.setAttribute('data-lang', lang);
   localStorage.setItem('lang', lang);
