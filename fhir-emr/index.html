@@ -27,15 +27,15 @@ body { background:var(--bg); color:var(--ink); font-family:'DM Sans',sans-serif;
 /* NAV */
 nav {
   position:fixed; top:0; left:0; right:0; z-index:100;
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex; align-items:center;
   padding:20px 60px;
-  background:rgba(247,244,239,0.92);
+  background:rgba(247,244,239,0.80);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
 }
-.nav-logo { font-family:'Fraunces',serif; font-size:18px; font-weight:600; color:var(--ink); text-decoration:none; }
 .nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
 .nav-back:hover { color:var(--accent); }
+.nav-right { margin-left:auto; display:flex; align-items:center; gap:16px; }
 
 /* ── LANG TOGGLE ── */
 .lang-toggle {
@@ -52,11 +52,9 @@ nav {
 .lang-btn.active { background: var(--ink); color: #fff; }
 .lang-btn:hover:not(.active) { color: var(--ink); }
 
-.nav-tag { display:inline-flex; align-items:center; gap:6px; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); background:var(--accent-light); border:1px solid var(--blue-border); padding:6px 14px; border-radius:100px; }
 
 /* HERO */
 .hero {
-  min-height: 80vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
@@ -346,21 +344,21 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
 <!-- NAV -->
 <nav>
-  <a href="../index.html" class="nav-logo">MJ Park</a>
   <a href="../index.html#projects" class="nav-back">← Back to Projects</a>
-  <div class="nav-tag">🩺 FHIR · Healthcare</div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('ko')">KR</button>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ko')">KR</button>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <div class="fhir-hero">
   <div class="hero-text">
-    <div class="hero-eyebrow">Solo Project · Sep 2024 – Mar 2025</div>
+    <div class="hero-eyebrow">MSoftech · Sep 2024 – Mar 2025</div>
     <h1 class="hero-title">FHIR<br>EMR</h1>
-    <p class="hero-desc" data-en="A <strong>full-cycle Electronic Medical Record system</strong> built on KR Core FHIR R4 standards — covering patient registration, clinical encounters, observations, diagnostic reports, conditions, and medication requests." data-ko="환자 등록부터 약품 처방까지 진료 전 주기를 <strong>KR Core FHIR R4 표준</strong>으로 구현한 전자의무기록 시스템입니다. 기획·설계·프론트엔드·백엔드·FHIR 구현까지 전 과정을 단독으로 개발했습니다.">A <strong>full-cycle Electronic Medical Record system</strong> built on KR Core FHIR R4 standards — covering patient registration, clinical encounters, observations, diagnostic reports, conditions, and medication requests.</p>
+    <p class="hero-desc" data-en="An <strong>educational EMR system</strong> designed for medical informatics and health administration students to learn FHIR data architecture through hands-on practice. Built on real clinical standards — SNOMED-CT, LOINC, EDI, and ATC codes — with pharmaceutical data sourced from Korea's HIRA database, ensuring every interaction reflects production-grade healthcare data." data-ko="의료정보학·보건행정학 학생들이 <strong>실습만으로 FHIR 데이터 구조를 이해할 수 있도록 설계한 교육용 EMR 시스템</strong>입니다. SNOMED-CT, LOINC, EDI, ATC 등 실제 임상 표준 코드를 적용했으며, 의약품 정보는 심평원 데이터(공공데이터포털)를 기반으로 구성하여 실무와 동일한 신뢰성을 보장합니다.">An <strong>educational EMR system</strong> designed for medical informatics and health administration students to learn FHIR data architecture through hands-on practice. Built on real clinical standards — SNOMED-CT, LOINC, EDI, and ATC codes — with pharmaceutical data sourced from Korea's HIRA database, ensuring every interaction reflects production-grade healthcare data.</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="hero-stat-num">5</span><div class="hero-stat-en">FHIR Resources</div></div>
       <div class="hero-stat"><span class="hero-stat-num">KR</span><div class="hero-stat-en">Core IG Compliant</div></div>
@@ -382,15 +380,15 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
     <h2 class="section-title">Project Overview</h2>
     <div class="overview-grid">
       <div class="overview-text">
-        <p data-en="This is a <strong>full-cycle EMR system</strong> built entirely on the <strong>KR Core FHIR R4</strong> standard — Korea's national healthcare interoperability specification. Every data element is stored and exchanged as a FHIR Resource." data-ko="대한민국 의료 표준인 <strong>KR Core FHIR R4</strong>를 기반으로 진료 전 주기를 구현한 전자의무기록 시스템입니다. 모든 데이터가 FHIR 리소스 형태로 저장되고 교환됩니다.">This is a <strong>full-cycle EMR system</strong> built entirely on the <strong>KR Core FHIR R4</strong> standard — Korea's national healthcare interoperability specification. Every data element is stored and exchanged as a FHIR Resource.</p>
-        <p data-en="The system covers the complete clinical workflow: <strong>Patient → Practitioner → Encounter → Observation → DiagnosticReport → Condition → MedicationRequest</strong>. Each resource is linked to the KR Core Implementation Guide." data-ko="환자 → 의사 → 진료 → 관찰 결과 → 진단 보고서 → 상병 → 처방까지 진료 전 과정이 연결됩니다. 각 리소스는 KR Core Implementation Guide를 준수합니다.">The system covers the complete clinical workflow: <strong>Patient → Practitioner → Encounter → Observation → DiagnosticReport → Condition → MedicationRequest</strong>. Each resource is linked to the KR Core Implementation Guide.</p>
-        <p data-en="The <strong>Patient Dashboard</strong> aggregates all clinical data in one view — with trend charts, AI-generated assessments, medication history, and lifestyle guidance — making complex medical data immediately actionable." data-ko="<strong>환자 대시보드</strong>는 모든 진료 데이터를 한 화면에 집약합니다. 추이 차트, AI 자동 종합 평가, 복용 약물 이력, 생활 습관 가이드까지 복잡한 의료 데이터를 즉시 활용 가능한 형태로 제공합니다.">The <strong>Patient Dashboard</strong> aggregates all clinical data in one view — with trend charts, AI-generated assessments, medication history, and lifestyle guidance — making complex medical data immediately actionable.</p>
+        <p data-en="FHIR is becoming the global standard for healthcare data exchange, but most students learn it only through documentation. This project is a <strong>hands-on educational EMR</strong> where medical informatics and health administration students experience the full clinical workflow — patient registration, encounters, observations, diagnostic reports, conditions, and prescriptions — all structured as KR Core FHIR R4 resources. By using the system, students naturally learn how FHIR data architecture works in practice." data-ko="FHIR은 의료 데이터 교환의 글로벌 표준이 되고 있지만, 대부분의 학생들은 문서로만 학습합니다. 이 프로젝트는 의료정보학·보건행정학 학생들이 환자 등록부터 진료·검사·진단·처방까지 <strong>전 주기를 직접 실습하며 FHIR 데이터 구조를 자연스럽게 익히는 교육용 EMR</strong>입니다. 모든 데이터가 KR Core FHIR R4 리소스로 구조화되어 있어, 시스템을 사용하는 것만으로 FHIR 아키텍처를 체득할 수 있습니다.">FHIR is becoming the global standard for healthcare data exchange, but most students learn it only through documentation. This project is a <strong>hands-on educational EMR</strong> where medical informatics and health administration students experience the full clinical workflow — patient registration, encounters, observations, diagnostic reports, conditions, and prescriptions — all structured as KR Core FHIR R4 resources. By using the system, students naturally learn how FHIR data architecture works in practice.</p>
+        <p data-en="The system is built on real clinical standards — <strong>SNOMED-CT, LOINC, EDI, and ATC codes</strong> — with pharmaceutical data sourced from Korea's <strong>HIRA database</strong>. This is not a simplified mock-up — it's a <strong>production-grade data environment</strong> where students work with the same standards and data that real hospitals use." data-ko="<strong>SNOMED-CT, LOINC, EDI, ATC</strong> 등 실제 임상 표준 코드를 적용했으며, 의약품 정보는 <strong>심평원 데이터(공공데이터포털)</strong>를 기반으로 구성합니다. 단순한 모의 환경이 아니라, 실제 병원과 <strong>동일한 표준·데이터로 구성된 프로덕션급 실습 환경</strong>입니다.">The system is built on real clinical standards — <strong>SNOMED-CT, LOINC, EDI, and ATC codes</strong> — with pharmaceutical data sourced from Korea's <strong>HIRA database</strong>. This is not a simplified mock-up — it's a <strong>production-grade data environment</strong> where students work with the same standards and data that real hospitals use.</p>
+        <p data-en="The <strong>Patient Dashboard</strong> aggregates all clinical data into a single view — trend charts, AI-generated health assessments, medication history, and lifestyle guidance. The AI layer, powered by the same <strong>Agent Orchestration Platform</strong> used across MSoftech's products, automatically generates comprehensive patient summaries from raw FHIR data — giving students insight into how AI-assisted clinical decision support works in modern healthcare systems." data-ko="<strong>환자 대시보드</strong>는 추이 차트, AI 자동 건강 평가, 복용 약물 이력, 생활 습관 가이드를 한 화면에 집약합니다. AI 레이어는 MSoftech 전 제품에서 사용하는 <strong>Agent Orchestration Platform</strong>으로 구동되며, 원시 FHIR 데이터로부터 종합 환자 요약을 자동 생성합니다. 학생들은 현대 의료 시스템에서 <strong>AI 기반 임상 의사결정 지원이 어떻게 작동하는지</strong>까지 체험할 수 있습니다.">The <strong>Patient Dashboard</strong> aggregates all clinical data into a single view — trend charts, AI-generated health assessments, medication history, and lifestyle guidance. The AI layer, powered by the same <strong>Agent Orchestration Platform</strong> used across MSoftech's products, automatically generates comprehensive patient summaries from raw FHIR data — giving students insight into how AI-assisted clinical decision support works in modern healthcare systems.</p>
       </div>
       <div>
         <div class="meta-card"><div class="meta-label">Period</div><div class="meta-value">Sep 2024 – Mar 2025</div></div>
-        <div class="meta-card"><div class="meta-label">Type</div><div class="meta-value">Solo Project</div></div>
-        <div class="meta-card"><div class="meta-label">Standard</div><div class="meta-value">KR Core FHIR R4</div></div>
-        <div class="meta-card"><div class="meta-label">Domain</div><div class="meta-value">Healthcare · EMR · AI</div></div>
+        <div class="meta-card"><div class="meta-label">Type</div><div class="meta-value" data-en="MSoftech Product" data-ko="엠소프텍 자체 개발">MSoftech Product</div></div>
+        <div class="meta-card"><div class="meta-label">Role</div><div class="meta-value" data-en="AI Solutions Architect · Full-Stack Engineer" data-ko="AI 솔루션 아키텍트 · 풀스택 엔지니어">AI Solutions Architect · Full-Stack Engineer</div></div>
+        <div class="meta-card"><div class="meta-label">Domain</div><div class="meta-value">Healthcare · EMR · KR Core FHIR R4</div></div>
       </div>
     </div>
   </div>
