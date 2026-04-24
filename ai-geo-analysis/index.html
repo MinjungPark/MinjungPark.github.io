@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Geological Analysis — MSoftech</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef;
+  --ink: #1a1612;
+  --mid: #6b6560;
+  --light: #c8c3bc;
+  --accent: #6e3545;
+  --accent-light: rgba(110,53,69,0.08);
+  --accent-mid: rgba(110,53,69,0.15);
+  --card: #ffffff;
+  --border: rgba(26,22,18,0.08);
+  --border-hover: rgba(26,22,18,0.16);
+  --burgundy-border: rgba(110,53,69,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--ink); font-family:'Pretendard',-apple-system,sans-serif; overflow-x:hidden; word-break:keep-all; overflow-wrap:break-word; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center;
+  padding:20px 60px;
+  background:rgba(247,244,239,0.80);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-back { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:var(--mid); text-decoration:none; transition:color 0.2s; }
+.nav-back:hover { color:var(--accent); }
+.lang-toggle {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(26,22,18,0.06); border:1px solid var(--border);
+  border-radius:100px; padding:4px; margin-left:auto;
+}
+.lang-btn {
+  font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600;
+  padding:4px 12px; border-radius:100px; border:none;
+  background:transparent; color:var(--mid); cursor:pointer;
+  transition:background 0.2s, color 0.2s; letter-spacing:0.05em;
+}
+.lang-btn.active { background:var(--ink); color:#fff; }
+.lang-btn:hover:not(.active) { color:var(--ink); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* HERO */
+.hero {
+  display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:48px;
+  padding:140px 60px 80px;
+  max-width:1200px; margin:0 auto;
+}
+.hero-eyebrow { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:16px; opacity:0; animation:fadeUp 0.6s 0.1s ease forwards; }
+.hero-title { font-family:'Fraunces',serif; font-size:clamp(36px,5vw,52px); font-weight:700; line-height:1.15; color:var(--ink); margin-bottom:20px; opacity:0; animation:fadeUp 0.6s 0.2s ease forwards; }
+.hero-desc { font-size:clamp(15px,2vw,18px); color:var(--mid); line-height:1.75; margin-bottom:40px; opacity:0; animation:fadeUp 0.6s 0.3s ease forwards; }
+.hero-stats { display:flex; gap:28px; opacity:0; animation:fadeUp 0.6s 0.4s ease forwards; }
+.hero-stat { text-align:left; }
+.hero-stat-num { font-family:'Fraunces',serif; font-size:32px; font-weight:700; color:var(--accent); }
+.hero-stat-label { font-size:12px; font-weight:600; color:var(--ink); margin-top:4px; white-space:nowrap; }
+.hero-visual { opacity:0; animation:fadeUp 0.7s 0.5s ease forwards; }
+
+/* GIF Frame */
+.gif-frame { border-radius:12px; overflow:hidden; border:1px solid var(--border); box-shadow:0 24px 80px rgba(0,0,0,0.12); }
+.gif-bar { display:flex; align-items:center; gap:6px; padding:10px 16px; background:rgba(26,22,18,0.03); border-bottom:1px solid var(--border); }
+.gif-dot { width:8px; height:8px; border-radius:50%; }
+.gif-dot-r { background:#ff5f57; } .gif-dot-y { background:#febc2e; } .gif-dot-g { background:#28c840; }
+.gif-bar-title { flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
+.gif-frame img { width:100%; display:block; }
+
+/* SECTIONS */
+.section { padding:80px 60px; max-width:1200px; margin:0 auto; }
+.section-alt { padding:80px 0; background:var(--card); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+.section-inner { max-width:1200px; margin:0 auto; padding:0 60px; }
+.eyebrow { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+.eyebrow::before { content:''; width:24px; height:1.5px; background:var(--accent); display:inline-block; }
+.section-title { font-family:'Fraunces',serif; font-size:clamp(28px,3vw,36px); font-weight:700; color:var(--ink); margin-bottom:48px; }
+
+/* OVERVIEW */
+.overview-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:48px; }
+.overview-text { font-size:17px; line-height:1.85; color:var(--mid); }
+.overview-text p { margin-bottom:20px; }
+.meta-grid { display:flex; flex-direction:column; gap:14px; }
+.meta-card { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:22px 24px; transition:border-color 0.2s; }
+.meta-card:hover { border-color:var(--accent); }
+.meta-label { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px; }
+.meta-value { font-size:14px; font-weight:600; color:var(--ink); }
+
+/* DOMAIN EXPERTISE */
+.domain-intro { font-size:17px; line-height:1.85; color:var(--mid); margin-bottom:48px; }
+.domain-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:32px; }
+.domain-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; transition:border-color 0.2s; }
+.domain-card:hover { border-color:var(--accent); }
+.domain-icon { width:40px; height:40px; background:var(--accent-light); border:1px solid var(--burgundy-border); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.domain-title { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:8px; }
+.domain-desc { font-size:13px; color:var(--mid); line-height:1.6; }
+.domain-callout { display:flex; align-items:center; gap:16px; background:var(--accent-light); border:1px solid var(--burgundy-border); border-radius:12px; padding:20px 24px; }
+.domain-callout-icon { width:40px; height:40px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.domain-callout-icon svg { stroke:#fff; }
+.domain-callout-text { font-size:14px; font-weight:500; color:var(--ink); line-height:1.7; }
+
+/* AI REPORT */
+.report-intro { font-size:17px; line-height:1.85; color:var(--mid); margin-bottom:48px; }
+.report-screenshot { border-radius:12px; overflow:hidden; border:1px solid var(--border); margin-bottom:0; }
+.report-screenshot img { width:100%; display:block; height:700px; object-fit:cover; object-position:top center; transition:height 0.4s ease; }
+.report-img-wrap { position:relative; overflow:hidden; }
+.report-img-wrap.collapsible::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:80px;
+  background:linear-gradient(to bottom, transparent, rgba(255,255,255,0.95));
+  pointer-events:none; transition:opacity 0.3s;
+}
+.report-img-wrap.collapsible.expanded::after { opacity:0; }
+.report-img-wrap.collapsible.expanded img { height:auto !important; max-height:none !important; }
+.expand-btn {
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  width:100%; padding:10px 0;
+  background:var(--card); border:none; border-top:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600;
+  color:var(--accent); cursor:pointer; transition:background 0.2s; letter-spacing:0.05em;
+  border-radius:0 0 12px 12px; margin-bottom:48px;
+}
+.expand-btn:hover { background:var(--accent-light); }
+.report-features { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.report-feature { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; transition:border-color 0.2s; }
+.report-feature:hover { border-color:var(--accent); }
+.report-feature-num { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:0.1em; margin-bottom:10px; }
+.report-feature-title { font-size:15px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+.report-feature-desc { font-size:13px; color:var(--mid); line-height:1.6; }
+.report-feature-full { grid-column:1 / -1; }
+
+/* SCREEN CARDS */
+.screen-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+.screen-card { background:var(--bg); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:border-color 0.2s; }
+.screen-card:hover { border-color:var(--accent); }
+.screen-bar { display:flex; align-items:center; gap:6px; padding:10px 16px; background:rgba(26,22,18,0.03); border-bottom:1px solid var(--border); }
+.screen-dot { width:8px; height:8px; border-radius:50%; }
+.screen-dot-r { background:#ff5f57; } .screen-dot-y { background:#febc2e; } .screen-dot-g { background:#28c840; }
+.screen-bar-title { flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--light); }
+.screen-img { width:100%; display:block; }
+.screen-desc { padding:16px 20px; }
+.screen-desc-title { font-size:14px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+.screen-desc-text { font-size:13px; color:var(--mid); line-height:1.6; }
+
+/* IMPACT */
+.impact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.impact-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px 24px; text-align:center; transition:border-color 0.2s, transform 0.2s; position:relative; overflow:hidden; }
+.impact-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), rgba(110,53,69,0.2)); }
+.impact-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+.impact-num { font-family:'Fraunces',serif; font-size:40px; font-weight:700; color:var(--accent); display:block; margin-bottom:8px; line-height:1; }
+.impact-label { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+.impact-desc { font-size:11px; color:var(--light); line-height:1.6; }
+
+/* TECH STACK */
+.tech-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.tech-group { background:var(--bg); border:1px solid var(--border); border-radius:16px; padding:24px; transition:border-color 0.2s; }
+.tech-group:hover { border-color:var(--accent); }
+.tech-group-title { font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.tech-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.tech-tag { background:var(--accent-light); color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:11px; padding:4px 10px; border-radius:100px; border:1px solid var(--burgundy-border); }
+
+/* BOTTOM NAV */
+.bottom-nav { padding:60px 60px; max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+.bottom-nav a { font-size:14px; font-weight:600; color:var(--ink); text-decoration:none; padding:14px 28px; border-radius:100px; transition:all 0.2s; }
+.bottom-nav .prev { background:var(--accent); color:#fff; }
+.bottom-nav .prev:hover { opacity:0.9; }
+.bottom-nav .next { border:1px solid var(--border); }
+.bottom-nav .next:hover { border-color:var(--accent); color:var(--accent); }
+
+/* FOOTER */
+footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+footer p { font-size:12px; color:var(--light); }
+
+/* SCROLL TO TOP */
+.scroll-top-btn {
+  position:fixed; bottom:32px; right:32px; width:44px; height:44px;
+  background:var(--accent); color:#fff; border:none; border-radius:50%;
+  font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 16px rgba(110,53,69,0.25);
+  opacity:0; transform:translateY(12px); transition:all 0.3s; z-index:99; pointer-events:none;
+}
+.scroll-top-btn.visible { opacity:1; transform:translateY(0); pointer-events:auto; }
+.scroll-top-btn:hover { transform:translateY(-2px); }
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+  nav { padding:14px 24px; }
+  .hero { grid-template-columns:1fr; padding:120px 24px 60px; gap:40px; }
+  .hero-body { grid-template-columns:1fr; gap:32px; }
+  .hero-stats { flex-direction:row; gap:20px; }
+  .overview-grid { grid-template-columns:1fr; }
+  .domain-grid { grid-template-columns:1fr; }
+  .report-features { grid-template-columns:1fr; }
+  .screen-grid { grid-template-columns:1fr; }
+  .impact-grid { grid-template-columns:repeat(2,1fr); }
+  .tech-grid { grid-template-columns:1fr; }
+  .section { padding:60px 24px; }
+  .section-alt { padding:60px 0; }
+  .section-inner { padding:0 24px; }
+  .bottom-nav { padding:40px 24px; }
+  footer { padding:30px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="../">← Back to Projects</a>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ko')">KR</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">MSoftech · Nov 2023 – Jun 2024</p>
+    <h1 class="hero-title">AI Geological Analysis</h1>
+    <p class="hero-desc" data-en="An address-based geological survey system that evaluates hot spring development feasibility through AI — scoring geological conditions, estimating yield and cost, and assessing drilling risks to support multi-billion-won investment decisions before breaking ground." data-ko="주소 기반으로 온천 개발 타당성을 AI가 평가하는 지질 분석 시스템입니다. 지질 조건 평가, 산출량·비용 추정, 굴착 리스크 분석을 통해 수십억 원 규모의 투자 결정을 사전에 지원합니다.">An address-based geological survey system that evaluates hot spring development feasibility through AI — scoring geological conditions, estimating yield and cost, and assessing drilling risks to support multi-billion-won investment decisions before breaking ground.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">A+</div>
+        <div class="hero-stat-label">AI Grading</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Risk Factors</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1.5km</div>
+        <div class="hero-stat-label">Depth Analysis</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="gif-frame">
+      <div class="gif-bar">
+        <div class="gif-dot gif-dot-r"></div><div class="gif-dot gif-dot-y"></div><div class="gif-dot gif-dot-g"></div>
+        <div class="gif-bar-title">800m Deep Hot Spring Development Scenario</div>
+      </div>
+      <img src="img/scenario.gif" alt="800m Deep Hot Spring Development Scenario">
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div class="section-alt">
+  <div class="section-inner">
+    <div class="eyebrow">Overview</div>
+    <h2 class="section-title">Project Overview</h2>
+    <div class="overview-grid">
+      <div class="overview-text">
+        <p data-en="<strong>AI Geological Analysis</strong> is a feasibility assessment platform for hot spring development. Given any address in Korea, the system analyzes geological data — rock types, fault structures, fracture zones, geothermal gradients — from the Korea Institute of Geoscience and Mineral Resources (KIGAM) and generates a comprehensive AI report with development grade, estimated yield, projected cost, and risk evaluation." data-ko="<strong>AI Geological Analysis</strong>는 온천 개발 타당성 평가 플랫폼입니다. 대한민국 내 주소를 입력하면 한국지질자원연구원(KIGAM) 데이터를 기반으로 암종, 단층 구조, 파쇄대, 지온경사도 등 지질 데이터를 분석하고, 개발 등급, 예상 산출량, 비용 추정, 리스크 평가를 포함한 종합 AI 리포트를 생성합니다."><strong>AI Geological Analysis</strong> is a feasibility assessment platform for hot spring development. Given any address in Korea, the system analyzes geological data — rock types, fault structures, fracture zones, geothermal gradients — from the Korea Institute of Geoscience and Mineral Resources (KIGAM) and generates a comprehensive AI report with development grade, estimated yield, projected cost, and risk evaluation.</p>
+        <p data-en="Hot spring development is a high-stakes investment — often exceeding billions of won — where failure means total loss. This system automates the initial feasibility assessment that traditionally required expensive geological consultants, enabling developers to make data-driven go/no-go decisions with AI-scored confidence levels before committing capital." data-ko="온천 개발은 수십억 원 규모의 고위험 투자로, 실패 시 전액 매몰됩니다. 기존에는 고비용 지질 전문가 의뢰가 필수였던 초기 타당성 평가를 자동화하여, 개발업체가 자본 투입 전 AI 신뢰도 기반의 데이터 중심 의사결정을 내릴 수 있게 합니다.">Hot spring development is a high-stakes investment — often exceeding billions of won — where failure means total loss. This system automates the initial feasibility assessment that traditionally required expensive geological consultants, enabling developers to make data-driven go/no-go decisions with AI-scored confidence levels before committing capital.</p>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-card"><div class="meta-label">Period</div><div class="meta-value">Nov 2023 – Jun 2024</div></div>
+        <div class="meta-card"><div class="meta-label">Type</div><div class="meta-value" data-en="MSoftech Product" data-ko="엠소프텍 자체 개발">MSoftech Product</div></div>
+        <div class="meta-card"><div class="meta-label">Role</div><div class="meta-value" data-en="AI Solutions Architect · Full-Stack Engineer" data-ko="AI 솔루션 아키텍트 · 풀스택 엔지니어">AI Solutions Architect · Full-Stack Engineer</div></div>
+        <div class="meta-card"><div class="meta-label">Domain</div><div class="meta-value" data-en="Geology · Hot Spring Development · Risk Assessment" data-ko="지질학 · 온천 개발 · 리스크 분석">Geology · Hot Spring Development · Risk Assessment</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOMAIN EXPERTISE -->
+<div class="section">
+  <div class="eyebrow">Domain Expertise</div>
+  <h2 class="section-title">Independent Domain Research</h2>
+  <p class="domain-intro" data-en="Building AI Geological Analysis required deep understanding of geoscience, hot spring regulations, and drilling engineering — domains far beyond typical software development. MSoftech independently studied geological survey methodology, Korean hot spring law (온천법), drilling cost structures, and risk assessment frameworks before designing the system architecture." data-ko="AI 지질분석 시스템 구축에는 지구과학, 온천 법규, 굴착 공학에 대한 깊은 이해가 필요했습니다 — 일반적인 소프트웨어 개발을 훨씬 넘어서는 도메인입니다. 엠소프텍은 지질조사 방법론, 온천법, 굴착 비용 구조, 리스크 평가 체계를 독자적으로 연구한 후 시스템 아키텍처를 설계했습니다.">Building AI Geological Analysis required deep understanding of geoscience, hot spring regulations, and drilling engineering — domains far beyond typical software development. MSoftech independently studied geological survey methodology, Korean hot spring law (온천법), drilling cost structures, and risk assessment frameworks before designing the system architecture.</p>
+
+  <div class="domain-grid">
+    <div class="domain-card">
+      <div class="domain-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M2 20h20"/><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M12 4v4"/><path d="M8 4h8"/></svg></div>
+      <div class="domain-title" data-en="Hot Spring Development Law" data-ko="온천 개발 법규">Hot Spring Development Law</div>
+      <div class="domain-desc" data-en="Korean Hot Spring Act Article 2, enforcement rules, permit requirements (25°C+, 300 tons/day), and regulatory approval processes for commercial development." data-ko="온천법 제2조, 시행규칙, 인허가 요건(25°C 이상, 일 300톤), 상업 개발을 위한 인허가 절차 분석.">Korean Hot Spring Act Article 2, enforcement rules, permit requirements (25°C+, 300 tons/day), and regulatory approval processes for commercial development.</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg></div>
+      <div class="domain-title" data-en="Geological Fundamentals" data-ko="지질학 기초">Geological Fundamentals</div>
+      <div class="domain-desc" data-en="Rock type classification (granite, gneiss), fault and fracture zone analysis, geothermal gradient interpretation, and 1:50,000 geological map reading methodology." data-ko="암종 분류(화강암, 편마암), 단층 및 파쇄대 분석, 지온경사도 해석, 1:50,000 지질도 판독 방법론.">Rock type classification (granite, gneiss), fault and fracture zone analysis, geothermal gradient interpretation, and 1:50,000 geological map reading methodology.</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2v6"/><path d="m16 6-4-4-4 4"/><path d="M6 18h12"/><path d="M6 14h12"/><path d="M6 10h12"/><circle cx="12" cy="22" r="2"/></svg></div>
+      <div class="domain-title" data-en="Drilling Process Engineering" data-ko="굴착 공정 분석">Drilling Process Engineering</div>
+      <div class="domain-desc" data-en="6-phase construction process from rigging to well completion, casing design, grouting techniques, decompression drilling, and 72-hour pump testing protocols." data-ko="장비 세팅부터 양수 시험까지 6단계 시공 공정, 케이싱 설계, 그라우팅 기법, 감압 굴착, 72시간 양수 시험 프로토콜.">6-phase construction process from rigging to well completion, casing design, grouting techniques, decompression drilling, and 72-hour pump testing protocols.</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+      <div class="domain-title" data-en="Risk Assessment Framework" data-ko="리스크 평가 체계">Risk Assessment Framework</div>
+      <div class="domain-desc" data-en="6 risk factors — cold water intrusion, casing failure, cavity collapse, cement/grout loss, gas emission, and data scarcity — with severity scoring and mitigation strategies." data-ko="6개 리스크 요인 — 냉수층 유입, 케이싱 훼손, 공벽 붕괴, 시멘트 유실, 가스 분출, 데이터 부족 — 위험도 평가 및 대응 전략.">6 risk factors — cold water intrusion, casing failure, cavity collapse, cement/grout loss, gas emission, and data scarcity — with severity scoring and mitigation strategies.</div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+      <div class="domain-title" data-en="Public Data Integration" data-ko="공공 데이터 활용">Public Data Integration</div>
+      <div class="domain-desc" data-en="Korea Institute of Geoscience and Mineral Resources (KIGAM) 1:50,000 geological maps, National Groundwater Information Center data, and Eco-Geo case study databases." data-ko="한국지질자원연구원(KIGAM) 1:50,000 지질도, 국가지하수정보센터 데이터, 에코지오 사례 DB 통합 활용.">Korea Institute of Geoscience and Mineral Resources (KIGAM) 1:50,000 geological maps, National Groundwater Information Center data, and Eco-Geo case study databases.</div>
+    </div>
+  </div>
+
+  <div class="domain-callout">
+    <div class="domain-callout-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+    <div class="domain-callout-text" data-en="From geological research and regulatory analysis to system architecture, UI/UX design, AI pipeline development, and full-stack engineering — MSoftech delivered every phase independently as a single integrated team." data-ko="지질학 연구, 규제 분석, 시스템 아키텍처, UI/UX 디자인, AI 파이프라인 개발, 풀스택 엔지니어링까지 — 엠소프텍이 모든 단계를 하나의 팀으로 독자 수행했습니다.">From geological research and regulatory analysis to system architecture, UI/UX design, AI pipeline development, and full-stack engineering — MSoftech delivered every phase independently as a single integrated team.</div>
+  </div>
+</div>
+
+<!-- AI ANALYSIS REPORT -->
+<div class="section-alt">
+  <div class="section-inner">
+  <div class="eyebrow">Core Feature</div>
+  <h2 class="section-title">AI Geological Analysis Report</h2>
+  <p class="report-intro" data-en="The system's core output — a comprehensive AI report that evaluates hot spring development feasibility from every angle. Each report delivers an overall grade (A+ to D), geological scoring across 5 dimensions, AI-generated development opinions, theory-vs-reality gap analysis, geological cross-section visualization, 6-factor risk assessment, and detailed construction cost estimation." data-ko="시스템의 핵심 산출물 — 온천 개발 타당성을 모든 각도에서 평가하는 종합 AI 리포트입니다. 종합 등급(A+~D), 5개 차원의 지질 평가, AI 개발 의견, 이론 vs 현실 간극 분석, 지질 단면도, 6개 항목 리스크 평가, 상세 시공 비용 추정을 제공합니다.">The system's core output — a comprehensive AI report that evaluates hot spring development feasibility from every angle. Each report delivers an overall grade (A+ to D), geological scoring across 5 dimensions, AI-generated development opinions, theory-vs-reality gap analysis, geological cross-section visualization, 6-factor risk assessment, and detailed construction cost estimation.</p>
+
+  <div class="report-screenshot">
+    <div class="screen-bar">
+      <div class="screen-dot screen-dot-r"></div><div class="screen-dot screen-dot-y"></div><div class="screen-dot screen-dot-g"></div>
+      <div class="screen-bar-title">AI Geological Analysis Report</div>
+    </div>
+    <div class="report-img-wrap collapsible" id="wrap-geoReport">
+      <img src="img/ai_report.jpg" alt="AI Geological Analysis Report">
+    </div>
+  </div>
+  <button class="expand-btn" onclick="toggleExpand('wrap-geoReport', this)" data-label="View Full Report">
+    <i class="expand-icon">↓</i> <span class="expand-label">View Full Report</span>
+  </button>
+
+  <div class="report-features">
+    <div class="report-feature">
+      <div class="report-feature-num">01</div>
+      <div class="report-feature-title" data-en="Overall Grade" data-ko="종합 등급">Overall Grade</div>
+      <div class="report-feature-desc" data-en="A+ to D grading based on weighted scoring across 5 geological dimensions — fault distance, success rate, target depth, rock hardness, and formation characteristics." data-ko="단층 거리, 성공 사례, 목표 심도, 암반 경도, 암종 특성 5개 차원의 가중 평가 기반 A+~D 등급 판정.">A+ to D grading based on weighted scoring across 5 geological dimensions — fault distance, success rate, target depth, rock hardness, and formation characteristics.</div>
+    </div>
+    <div class="report-feature">
+      <div class="report-feature-num">02</div>
+      <div class="report-feature-title" data-en="AI Development Opinion" data-ko="AI 지질분석 의견">AI Development Opinion</div>
+      <div class="report-feature-desc" data-en="AI-generated geological interpretation with development recommendations, confidence level, and analysis reliability scoring based on available data quality." data-ko="AI가 생성한 지질 해석, 개발 권고, 신뢰도 수준, 데이터 품질 기반 분석 신뢰도 점수.">AI-generated geological interpretation with development recommendations, confidence level, and analysis reliability scoring based on available data quality.</div>
+    </div>
+    <div class="report-feature">
+      <div class="report-feature-num">03</div>
+      <div class="report-feature-title" data-en="Theory vs Reality Gap" data-ko="이론 vs 현실 간극">Theory vs Reality Gap</div>
+      <div class="report-feature-desc" data-en="Comparison between theoretical geological predictions (temperature at depth, expected yield) and real-world drilling outcomes from comparable sites." data-ko="이론적 지질 예측(심도별 온도, 예상 산출량)과 유사 현장의 실제 굴착 결과를 비교 분석.">Comparison between theoretical geological predictions (temperature at depth, expected yield) and real-world drilling outcomes from comparable sites.</div>
+    </div>
+    <div class="report-feature">
+      <div class="report-feature-num">04</div>
+      <div class="report-feature-title" data-en="Geological Cross-Section" data-ko="예상 지질 단면">Geological Cross-Section</div>
+      <div class="report-feature-desc" data-en="Depth-based visualization (0~1,500m) showing rock layers, fracture zones, temperature gradients, and estimated aquifer locations with drilling target markers." data-ko="암층, 파쇄대, 온도 구배, 예상 대수층 위치를 굴착 목표 지점과 함께 표시하는 심도별(0~1,500m) 시각화.">Depth-based visualization (0~1,500m) showing rock layers, fracture zones, temperature gradients, and estimated aquifer locations with drilling target markers.</div>
+    </div>
+    <div class="report-feature">
+      <div class="report-feature-num">05</div>
+      <div class="report-feature-title" data-en="Risk Assessment" data-ko="리스크 평가">Risk Assessment</div>
+      <div class="report-feature-desc" data-en="6-factor risk scoring — cold water intrusion, casing damage, cavity collapse, cement loss, gas emission, and data scarcity — with High/Medium/Low severity levels." data-ko="냉수층 유입, 케이싱 훼손, 공벽 붕괴, 시멘트 유실, 가스 분출, 데이터 부족 6개 항목의 위험/주의/안전 등급 평가.">6-factor risk scoring — cold water intrusion, casing damage, cavity collapse, cement loss, gas emission, and data scarcity — with High/Medium/Low severity levels.</div>
+    </div>
+    <div class="report-feature">
+      <div class="report-feature-num">06</div>
+      <div class="report-feature-title" data-en="Construction Cost Estimate" data-ko="예상 시공 비용">Construction Cost Estimate</div>
+      <div class="report-feature-desc" data-en="Phase-by-phase cost breakdown — drilling, casing, cement, testing, logging — with total estimate range and success-based billing conditions." data-ko="굴착비, 케이싱비, 시멘팅, 시험비, 물리탐사 등 단계별 비용 산출과 총 견적 범위 및 성공 보수 조건.">Phase-by-phase cost breakdown — drilling, casing, cement, testing, logging — with total estimate range and success-based billing conditions.</div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- KEY SCREENS -->
+<div class="section">
+  <div class="eyebrow">Key Screens</div>
+  <h2 class="section-title">Data Modules</h2>
+
+  <div class="screen-grid">
+    <div class="screen-card" style="grid-column:1/-1;">
+      <div class="screen-bar">
+        <div class="screen-dot screen-dot-r"></div><div class="screen-dot screen-dot-y"></div><div class="screen-dot screen-dot-g"></div>
+        <div class="screen-bar-title" data-en="Analysis List" data-ko="분석 목록">Analysis List</div>
+      </div>
+      <img class="screen-img" src="img/analysis_list.jpg" alt="Analysis List">
+      <div class="screen-desc">
+        <div class="screen-desc-title" data-en="Analysis List & Management" data-ko="분석 목록 및 관리">Analysis List & Management</div>
+        <div class="screen-desc-text" data-en="Saved AI geological analysis reports with summary statistics — total analyses, recommended, conditional, and not recommended counts. Each entry shows address, development purpose, target yield, success rate, estimated yield, and recommendation status." data-ko="저장된 AI 지질분석 리포트를 총 분석, 개발 권장, 조건부 권장, 비권장 통계와 함께 관리합니다. 각 항목에 주소, 개발 목적, 목표 수량, 성공률, 예상 수량, 권장 여부를 표시합니다.">Saved AI geological analysis reports with summary statistics — total analyses, recommended, conditional, and not recommended counts. Each entry shows address, development purpose, target yield, success rate, estimated yield, and recommendation status.</div>
+      </div>
+    </div>
+
+    <div class="screen-card">
+      <div class="screen-bar">
+        <div class="screen-dot screen-dot-r"></div><div class="screen-dot screen-dot-y"></div><div class="screen-dot screen-dot-g"></div>
+        <div class="screen-bar-title" data-en="Development Standards & Cost Detail" data-ko="개발 기준 및 비용 상세">Development Standards & Cost Detail</div>
+      </div>
+      <img class="screen-img" src="img/detail_popup.png" alt="Detail Popup">
+      <div class="screen-desc">
+        <div class="screen-desc-title" data-en="Development Standards & Drilling Cost" data-ko="온천 개발 기준 및 굴착 비용">Development Standards & Drilling Cost</div>
+        <div class="screen-desc-text" data-en="Hot spring development requirements (temperature, yield, water quality standards), regulatory approval process, phase-by-phase drilling cost breakdown, and AI-powered drilling risk analysis with severity scoring." data-ko="온천 개발 요건(온도, 수량, 수질 기준), 인허가 절차, 단계별 굴착 비용 산출, AI 기반 굴착 리스크 분석 및 위험도 평가.">Hot spring development requirements (temperature, yield, water quality standards), regulatory approval process, phase-by-phase drilling cost breakdown, and AI-powered drilling risk analysis with severity scoring.</div>
+      </div>
+    </div>
+
+    <div class="screen-card">
+      <div class="screen-bar">
+        <div class="screen-dot screen-dot-r"></div><div class="screen-dot screen-dot-y"></div><div class="screen-dot screen-dot-g"></div>
+        <div class="screen-bar-title" data-en="Geology Education" data-ko="지질 용어 교육">Geology Education</div>
+      </div>
+      <img class="screen-img" src="img/geology_education.png" alt="Geology Education">
+      <div class="screen-desc">
+        <div class="screen-desc-title" data-en="Geological Terminology Education" data-ko="지질 용어 교육 시스템">Geological Terminology Education</div>
+        <div class="screen-desc-text" data-en="Interactive geology education module covering faults, fault planes, fracture zones, deep fracture structures, hot spring mechanisms, and yield factors — with visual diagrams and step-by-step explanations." data-ko="단층, 단층면, 파쇄대, 심부 파쇄대, 온천 메커니즘, 온천 수량 요인 등 지질 용어를 시각 자료와 단계별 설명으로 학습하는 인터랙티브 교육 모듈.">Interactive geology education module covering faults, fault planes, fracture zones, deep fracture structures, hot spring mechanisms, and yield factors — with visual diagrams and step-by-step explanations.</div>
+      </div>
+    </div>
+
+    <div class="screen-card" style="grid-column:1/-1;">
+      <div class="screen-bar">
+        <div class="screen-dot screen-dot-r"></div><div class="screen-dot screen-dot-y"></div><div class="screen-dot screen-dot-g"></div>
+        <div class="screen-bar-title" data-en="800m Drilling Scenario Simulation" data-ko="800m 심부 개발 시나리오">800m Drilling Scenario Simulation</div>
+      </div>
+      <img class="screen-img" src="img/scenario.gif" alt="Development Scenario">
+      <div class="screen-desc">
+        <div class="screen-desc-title" data-en="Development Scenario Simulation" data-ko="개발 시나리오 시뮬레이션">Development Scenario Simulation</div>
+        <div class="screen-desc-text" data-en="6-phase drilling simulation (D-Day to D+60) with real-time depth visualization, equipment monitoring, and step-by-step construction progress — from rigging and surface casing through grouting, deep drilling, and pump testing." data-ko="장비 세팅부터 양수 시험까지 6단계(D-Day~D+60) 굴착 시뮬레이션. 실시간 심도 시각화, 장비 모니터링, 단계별 시공 진행 상황을 제공합니다.">6-phase drilling simulation (D-Day to D+60) with real-time depth visualization, equipment monitoring, and step-by-step construction progress — from rigging and surface casing through grouting, deep drilling, and pump testing.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICE FLOW -->
+<div class="section-alt">
+  <div class="section-inner">
+  <div class="eyebrow">System Architecture</div>
+  <h2 class="section-title">Service Flow</h2>
+  <p class="domain-intro" data-en="The system takes an address input and retrieves geological data from KIGAM 1:50,000 maps and the National Groundwater Information Center. The Spring Boot API processes this data through an AI analysis pipeline that evaluates geological conditions, estimates yield and cost, and generates a structured feasibility report with grade scoring and risk assessment." data-ko="주소를 입력하면 KIGAM 1:50,000 지질도와 국가지하수정보센터에서 지질 데이터를 수집합니다. Spring Boot API가 이 데이터를 AI 분석 파이프라인으로 처리하여 지질 조건 평가, 산출량·비용 추정, 등급 판정과 리스크 평가를 포함한 구조화된 타당성 리포트를 생성합니다.">The system takes an address input and retrieves geological data from KIGAM 1:50,000 maps and the National Groundwater Information Center. The Spring Boot API processes this data through an AI analysis pipeline that evaluates geological conditions, estimates yield and cost, and generates a structured feasibility report with grade scoring and risk assessment.</p>
+
+  <svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;border:1px solid var(--border);border-radius:12px;padding:16px 20px;background:var(--card);">
+    <defs><marker id="ah" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#6e3545" stroke-width="0.8"/></marker></defs>
+
+    <!-- AI Analysis Pipeline (left block) -->
+    <rect x="20" y="15" width="310" height="22" rx="4" fill="#6e3545" opacity="0.12" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="175" y="29" text-anchor="middle" font-size="7" font-weight="bold" fill="#6e3545">AI Analysis Pipeline</text>
+
+    <!-- 5 Scoring Dimensions -->
+    <text x="30" y="56" font-size="6" fill="#6e3545" font-weight="bold">Geological Scoring (5 dimensions)</text>
+
+    <rect x="30" y="62" width="88" height="22" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="74" y="76" text-anchor="middle" font-size="6" fill="#6b6560">Fault Distance</text>
+
+    <rect x="126" y="62" width="88" height="22" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="170" y="76" text-anchor="middle" font-size="6" fill="#6b6560">Success Rate</text>
+
+    <rect x="222" y="62" width="88" height="22" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="266" y="76" text-anchor="middle" font-size="6" fill="#6b6560">Target Depth</text>
+
+    <rect x="78" y="92" width="88" height="22" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="122" y="106" text-anchor="middle" font-size="6" fill="#6b6560">Rock Hardness</text>
+
+    <rect x="174" y="92" width="88" height="22" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="218" y="106" text-anchor="middle" font-size="6" fill="#6b6560">Formation Type</text>
+
+    <!-- Risk Analysis -->
+    <text x="30" y="136" font-size="6" fill="#6e3545" font-weight="bold">Risk Analysis (6 factors)</text>
+
+    <rect x="30" y="142" width="88" height="22" rx="4" fill="none" stroke="#6e3545" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="74" y="156" text-anchor="middle" font-size="5.5" fill="#6b6560">Cold Water Intrusion</text>
+
+    <rect x="126" y="142" width="88" height="22" rx="4" fill="none" stroke="#6e3545" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="170" y="156" text-anchor="middle" font-size="5.5" fill="#6b6560">Casing Damage</text>
+
+    <rect x="222" y="142" width="88" height="22" rx="4" fill="none" stroke="#6e3545" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="266" y="156" text-anchor="middle" font-size="5.5" fill="#6b6560">Cavity Collapse</text>
+
+    <rect x="30" y="170" width="88" height="22" rx="4" fill="none" stroke="#6e3545" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="74" y="184" text-anchor="middle" font-size="5.5" fill="#6b6560">Cement Loss</text>
+
+    <rect x="126" y="170" width="88" height="22" rx="4" fill="none" stroke="#6e3545" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="170" y="184" text-anchor="middle" font-size="5.5" fill="#6b6560">Gas Emission</text>
+
+    <rect x="222" y="170" width="88" height="22" rx="4" fill="none" stroke="#6e3545" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <text x="266" y="184" text-anchor="middle" font-size="5.5" fill="#6b6560">Data Scarcity</text>
+
+    <!-- Cost Estimation -->
+    <text x="30" y="214" font-size="6" fill="#6e3545" font-weight="bold">Cost Estimation</text>
+    <rect x="30" y="220" width="280" height="22" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="170" y="234" text-anchor="middle" font-size="6" fill="#6b6560">Drilling · Casing · Grouting · Testing · Logging → Total Estimate</text>
+
+    <!-- Arrow from Pipeline to Report -->
+    <line x1="335" y1="140" x2="380" y2="140" stroke="#6e3545" stroke-width="0.5" marker-end="url(#ah)"/>
+
+    <!-- AI Report (right block) -->
+    <rect x="385" y="15" width="290" height="22" rx="4" fill="#6e3545" opacity="0.12" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="530" y="29" text-anchor="middle" font-size="7" font-weight="bold" fill="#6e3545">AI Report Output</text>
+
+    <rect x="395" y="48" width="130" height="28" rx="4" fill="#6e3545" opacity="0.08" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="460" y="66" text-anchor="middle" font-size="6" font-weight="bold" fill="#6e3545">Overall Grade (A+~D)</text>
+
+    <rect x="535" y="48" width="130" height="28" rx="4" fill="#6e3545" opacity="0.08" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="600" y="66" text-anchor="middle" font-size="6" font-weight="bold" fill="#6e3545">Score Analysis</text>
+
+    <rect x="395" y="84" width="130" height="28" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="460" y="102" text-anchor="middle" font-size="6" fill="#6b6560">AI Development Opinion</text>
+
+    <rect x="535" y="84" width="130" height="28" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="600" y="102" text-anchor="middle" font-size="6" fill="#6b6560">Theory vs Reality Gap</text>
+
+    <rect x="395" y="120" width="130" height="28" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="460" y="138" text-anchor="middle" font-size="6" fill="#6b6560">Geological Cross-Section</text>
+
+    <rect x="535" y="120" width="130" height="28" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="600" y="138" text-anchor="middle" font-size="6" fill="#6b6560">Risk Assessment</text>
+
+    <rect x="395" y="156" width="270" height="28" rx="4" fill="#6e3545" opacity="0.06" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="530" y="174" text-anchor="middle" font-size="6" fill="#6b6560">Construction Cost Estimation</text>
+
+    <!-- Arrow to PDF -->
+    <line x1="530" y1="184" x2="530" y2="210" stroke="#6e3545" stroke-width="0.5" marker-end="url(#ah)"/>
+    <rect x="500" y="215" width="60" height="26" rx="4" fill="#6e3545" opacity="0.08" stroke="#6e3545" stroke-width="0.5"/>
+    <text x="530" y="232" text-anchor="middle" font-size="7" font-weight="bold" fill="#6e3545">PDF</text>
+
+    <!-- Data Sources (bottom) -->
+    <text x="30" y="260" font-size="6" fill="#6b6560">Data: KIGAM 1:50,000 Geological Map · National Groundwater Information Center · Eco-Geo Case DB</text>
+    <text x="530" y="260" text-anchor="middle" font-size="6" fill="#6b6560">Engine: Google Vertex AI · Gemini · Prompt Registry</text>
+  </svg>
+  </div>
+</div>
+
+<!-- IMPACT -->
+<div class="section">
+    <div class="eyebrow">Results</div>
+    <h2 class="section-title">Impact</h2>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <span class="impact-num">A+</span>
+        <div class="impact-label" data-en="AI Grading System" data-ko="AI 등급 판정 시스템">AI Grading System</div>
+        <div class="impact-desc" data-en="Automated feasibility grading<br>across 5 geological dimensions" data-ko="5개 지질 차원의<br>자동 타당성 등급 판정">Automated feasibility grading<br>across 5 geological dimensions</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-num">6</span>
+        <div class="impact-label" data-en="Risk Factors Analyzed" data-ko="리스크 항목 분석">Risk Factors Analyzed</div>
+        <div class="impact-desc" data-en="Comprehensive drilling risk<br>assessment with severity levels" data-ko="위험도 등급 포함<br>종합 굴착 리스크 평가">Comprehensive drilling risk<br>assessment with severity levels</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-num">1.5km</span>
+        <div class="impact-label" data-en="Depth Coverage" data-ko="분석 심도 범위">Depth Coverage</div>
+        <div class="impact-desc" data-en="Geological cross-section analysis<br>from surface to 1,500m depth" data-ko="지표면~1,500m 심도의<br>지질 단면 분석">Geological cross-section analysis<br>from surface to 1,500m depth</div>
+      </div>
+      <div class="impact-card">
+        <span class="impact-num">E2E</span>
+        <div class="impact-label" data-en="Independent Development" data-ko="독자 개발">Independent Development</div>
+        <div class="impact-desc" data-en="Domain research to deployment<br>delivered as a single team" data-ko="도메인 리서치부터 배포까지<br>하나의 팀으로 독자 수행">Domain research to deployment<br>delivered as a single team</div>
+      </div>
+    </div>
+</div>
+
+<!-- TECH STACK -->
+<div class="section-alt">
+  <div class="section-inner">
+  <div class="eyebrow">Technology</div>
+  <h2 class="section-title">Tech Stack</h2>
+  <div class="tech-grid">
+    <div class="tech-group">
+      <div class="tech-group-title">Frontend</div>
+      <div class="tech-tags">
+        <span class="tech-tag">React 18</span>
+        <span class="tech-tag">TypeScript</span>
+        <span class="tech-tag">Recharts</span>
+        <span class="tech-tag">Kakao Maps</span>
+      </div>
+    </div>
+    <div class="tech-group">
+      <div class="tech-group-title">Backend</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Spring Boot</span>
+        <span class="tech-tag">Java 17</span>
+        <span class="tech-tag">JPA</span>
+        <span class="tech-tag">RESTful API</span>
+      </div>
+    </div>
+    <div class="tech-group">
+      <div class="tech-group-title">AI Engine</div>
+      <div class="tech-tags">
+        <span class="tech-tag">Google Vertex AI</span>
+        <span class="tech-tag">Google Gemini</span>
+        <span class="tech-tag">Prompt Registry</span>
+      </div>
+    </div>
+    <div class="tech-group">
+      <div class="tech-group-title">Data</div>
+      <div class="tech-tags">
+        <span class="tech-tag">PostgreSQL</span>
+        <span class="tech-tag">KIGAM DB</span>
+        <span class="tech-tag">Groundwater DB</span>
+        <span class="tech-tag">Eco-Geo Cases</span>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <a class="prev" href="../">← Back to Projects</a>
+  <a class="next" href="../hot-spring-simulator/">Next: Hot Spring Cost Simulator →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 Min Jung Park · MSoftech</p>
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--light);">Seoul, South Korea</p>
+</footer>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- SCRIPTS -->
+<script>
+/* Scroll to top */
+var scrollTopBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', function() { scrollTopBtn.classList.toggle('visible', window.scrollY > 400); });
+
+/* Expand/Collapse */
+function toggleExpand(wrapId, btn) {
+  var wrap = document.getElementById(wrapId);
+  var isExpanded = wrap.classList.contains('expanded');
+  wrap.classList.toggle('expanded');
+  var icon = btn.querySelector('.expand-icon');
+  var label = btn.querySelector('.expand-label');
+  if (isExpanded) {
+    icon.textContent = '↓';
+    label.textContent = btn.getAttribute('data-label') || 'View Full Report';
+  } else {
+    icon.textContent = '↑';
+    label.textContent = 'Collapse';
+  }
+}
+
+/* Lang toggle */
+function setLang(lang) {
+  document.querySelectorAll('[data-en][data-ko]').forEach(function(el) {
+    el.innerHTML = lang === 'ko' ? el.getAttribute('data-ko') : el.getAttribute('data-en');
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', (btn.textContent.trim() === 'EN' && lang === 'en') || (btn.textContent.trim() === 'KR' && lang === 'ko'));
+  });
+  localStorage.setItem('lang', lang);
+}
+(function() { var saved = localStorage.getItem('lang'); if (saved) setLang(saved); })();
+</script>
+</body>
+</html>
