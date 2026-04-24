@@ -203,6 +203,17 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 }
 .scroll-top-btn.visible { opacity:1; transform:translateY(0); pointer-events:auto; }
 .scroll-top-btn:hover { transform:translateY(-2px); }
+
+/* Collapsible Screen (FHIR EMR pattern) */
+.screen-img-wrap { position:relative; overflow:hidden; }
+.screen-img-wrap.collapsible { cursor:pointer; }
+.screen-img-wrap.collapsible .screen-img { height:360px; object-fit:cover; object-position:top center; transition:height 0.4s ease; }
+.screen-img-wrap.collapsible.expanded .screen-img { height:auto !important; max-height:none !important; object-fit:contain; }
+.screen-img-wrap.collapsible::after { content:''; position:absolute; bottom:0; left:0; right:0; height:80px; background:linear-gradient(to bottom, transparent, rgba(255,255,255,0.95)); pointer-events:none; transition:opacity 0.3s; }
+.screen-img-wrap.collapsible.expanded::after { opacity:0; }
+.expand-btn { display:flex; align-items:center; justify-content:center; gap:6px; width:100%; padding:10px 0; background:var(--bg); border:none; border-top:1px solid var(--border); font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:var(--accent); cursor:pointer; transition:background 0.2s; letter-spacing:0.05em; }
+.expand-btn:hover { background:var(--accent-light); }
+.expand-btn .expand-icon { display:inline-block; font-style:normal; }
 </style>
 
 </head>
@@ -248,7 +259,7 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
       <div class="overview-text">
         <p data-en="Nursing students practice clinical workflows in a <strong>real hospital-grade EMR environment</strong> — covering OCS, ENR, Lab, and PACS — exactly as they would on an actual ward. Every action, every input, every decision is captured as a structured evaluation log in real time." data-ko="간호대학생들이 실제 병동과 동일한 <strong>병원급 EMR 환경</strong>(OCS, ENR, Lab, PACS)에서 임상 워크플로우를 실습합니다. 모든 행동, 모든 입력, 모든 판단이 실시간 구조화된 평가 로그로 기록됩니다.">Nursing students practice clinical workflows in a <strong>real hospital-grade EMR environment</strong> — covering OCS, ENR, Lab, and PACS — exactly as they would on an actual ward. Every action, every input, every decision is captured as a structured evaluation log in real time.</p>
         <p data-en="The evaluation engine was built on domain knowledge, not just code. We mapped actual clinical nursing protocols — ward rounds, medication administration, vital sign assessment, intake/output management — and translated them into <strong>55 structured evaluation criteria</strong> that mirror real professional standards. Upon completing a simulation, <strong>6 specialized AI Agents</strong> automatically assess each student's performance: identifying what they did well, what needs improvement, and why — with structured, actionable feedback." data-ko="평가 엔진의 기반은 코드가 아니라 도메인 지식입니다. 실제 임상 간호 프로토콜 — 병동 순회, 투약 관리, 활력징후 사정, 섭취·배설 관리 — 을 직접 분석하고, 현장 전문 기준을 반영한 <strong>55개 구조화된 평가 기준</strong>으로 설계했습니다. 실습 완료 후 <strong>6개 전문 AI 에이전트</strong>가 학생의 수행을 자동 분석하여 잘한 점, 부족한 점, 개선 방향을 구조화된 피드백으로 제공합니다.">The evaluation engine was built on domain knowledge, not just code. We mapped actual clinical nursing protocols — ward rounds, medication administration, vital sign assessment, intake/output management — and translated them into <strong>55 structured evaluation criteria</strong> that mirror real professional standards. Upon completing a simulation, <strong>6 specialized AI Agents</strong> automatically assess each student's performance: identifying what they did well, what needs improvement, and why — with structured, actionable feedback.</p>
-        <p data-en="For students, it means going beyond pass/fail into genuine clinical growth. For professors, automated evaluation reduces grading workload by <strong>40%</strong> — freeing them to focus on higher-quality, personalized feedback. Over <strong>40,000+ evaluation logs</strong> processed in production." data-ko="학생에게는 단순한 합격·불합격을 넘어 실질적인 임상 역량 성장을 의미합니다. 교수에게는 반복적인 채점 부담을 <strong>40%</strong> 줄여 더 깊이 있는 개인화 피드백에 집중할 수 있게 합니다. 현재까지 <strong>40,000건 이상의 평가 로그</strong>를 프로덕션 환경에서 처리했습니다.">For students, it means going beyond pass/fail into genuine clinical growth. For professors, automated evaluation reduces grading workload by <strong>40%</strong> — freeing them to focus on higher-quality, personalized feedback. Over <strong>40,000+ evaluation logs</strong> processed in production.</p>
+        <p data-en="This architecture delivers measurable outcomes: evaluation time reduced by <strong>90%</strong> compared to manual grading, full consistency across 100+ students per cohort, and professor workload cut by <strong>40%</strong> — shifting their role from repetitive scoring to targeted clinical mentoring. The system has processed over <strong>40,000 evaluation logs</strong> in production." data-ko="이 아키텍처는 측정 가능한 결과를 만들어냅니다. 수기 채점 대비 평가 시간 <strong>90%</strong> 단축, 학년당 100명 이상의 학생에 대한 완전한 평가 일관성 확보, 교수 업무 부담 <strong>40%</strong> 감소 — 교수의 역할을 반복적 채점에서 임상 멘토링으로 전환합니다. 현재까지 프로덕션 환경에서 <strong>40,000건 이상의 평가 로그</strong>를 처리했습니다.">This architecture delivers measurable outcomes: evaluation time reduced by <strong>90%</strong> compared to manual grading, full consistency across 100+ students per cohort, and professor workload cut by <strong>40%</strong> — shifting their role from repetitive scoring to targeted clinical mentoring. The system has processed over <strong>40,000 evaluation logs</strong> in production.</p>
       </div>
       <div>
         <div class="meta-card"><div class="meta-label">Period</div><div class="meta-value">Apr 2025 – Nov 2025</div></div>
@@ -260,51 +271,279 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
   </div>
 </div>
 
-<!-- ARCHITECTURE -->
+<!-- DOMAIN RESEARCH -->
 <div class="section">
 <div class="container">
-  <div class="eyebrow">Architecture</div>
-  <h2 class="section-title">System Architecture</h2>
-  <img src="img/Architecture_Design_Decisions.png" alt="Architecture" style="width:100%; display:block; border-radius:16px; border:1px solid var(--border); margin-bottom:24px;">
-  <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px;">
-    <div class="desc-en" data-en="<strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database." data-ko="<strong>계층형 AI 파이프라인:</strong> EvaluationController → NursingEvaluation OrchestrationService → 실행 레이어(@Transactional) → AI Agent 컴포넌트 → Google Vertex AI (Gemini 2.0 Flash) 순서로 처리됩니다. 모든 AI 응답은 JSON Schema로 검증된 후 데이터베이스에 저장됩니다."><strong>Layered AI Pipeline:</strong> EvaluationController → NursingEvaluation OrchestrationService → Execution Layer (@Transactional) → AI Agent Components → Google Vertex AI (Gemini 2.0 Flash). All AI responses are validated via JSON Schema before being saved to the database.</div>
+  <div class="eyebrow">Domain Foundation</div>
+  <h2 class="section-title" style="margin-bottom:6px;">Clinical Standards</h2>
+  <p class="section-ko" data-en="Grounded in published national nursing standards, not invented benchmarks" data-ko="임의로 만든 기준이 아닌 공식 간호 표준 기반">임의로 만든 기준이 아닌 공식 간호 표준 기반</p>
+
+  <p style="font-size:16px; line-height:1.85; color:var(--mid); margin-bottom:48px;" data-en="Evaluation systems in regulated domains cannot rely on approximations. Each of the 55 criteria in this platform is systematically codified from <strong>published Korean national nursing standards</strong> — the clinical references that underpin nursing licensure and professional practice guidelines. We design evaluation engines only after clinical judgment is formally mapped at the protocol level, because healthcare AI that settles for 'mostly correct' becomes a liability the moment it enters production." data-ko="규제 도메인의 평가 시스템은 근사치로 운영될 수 없습니다. 이 플랫폼의 55개 평가 항목은 한국 간호 자격시험과 실무 지침의 근거가 되는 <strong>공식 간호 표준(National Nursing Standards)</strong>을 체계적으로 코드화한 결과입니다. 저희는 임상 판단 기준이 프로토콜 레벨에서 명확히 정의된 뒤에야 평가 엔진을 설계합니다. '대체로 맞는 수준'의 의료 AI는 프로덕션에 진입하는 순간 곧바로 리스크로 전환되기 때문입니다.">Evaluation systems in regulated domains cannot rely on approximations. Each of the 55 criteria in this platform is systematically codified from <strong>published Korean national nursing standards</strong> — the clinical references that underpin nursing licensure and professional practice guidelines. We design evaluation engines only after clinical judgment is formally mapped at the protocol level, because healthcare AI that settles for 'mostly correct' becomes a liability the moment it enters production.</p>
+
+  <!-- Reference Standards -->
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px;">
+    <div class="meta-card">
+      <div class="meta-label">Practice Guide</div>
+      <div class="meta-value" data-en="Nursing Practice Guide (2024)" data-ko="기본간호학 실습 지침서">기본간호학 실습 지침서</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Vitals Standard</div>
+      <div class="meta-value" data-en="KNA Vital Signs Protocol" data-ko="대한간호협회 활력징후 측정 표준">대한간호협회 활력징후 측정 표준</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Patient Safety</div>
+      <div class="meta-value" data-en="Patient Safety · Morse Fall Scale" data-ko="환자안전 지표 · Morse Fall Scale">환자안전 지표 · Morse Fall Scale</div>
+    </div>
+  </div>
+
+  <!-- Concrete Tolerances -->
+  <div class="agent-grid" style="grid-template-columns:repeat(4,1fr); margin-bottom:32px;">
+    <div class="agent-card">
+      <div class="agent-name">VITAL SIGNS</div>
+      <div class="agent-target" data-en="Measurement Tolerances" data-ko="활력징후 허용 오차">Measurement Tolerances</div>
+      <div style="font-size:12px; line-height:1.9; color:var(--ink); margin-top:10px; font-family:'JetBrains Mono',monospace;">
+        BT: ±0.2°C<br>
+        HR: ±3 bpm<br>
+        RR: ±2/min<br>
+        BP: ±5 mmHg<br>
+        SpO2: ±1%
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">MEDICATION</div>
+      <div class="agent-target" data-en="The 5 Rights" data-ko="투약 5 Rights">The 5 Rights</div>
+      <div style="font-size:12px; line-height:1.9; color:var(--ink); margin-top:10px;">
+        Right Patient<br>
+        Right Drug<br>
+        Right Dose<br>
+        Right Route<br>
+        Right Time
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">NURSING RECORDS</div>
+      <div class="agent-target" data-en="F-DAR Format" data-ko="간호기록 F-DAR">F-DAR Format</div>
+      <div style="font-size:12px; line-height:1.9; color:var(--ink); margin-top:10px;">
+        <strong style="color:var(--accent);">F</strong>ocus<br>
+        <strong style="color:var(--accent);">D</strong>ata<br>
+        <strong style="color:var(--accent);">A</strong>ction<br>
+        <strong style="color:var(--accent);">R</strong>esponse
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name">SAFETY</div>
+      <div class="agent-target" data-en="Risk Assessment" data-ko="안전 평가">Risk Assessment</div>
+      <div style="font-size:12px; line-height:1.9; color:var(--ink); margin-top:10px;">
+        Morse Fall Scale<br>
+        9-Category Initial<br>
+        Pain NRS (0-10)<br>
+        Danger Value Flag
+      </div>
+    </div>
   </div>
 </div>
 </div>
 
-<!-- AI PIPELINE -->
+<!-- ARCHITECTURE -->
 <div class="section-alt">
-  <div class="section-inner">
-    <div class="eyebrow">AI Pipeline</div>
-    <h2 class="section-title">How AI Evaluation Works</h2>
-    <div class="pipeline">
-      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span><div class="pipeline-name">Student Submits</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg></span><div class="pipeline-name">6 AI Agents</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><div class="pipeline-name">Vertex AI Call</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span><div class="pipeline-name">JSON Validation</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></span><div class="pipeline-name">Prof. Review</div></div>
-      <div class="pipeline-step"><span class="pipeline-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></span><div class="pipeline-name">Result Published</div></div>
-    </div>
+<div class="section-inner">
+  <div class="eyebrow">How It Works</div>
+  <h2 class="section-title">System Overview</h2>
+  <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px 24px; overflow-x:auto; margin-bottom:24px;">
+    <svg viewBox="0 0 1600 500" xmlns="http://www.w3.org/2000/svg" style="display:block; width:100%; height:auto;">
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="#0E7490" stroke-width="0.9"/>
+        </marker>
+      </defs>
+      <!-- STUDENT ACTIVITY -->
+      <rect x="30" y="60" width="350" height="400" rx="10" fill="none" stroke="#0E7490" stroke-width="0.8" stroke-opacity="0.45" stroke-dasharray="6 4"/>
+      <text x="55" y="48" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="500" fill="#6b6560" letter-spacing="1.5">STUDENT ACTIVITY</text>
+      <rect x="65" y="240" width="115" height="52" rx="8" fill="#0E7490" fill-opacity="0.08" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="122" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Practice</text>
+      <text x="122" y="283" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Session</text>
+      <rect x="220" y="140" width="140" height="52" rx="8" fill="#0E7490" fill-opacity="0.08" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="290" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Save Practice</text>
+      <text x="290" y="183" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Output</text>
+      <rect x="220" y="340" width="140" height="52" rx="8" fill="#0E7490" fill-opacity="0.08" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="290" y="367" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Generate</text>
+      <text x="290" y="383" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Action Log</text>
+      <path d="M 180 255 C 205 255, 205 170, 220 166" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <path d="M 180 276 C 205 276, 205 366, 220 366" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <!-- HUMAN-IN-THE-LOOP -->
+      <rect x="420" y="60" width="980" height="400" rx="10" fill="none" stroke="#0E7490" stroke-width="0.8" stroke-opacity="0.45" stroke-dasharray="6 4"/>
+      <text x="445" y="48" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="500" fill="#6b6560" letter-spacing="1.5">HUMAN-IN-THE-LOOP (EVALUATION MANAGEMENT)</text>
+      <rect x="450" y="105" width="180" height="335" rx="8" fill="none" stroke="#0E7490" stroke-width="0.6" stroke-opacity="0.4" stroke-dasharray="4 3"/>
+      <text x="540" y="130" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="500" fill="#6b6560" letter-spacing="1">1. AI FIRST PASS</text>
+      <rect x="475" y="240" width="130" height="52" rx="8" fill="#0E7490" fill-opacity="0.08" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="540" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Run 6 AI</text>
+      <text x="540" y="283" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Agents</text>
+      <rect x="660" y="105" width="540" height="335" rx="8" fill="#0E7490" fill-opacity="0.035" stroke="#0E7490" stroke-width="0.8" stroke-opacity="0.6" stroke-dasharray="4 3"/>
+      <text x="930" y="130" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#0E7490" letter-spacing="1">2. REVIEW (CORE)</text>
+      <rect x="690" y="240" width="140" height="52" rx="8" fill="#0E7490" fill-opacity="0.12" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="760" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Monitor</text>
+      <text x="760" y="283" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">AI Output</text>
+      <rect x="890" y="140" width="280" height="52" rx="8" fill="#0E7490" fill-opacity="0.12" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="1030" y="167" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Review AI</text>
+      <text x="1030" y="183" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Prompts &amp; Feedback</text>
+      <rect x="890" y="340" width="280" height="52" rx="8" fill="#0E7490" fill-opacity="0.12" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="1030" y="367" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Verify Student</text>
+      <text x="1030" y="383" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Action Logs</text>
+      <path d="M 830 255 C 860 255, 860 166, 890 166" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <path d="M 830 276 C 860 276, 860 366, 890 366" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <rect x="1230" y="105" width="160" height="335" rx="8" fill="none" stroke="#0E7490" stroke-width="0.6" stroke-opacity="0.4" stroke-dasharray="4 3"/>
+      <text x="1310" y="130" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="500" fill="#6b6560" letter-spacing="1">3. CONFIRMATION</text>
+      <rect x="1245" y="240" width="130" height="52" rx="8" fill="#0E7490" fill-opacity="0.08" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="1310" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Approve</text>
+      <text x="1310" y="283" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#0E7490">Final Score</text>
+      <path d="M 605 266 L 690 266" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <path d="M 1170 166 C 1200 166, 1215 258, 1245 258" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <path d="M 1170 366 C 1200 366, 1215 276, 1245 276" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <!-- STUDENT RESULT -->
+      <rect x="1440" y="60" width="150" height="400" rx="10" fill="none" stroke="#0E7490" stroke-width="0.8" stroke-opacity="0.45" stroke-dasharray="6 4"/>
+      <text x="1465" y="48" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="500" fill="#6b6560" letter-spacing="1.5">STUDENT RESULT</text>
+      <rect x="1450" y="240" width="130" height="52" rx="8" fill="#0E7490" fill-opacity="0.08" stroke="#0E7490" stroke-width="0.8"/>
+      <text x="1515" y="267" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0E7490">Grade Report &amp;</text>
+      <text x="1515" y="283" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#0E7490">Detailed Feedback</text>
+      <path d="M 360 166 C 410 166, 430 258, 475 258" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <path d="M 360 366 C 410 366, 430 276, 475 276" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+      <path d="M 1375 266 L 1450 266" fill="none" stroke="#0E7490" stroke-width="0.9" marker-end="url(#arr)"/>
+    </svg>
+  </div>
+  <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px;">
+    <div class="desc-en" data-en="A student completes a clinical simulation, and the system captures two outputs: structured practice data and a granular action log. These flow into <strong>6 specialized AI Agents</strong> for automated first-pass evaluation. From there, the professor takes over — reviewing AI-generated scores alongside the full prompt context and raw student action logs — before approving or adjusting the final grade. Only after this human confirmation does the result reach the student." data-ko="학생이 임상 시뮬레이션을 마치면, 시스템은 구조화된 실습 데이터와 행동 로그를 동시에 생성합니다. 이 데이터가 <strong>6개 전문 AI Agent</strong>의 자동 1차 평가로 넘어가고, 이후 교수가 AI 평가 결과를 프롬프트 전문, 학생 행동 로그와 함께 직접 대조 검토한 뒤 최종 점수를 확정합니다. 교수의 승인이 완료된 후에야 학생에게 결과가 공개됩니다.">A student completes a clinical simulation, and the system captures two outputs: structured practice data and a granular action log. These flow into <strong>6 specialized AI Agents</strong> for automated first-pass evaluation. From there, the professor takes over — reviewing AI-generated scores alongside the full prompt context and raw student action logs — before approving or adjusting the final grade. Only after this human confirmation does the result reach the student.</div>
+  </div>
+</div>
+</div>
+
+<!-- EVALUATION ENGINE -->
+<div class="section">
+  <div class="container">
+    <div class="eyebrow">AI Agents</div>
+    <h2 class="section-title" style="margin-bottom:6px;">Evaluation Engine</h2>
+    <p class="section-ko" data-en="6 specialized agents, each owning a distinct clinical domain" data-ko="6개 전문 Agent — 각각 독립된 임상 영역을 전담">6개 전문 Agent — 각각 독립된 임상 영역을 전담</p>
+
     <div class="agent-grid">
-      <div class="agent-card"><div class="agent-name">VitalSignsAgent</div><div class="agent-target">Vital Signs</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">IoAgent</div><div class="agent-target">Intake / Output</div><div class="agent-count">2 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">MedicationAgent</div><div class="agent-target">Medication (5 Rights)</div><div class="agent-count">5 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">NursingRecordAgent</div><div class="agent-target">Nursing Record</div><div class="agent-count">4 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">InitialAssessmentAgent</div><div class="agent-target">Initial Assessment</div><div class="agent-count">9 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
-      <div class="agent-card"><div class="agent-name">ActionLogAgent</div><div class="agent-target">Action Log</div><div class="agent-count">3 <span style="font-size:12px;color:var(--light)">criteria</span></div></div>
+      <div class="agent-card" style="text-align:center; padding:28px 20px;">
+        <div style="color:var(--accent); margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="agent-name">VitalSignsAgent</div>
+        <div class="agent-target" data-en="Measurement Accuracy" data-ko="활력징후 측정 정확도">Measurement Accuracy</div>
+        <div style="font-size:12px; color:var(--mid); line-height:1.6; margin-top:8px;" data-en="BT ±0.2°C · HR ±3 bpm<br>RR ±2/min · BP ±5 mmHg" data-ko="BT ±0.2°C · HR ±3 bpm<br>RR ±2/min · BP ±5 mmHg">BT ±0.2°C · HR ±3 bpm<br>RR ±2/min · BP ±5 mmHg</div>
+      </div>
+      <div class="agent-card" style="text-align:center; padding:28px 20px;">
+        <div style="color:var(--accent); margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="agent-name">MedicationAgent</div>
+        <div class="agent-target" data-en="5 Rights Protocol" data-ko="투약 5 Rights 준수">5 Rights Protocol</div>
+        <div style="font-size:12px; color:var(--mid); line-height:1.6; margin-top:8px;" data-en="Patient · Drug · Dose<br>Route · Time" data-ko="Patient · Drug · Dose<br>Route · Time">Patient · Drug · Dose<br>Route · Time</div>
+      </div>
+      <div class="agent-card" style="text-align:center; padding:28px 20px;">
+        <div style="color:var(--accent); margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="agent-name">NursingRecordAgent</div>
+        <div class="agent-target" data-en="F-DAR Documentation" data-ko="간호기록 F-DAR 구조">F-DAR Documentation</div>
+        <div style="font-size:12px; color:var(--mid); line-height:1.6; margin-top:8px;" data-en="Focus · Data<br>Action · Response" data-ko="Focus · Data<br>Action · Response">Focus · Data<br>Action · Response</div>
+      </div>
+      <div class="agent-card" style="text-align:center; padding:28px 20px;">
+        <div style="color:var(--accent); margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 20v-2a4 4 0 0 1 4-4h2"/><circle cx="9" cy="8" r="4"/><path d="M17 8l2 1.5L17 11"/><path d="M15 6h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4"/></svg></div>
+        <div class="agent-name">IoAgent</div>
+        <div class="agent-target" data-en="Intake / Output" data-ko="섭취 / 배설 기록">Intake / Output</div>
+        <div style="font-size:12px; color:var(--mid); line-height:1.6; margin-top:8px;" data-en="Recording accuracy<br>and completeness" data-ko="기록 정확성<br>및 완전성 검증">Recording accuracy<br>and completeness</div>
+      </div>
+      <div class="agent-card" style="text-align:center; padding:28px 20px;">
+        <div style="color:var(--accent); margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 12h6M9 16h6"/></svg></div>
+        <div class="agent-name">InitialAssessmentAgent</div>
+        <div class="agent-target" data-en="9-Category Assessment" data-ko="9개 카테고리 초기사정">9-Category Assessment</div>
+        <div style="font-size:12px; color:var(--mid); line-height:1.6; margin-top:8px;" data-en="Patient safety · Pain<br>Fall risk · Consciousness" data-ko="환자안전 · 통증<br>낙상위험 · 의식수준">Patient safety · Pain<br>Fall risk · Consciousness</div>
+      </div>
+      <div class="agent-card" style="text-align:center; padding:28px 20px;">
+        <div style="color:var(--accent); margin-bottom:12px;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/><polyline points="4 6 5 7 7 5"/><polyline points="4 12 5 13 7 11"/><polyline points="4 18 5 19 7 17"/></svg></div>
+        <div class="agent-name">ActionLogAgent</div>
+        <div class="agent-target" data-en="Behavioral Sequence" data-ko="행동 시퀀스 검증">Behavioral Sequence</div>
+        <div style="font-size:12px; color:var(--mid); line-height:1.6; margin-top:8px;" data-en="Action vs expected<br>clinical workflow" data-ko="실제 행동 vs 기대<br>임상 워크플로우 대조">Action vs expected<br>clinical workflow</div>
+      </div>
+    </div>
+
+    <p style="font-size:16px; line-height:1.85; color:var(--mid);" data-en="All 6 agents run in parallel against the same student session, producing <strong>28 independent evaluation criteria</strong> in a single pass. Every criterion traces directly back to the clinical standards defined above." data-ko="6개 Agent가 동일한 학생 세션에 대해 병렬로 실행되어, 한 번의 평가에서 <strong>28개 독립 평가 항목</strong>을 산출합니다. 모든 평가 기준은 위 Clinical Standards에서 정의한 공식 간호 표준에서 직접 도출됩니다.">All 6 agents run in parallel against the same student session, producing <strong>28 independent evaluation criteria</strong> in a single pass. Every criterion traces directly back to the clinical standards defined above.</p>
+  </div>
+</div>
+
+<!-- HUMAN-IN-THE-LOOP -->
+<div class="section-alt">
+<div class="section-inner">
+  <div class="eyebrow">Evaluation Philosophy</div>
+  <h2 class="section-title" style="margin-bottom:6px;">Human-in-the-Loop</h2>
+  <p class="section-ko" data-en="AI proposes, humans decide — built into the architecture, not bolted on" data-ko="AI는 제안하고, 인간이 결정합니다 — 아키텍처에 내재된 안전성 설계">AI는 제안하고, 인간이 결정합니다 — 아키텍처에 내재된 안전성 설계</p>
+
+  <p style="font-size:16px; line-height:1.85; color:var(--mid); margin-bottom:48px;" data-en="Every AI evaluation in this system is a draft, not a verdict. Before any score reaches a student, a professor reviews the full AI reasoning alongside raw action logs — and can approve, adjust, or override. This isn't a compliance checkbox added at the end. Human oversight was embedded into the architecture from day one, following the same structural principle that <strong>FDA SaMD</strong> and <strong>EU AI Act</strong> require: AI proposes, humans decide." data-ko="이 시스템에서 AI의 평가는 초안이지 최종 결과가 아닙니다. 학생에게 점수가 공개되기 전, 교수가 AI의 판단 근거와 학생 행동 로그를 직접 대조 검토하고 승인·조정·기각할 수 있습니다. 규제 대응을 위해 사후에 덧붙인 기능이 아니라, 설계 초기부터 아키텍처에 내재한 구조입니다 — <strong>FDA SaMD</strong>, <strong>EU 고위험 AI 법안</strong>이 요구하는 핵심 원칙과 동일합니다: AI가 제안하고, 인간이 결정합니다.">Every AI evaluation in this system is a draft, not a verdict. Before any score reaches a student, a professor reviews the full AI reasoning alongside raw action logs — and can approve, adjust, or override. This isn't a compliance checkbox added at the end. Human oversight was embedded into the architecture from day one, following the same structural principle that <strong>FDA SaMD</strong> and <strong>EU AI Act</strong> require: AI proposes, humans decide.</p>
+
+  <!-- Two-col sub-sections -->
+  <div class="two-col" style="margin-bottom:32px;">
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent);"></div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); margin-bottom:6px; letter-spacing:0.08em;">REVIEW</div>
+      <div style="font-size:15px; font-weight:600; color:var(--ink); margin-bottom:16px;" data-en="What the Professor Sees" data-ko="교수가 확인하는 것">What the Professor Sees</div>
+      <div style="font-size:14px; line-height:1.9; color:var(--mid);" data-en="→ Full prompt transmitted to the LLM — 28,873 characters, version-controlled<br>→ AI's complete reasoning and structured feedback, not just the final score<br>→ Every student action — logged at the keystroke level with timestamps<br>→ Clinically critical values auto-flagged with full contextual data" data-ko="→ LLM에 전송된 프롬프트 전문 — 28,873자, 버전 관리됨<br>→ AI의 추론 과정과 구조화된 피드백 — 최종 점수뿐 아닌 판단 근거 전체<br>→ 학생의 모든 행동 — 키스트로크 단위로 타임스탬프와 함께 기록<br>→ 임상 위험 수치 자동 감지 및 맥락 데이터">→ Full prompt transmitted to the LLM — 28,873 characters, version-controlled<br>→ AI's complete reasoning and structured feedback, not just the final score<br>→ Every student action — logged at the keystroke level with timestamps<br>→ Clinically critical values auto-flagged with full contextual data</div>
+    </div>
+    <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; position:relative; overflow:hidden;">
+      <div style="position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent);"></div>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); margin-bottom:6px; letter-spacing:0.08em;">CONTROL</div>
+      <div style="font-size:15px; font-weight:600; color:var(--ink); margin-bottom:16px;" data-en="Professor's Control" data-ko="교수의 제어 권한">Professor's Control</div>
+      <div style="font-size:14px; line-height:1.9; color:var(--mid);" data-en="→ Approve or override AI-generated scores<br>→ Adjust individual category scores without affecting others<br>→ Selectively re-execute any single agent for re-validation<br>→ Append domain-specific comments and learning points" data-ko="→ AI 평가 결과 승인 또는 오버라이드(Override)<br>→ 개별 항목만 독립적으로 점수 조정<br>→ 특정 Agent 단위의 선택적 재실행<br>→ 도메인 맞춤 코멘트와 학습 포인트 추가">→ Approve or override AI-generated scores<br>→ Adjust individual category scores without affecting others<br>→ Selectively re-execute any single agent for re-validation<br>→ Append domain-specific comments and learning points</div>
     </div>
   </div>
+
+</div>
+</div>
+
+<!-- LLMOPS -->
+<div class="section">
+<div class="container">
+  <div class="eyebrow">Production Infrastructure</div>
+  <h2 class="section-title" style="margin-bottom:6px;">Full Observability</h2>
+  <p class="section-ko" data-en="Transparent tracking, logging, and re-execution of every LLM call" data-ko="모든 LLM 호출의 투명한 추적, 기록 및 재실행을 통한 신뢰성 확보">모든 LLM 호출의 투명한 추적, 기록 및 재실행을 통한 신뢰성 확보</p>
+
+  <div class="agent-grid" style="margin-bottom:32px;">
+    <div class="agent-card">
+      <div class="agent-name" data-en="TRACEABILITY" data-ko="TRACEABILITY">TRACEABILITY</div>
+      <div class="agent-target" data-en="Full Pipeline Tracking" data-ko="전체 파이프라인 추적">Full Pipeline Tracking</div>
+      <div style="font-size:13px; line-height:1.8; color:var(--mid); margin-top:10px;" data-en="Session context, token usage, and schema validation — every step of the AI reasoning process transparently logged." data-ko="세션 정보, 토큰 사용량, 데이터 규격 검증 결과를 포함하여 AI가 답변을 도출하기까지의 모든 과정을 투명하게 기록합니다.">Session context, token usage, and schema validation — every step of the AI reasoning process transparently logged.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name" data-en="RE-EXECUTION" data-ko="RE-EXECUTION">RE-EXECUTION</div>
+      <div class="agent-target" data-en="Independent Re-run" data-ko="독립적 재실행">Independent Re-run</div>
+      <div style="font-size:13px; line-height:1.8; color:var(--mid); margin-top:10px;" data-en="Any individual LLM call can be independently re-executed from logged data — precise issue reproduction and root cause analysis." data-ko="기록된 데이터를 바탕으로 개별 LLM 호출을 독립적으로 재실행하여 문제 상황을 정확하게 재현하고 원인을 파악합니다.">Any individual LLM call can be independently re-executed from logged data — precise issue reproduction and root cause analysis.</div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-name" data-en="RELIABILITY" data-ko="RELIABILITY">RELIABILITY</div>
+      <div class="agent-target" data-en="Enterprise-Grade Trust" data-ko="엔터프라이즈급 신뢰성">Enterprise-Grade Trust</div>
+      <div style="font-size:13px; line-height:1.8; color:var(--mid); margin-top:10px;" data-en="→ <strong>Debugging</strong> — rapid error resolution<br>→ <strong>Incident Traceback</strong> — precise failure analysis<br>→ <strong>Compliance Audit</strong> — regulatory adherence proof" data-ko="→ <strong>디버깅</strong> — 신속한 오류 수정<br>→ <strong>장애 대응 역추적</strong> — 정확한 원인 분석<br>→ <strong>규제 준수 증명</strong> — 투명한 가이드라인 입증">→ <strong>Debugging</strong> — rapid error resolution<br>→ <strong>Incident Traceback</strong> — precise failure analysis<br>→ <strong>Compliance Audit</strong> — regulatory adherence proof</div>
+    </div>
+  </div>
+
+  <!-- Prompt Engineering -->
+  <div style="background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; position:relative; overflow:hidden;">
+    <div style="position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent);"></div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:var(--accent); margin-bottom:6px; letter-spacing:0.08em;">PROMPT ENGINEERING</div>
+    <div style="font-size:15px; font-weight:600; color:var(--ink); margin-bottom:16px;">Production-Scale Prompt Management</div>
+    <div style="font-size:14px; line-height:1.9; color:var(--mid);" data-en="→ Structured prompts at production scale — 28,873 characters, versioned and reviewable<br>→ JSON Schema validation enforced on every response — zero tolerance for malformed output<br>→ Mode-branched prompts: GUIDED (learning) vs EVALUATION (assessment)<br>→ Built-in guardrails against hallucination and format drift" data-ko="→ 프로덕션 규모의 구조화된 프롬프트 — 28,873자, 버전 관리 및 리뷰 가능<br>→ 모든 응답에 JSON Schema 검증 강제 — 잘못된 형식(Malformed Output) 무관용<br>→ 모드별 분기 프롬프트 — GUIDED(학습) / EVALUATION(평가)<br>→ 할루시네이션(Hallucination)과 포맷 이탈 방지 가드레일(Guardrail) 내장">→ Structured prompts at production scale — 28,873 characters, versioned and reviewable<br>→ JSON Schema validation enforced on every response — zero tolerance for malformed output<br>→ Mode-branched prompts: GUIDED (learning) vs EVALUATION (assessment)<br>→ Built-in guardrails against hallucination and format drift</div>
+  </div>
+
+</div>
 </div>
 
 <!-- SCREENS -->
-<div class="section">
-<div class="container">
+<div class="section-alt">
+<div class="section-inner">
   <div class="eyebrow">Features</div>
   <h2 class="section-title">Key Screens</h2>
 
   <div class="screen-card">
     <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">간호기록 (ENR) · GUIDED MODE</div></div>
-    <img class="screen-img" src="img/간호기록.png" alt="Nursing Record">
+    <div class="screen-img-wrap collapsible" id="wrap-enr">
+      <img class="screen-img" src="img/간호기록.png" alt="Nursing Record">
+    </div>
+    <button class="expand-btn" onclick="toggleExpand('wrap-enr', this)" data-label="View Full Screen">
+      <i class="expand-icon">↓</i> <span class="expand-label">View Full Screen</span>
+    </button>
     <div class="screen-desc">
       <div class="desc-en" data-en="Students practice in a real hospital EMR environment. Records <strong>Initial Assessment, Vital Signs, I/O, and Nursing Notes</strong> in real time with step-by-step progress tracking." data-ko="실제 병원 EMR과 동일한 환경에서 간호 초기사정, 활력징후, 섭취/배설, 간호노트를 실시간으로 기록합니다. 우측 패널에서 실습 진행률을 단계별로 확인할 수 있습니다.">Students practice in a real hospital EMR environment. Records <strong>Initial Assessment, Vital Signs, I/O, and Nursing Notes</strong> in real time with step-by-step progress tracking.</div>
     </div>
@@ -329,25 +568,60 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 
   <div class="screen-card">
     <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">AI 평가 실행 · Vertex AI (Gemini 2.0 Flash)</div></div>
-    <img class="screen-img" src="img/AI평가로그.png" alt="AI Evaluation">
+    <div class="screen-img-wrap collapsible" id="wrap-ai">
+      <img class="screen-img" src="img/AI평가로그.png" alt="AI Evaluation">
+    </div>
+    <button class="expand-btn" onclick="toggleExpand('wrap-ai', this)" data-label="View Full Screen">
+      <i class="expand-icon">↓</i> <span class="expand-label">View Full Screen</span>
+    </button>
     <div class="screen-desc">
-      <div class="desc-en" data-en="Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time." data-ko="AI 프롬프트, 환자 컨텍스트, JSON 응답이 모두 투명하게 로그로 기록되어 교수님이 직접 검증할 수 있습니다. 각 에이전트의 점수와 상세 피드백이 실시간으로 표시됩니다.">Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time.</div>
+      <div class="desc-en" data-en="Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time." data-ko="AI 프롬프트, 환자 컨텍스트, JSON 응답이 투명하게 기록됩니다. 교수가 각 에이전트의 점수와 상세 피드백을 실시간으로 직접 검증할 수 있습니다.">Full AI prompt, patient context, and <strong>JSON response</strong> are logged transparently. Each agent's score and detailed feedback visible in real time.</div>
     </div>
   </div>
 
   <div class="screen-card">
     <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">교수용 평가 관리 대시보드 · Professor View</div></div>
-    <img class="screen-img" src="img/평가관리.png" alt="Professor Dashboard">
+    <div class="screen-img-wrap collapsible" id="wrap-prof">
+      <img class="screen-img" src="img/평가관리.png" alt="Professor Dashboard">
+    </div>
+    <button class="expand-btn" onclick="toggleExpand('wrap-prof', this)" data-label="View Full Screen">
+      <i class="expand-icon">↓</i> <span class="expand-label">View Full Screen</span>
+    </button>
     <div class="screen-desc">
-      <div class="desc-en" data-en="Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click." data-ko="교수님이 항목별 상세 피드백(정확함/주의/개선 필요)을 검토하고 최종 점수를 확정하거나 수정합니다. 원클릭으로 승인 또는 조정이 가능합니다.">Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click.</div>
+      <div class="desc-en" data-en="Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click." data-ko="교수가 항목별 상세 피드백(정확/주의/개선 필요)을 검토한 뒤 최종 점수를 확정합니다. 원클릭으로 승인 또는 개별 항목 조정이 가능합니다.">Professors review AI scores with <strong>category-level feedback</strong> (correct / caution / needs improvement). Final scores approved or adjusted with one click.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">학생 현황 · Student Competency Profile</div></div>
+      <img class="screen-img" src="img/학생현황.png" alt="Student Dashboard">
+      <div class="screen-desc">
+        <div class="desc-en" data-en="Each student's clinical competency visualized as a <strong>9-dimension radar profile</strong> — from patient safety to documentation accuracy. AI-generated analysis identifies strengths and specific areas for improvement, with score trends tracked across sessions." data-ko="학생별 임상 역량을 <strong>9차원 레이더 프로필</strong>로 시각화합니다. AI 분석이 강점과 구체적 개선 영역을 식별하고, 실습 회차별 점수 추이를 추적합니다.">Each student's clinical competency visualized as a <strong>9-dimension radar profile</strong> — from patient safety to documentation accuracy. AI-generated analysis identifies strengths and specific areas for improvement, with score trends tracked across sessions.</div>
+      </div>
+    </div>
+    <div class="screen-card">
+      <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">액션 로그 뷰어 · Action Log Viewer</div></div>
+      <img class="screen-img" src="img/액션로그뷰어.png" alt="Action Log Viewer">
+      <div class="screen-desc">
+        <div class="desc-en" data-en="Every student action — navigation, data entry, clinical decision — recorded with <strong>action type, screen context, evaluation score, and timestamp</strong>. Enables granular analysis of clinical reasoning patterns and serves as the evidence base for AI evaluation." data-ko="학생의 모든 행동 — 화면 이동, 데이터 입력, 임상 판단 — 이 <strong>행동 유형, 화면 컨텍스트, 평가 점수, 타임스탬프</strong>와 함께 기록됩니다. 임상 추론 패턴의 세밀한 분석과 AI 평가의 근거 데이터로 활용됩니다.">Every student action — navigation, data entry, clinical decision — recorded with <strong>action type, screen context, evaluation score, and timestamp</strong>. Enables granular analysis of clinical reasoning patterns and serves as the evidence base for AI evaluation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-card">
+    <div class="screen-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><div class="screen-bar-title">AI 평가 모니터링 · LLMOps Dashboard</div></div>
+    <img class="screen-img" src="img/AI평가모니터링.png" alt="LLMOps Dashboard">
+    <div class="screen-desc">
+      <div class="desc-en" data-en="Full LLMOps visibility — every Agent call surfaces its <strong>Call ID, token consumption, and processing latency</strong>. Reviewers can inspect any call's complete trace or trigger selective re-execution of individual Agents without affecting the rest of the pipeline." data-ko="완전한 LLMOps 가시성 — 모든 Agent 호출의 <strong>Call ID, 토큰 소비량, 처리 시간</strong>이 노출됩니다. 특정 호출의 전체 트레이스를 확인하거나, 파이프라인에 영향 없이 개별 Agent를 선택적으로 재실행할 수 있습니다.">Full LLMOps visibility — every Agent call surfaces its <strong>Call ID, token consumption, and processing latency</strong>. Reviewers can inspect any call's complete trace or trigger selective re-execution of individual Agents without affecting the rest of the pipeline.</div>
     </div>
   </div>
 </div>
 </div>
 
 <!-- IMPACT -->
-<div class="section-alt">
-  <div class="section-inner">
+<div class="section">
+  <div class="container">
     <div class="eyebrow">Results</div>
     <h2 class="section-title">Impact</h2>
     <div class="impact-grid">
@@ -360,8 +634,8 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 </div>
 
 <!-- TECH STACK -->
-<div class="section">
-<div class="container">
+<div class="section-alt">
+<div class="section-inner">
   <div class="eyebrow">Technology</div>
   <h2 class="section-title">Tech Stack</h2>
   <div class="tech-grid">
@@ -388,6 +662,21 @@ footer { padding:40px 60px; border-top:1px solid var(--border); display:flex; al
 </footer>
 
 <script>
+  function toggleExpand(wrapId, btn) {
+    const wrap = document.getElementById(wrapId);
+    const isExpanded = wrap.classList.contains('expanded');
+    wrap.classList.toggle('expanded');
+    const icon = btn.querySelector('.expand-icon');
+    const label = btn.querySelector('.expand-label');
+    if (isExpanded) {
+      icon.textContent = '↓';
+      label.textContent = btn.getAttribute('data-label') || 'View Full Screen';
+    } else {
+      icon.textContent = '↑';
+      label.textContent = 'Collapse';
+    }
+  }
+
   function setLang(lang) {
     document.documentElement.setAttribute('data-lang', lang);
     localStorage.setItem('lang', lang);
